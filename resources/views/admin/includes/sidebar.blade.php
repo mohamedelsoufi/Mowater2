@@ -15,7 +15,7 @@
                 <img src="{{asset('no-user.jpg')}}" class="img-circle elevation-2" alt="User Image">
             </div>
             <div class="info">
-                <a href="#"
+                <a href="{{route('admin-users.show',auth('admin')->user()->id)}}"
                    class="d-block">{{auth('admin')->user()->first_name .' '. auth('admin')->user()->last_name}}</a>
             </div>
         </div>
@@ -696,10 +696,10 @@
                 {{-- General toggle end --}}
 
                 {{-- Organizations toggle start --}}
-                @if(auth('admin')->user()->hasPermission(['read-special_numbers_organizations','read-special_numbers']))
-                    <li class="nav-item {{ request()->routeIs('special-number-organizations.*','special-numbers.*') ? 'menu-open' : '' }}">
+                @if(auth('admin')->user()->hasPermission(['read-special_numbers_organizations','read-special_numbers','read-agencies','read-car_showrooms','read-rental_offices','read-wenches','read-insurance_companies','read-brokers','read-delivery','read-driving_trainers','read-fuel_stations','read-traffic_clearing_offices']))
+                    <li class="nav-item {{ request()->routeIs('special-number-organizations.*','special-numbers.*','agencies.*','car-showrooms.*','rental-offices.*','wenches.*','insurance_companies.*','brokers.*','delivery.*','trainers.*','fuel-stations.*','traffic-clearing-offices.*') ? 'menu-open' : '' }}">
                         <a href="#"
-                           class="nav-link {{ request()->routeIs('special-number-organizations.*','special-numbers.*') ? 'active' : '' }}">
+                           class="nav-link {{ request()->routeIs('special-number-organizations.*','special-numbers.*','agencies.*','car-showrooms.*','rental-offices.*','wenches.*','insurance_companies.*','brokers.*','delivery.*','trainers.*','fuel-stations.*','traffic-clearing-offices.*') ? 'active' : '' }}">
                             <i class="fas fa-place-of-worship"></i>
                             <p>
                                 {{__('words.organizations')}}
@@ -708,66 +708,227 @@
                         </a>
 
                         <ul class="nav nav-treeview">
-                            {{-- Special numbers routes start --}}
-                            @if(auth('admin')->user()->hasPermission('read-special_numbers'))
-                                <li class="nav-item {{ request()->routeIs('special-numbers.*') ? 'menu-open' : '' }}">
+                            {{-- Agency routes start --}}
+                            @if(auth('admin')->user()->hasPermission('read-agencies'))
+                                <li class="nav-item {{ request()->routeIs('agencies.*') ? 'menu-open' : '' }}">
                                     <a href="#"
-                                       class="nav-link {{ request()->routeIs('special-numbers.*') ? 'sub-menu active' : '' }}">
-                                        <i class="fas fa-award"></i>
+                                       class="nav-link {{ request()->routeIs('agencies.*') ? 'sub-menu active' : '' }}">
+                                        <i class="fas fa-peace"></i>
+                                        <p>
+                                            {{__('words.agencies')}}
+                                            <i class="{{app()->getLocale() == 'ar' ? 'left fas fa-angle-right' :  'right fas fa-angle-left'}}"></i>
+                                        </p>
+                                    </a>
+                                    <ul class="nav nav-treeview">
+                                        @if(auth('admin')->user()->hasPermission('read-agencies'))
+                                            <li class="nav-item">
+                                                <a href="{{route('agencies.index')}}"
+                                                   class="nav-link {{ request()->routeIs('agencies.index') ? 'active' : '' }}">
+                                                    <i class="far fa-eye nav-icon"></i>
+                                                    <p>{{__('words.show_all')}}</p>
+                                                </a>
+                                            </li>
+                                        @endif
+
+                                        @if(auth('admin')->user()->hasPermission('create-agencies'))
+                                            <li class="nav-item">
+                                                <a href="{{route('agencies.create')}}"
+                                                   class="nav-link {{ request()->routeIs('agencies.create') ? 'active' : '' }}">
+                                                    <i class="fas fa-folder-plus"></i>
+                                                    <p>{{__('words.create')}}</p>
+                                                </a>
+                                            </li>
+                                        @endif
+                                    </ul>
+                                </li>
+                            @endif
+                            {{-- Agency routes end --}}
+
+                            {{-- Car Showroom routes start --}}
+                            @if(auth('admin')->user()->hasPermission('read-car_showrooms'))
+                                <li class="nav-item {{ request()->routeIs('car-showrooms.*') ? 'menu-open' : '' }}">
+                                    <a href="#"
+                                       class="nav-link {{ request()->routeIs('car-showrooms.*') ? 'sub-menu active' : '' }}">
+                                        <i class="fas fa-store"></i>
+                                        <p>
+                                            {{__('words.car_showrooms')}}
+                                            <i class="{{app()->getLocale() == 'ar' ? 'left fas fa-angle-right' :  'right fas fa-angle-left'}}"></i>
+                                        </p>
+                                    </a>
+                                    <ul class="nav nav-treeview">
+                                        @if(auth('admin')->user()->hasPermission('read-car_showrooms'))
+                                            <li class="nav-item">
+                                                <a href="{{route('car-showrooms.index')}}"
+                                                   class="nav-link {{ request()->routeIs('car-showrooms.index') ? 'active' : '' }}">
+                                                    <i class="far fa-eye nav-icon"></i>
+                                                    <p>{{__('words.show_all')}}</p>
+                                                </a>
+                                            </li>
+                                        @endif
+
+                                        @if(auth('admin')->user()->hasPermission('create-car_showrooms'))
+                                            <li class="nav-item">
+                                                <a href="{{route('car-showrooms.create')}}"
+                                                   class="nav-link {{ request()->routeIs('car-showrooms.create') ? 'active' : '' }}">
+                                                    <i class="fas fa-folder-plus"></i>
+                                                    <p>{{__('words.create')}}</p>
+                                                </a>
+                                            </li>
+                                        @endif
+                                    </ul>
+                                </li>
+                            @endif
+                            {{-- Car Showroom routes end --}}
+
+                            {{-- Rental Office routes start --}}
+                            @if(auth('admin')->user()->hasPermission('read-rental_offices'))
+                                <li class="nav-item {{ request()->routeIs('rental-offices.*') ? 'menu-open' : '' }}">
+                                    <a href="#"
+                                       class="nav-link {{ request()->routeIs('rental-offices.*') ? 'sub-menu active' : '' }}">
+                                        <i class="fas fa-handshake"></i>
+                                        <p>
+                                            {{__('words.rental_offices')}}
+                                            <i class="{{app()->getLocale() == 'ar' ? 'left fas fa-angle-right' :  'right fas fa-angle-left'}}"></i>
+                                        </p>
+                                    </a>
+                                    <ul class="nav nav-treeview">
+                                        @if(auth('admin')->user()->hasPermission('read-rental_offices'))
+                                            <li class="nav-item">
+                                                <a href="{{route('rental-offices.index')}}"
+                                                   class="nav-link {{ request()->routeIs('rental-offices.index') ? 'active' : '' }}">
+                                                    <i class="far fa-eye nav-icon"></i>
+                                                    <p>{{__('words.show_all')}}</p>
+                                                </a>
+                                            </li>
+                                        @endif
+
+                                        @if(auth('admin')->user()->hasPermission('create-rental_offices'))
+                                            <li class="nav-item">
+                                                <a href="{{route('rental-offices.create')}}"
+                                                   class="nav-link {{ request()->routeIs('rental-offices.create') ? 'active' : '' }}">
+                                                    <i class="fas fa-folder-plus"></i>
+                                                    <p>{{__('words.create')}}</p>
+                                                </a>
+                                            </li>
+                                        @endif
+                                    </ul>
+                                </li>
+                            @endif
+                            {{-- Rental Office routes end --}}
+
+                            {{-- Special numbers routes start --}}
+                            @if(auth('admin')->user()->hasPermission(['read-special_numbers_organizations','read-special_numbers']))
+                                <li class="nav-item {{ request()->routeIs('special-number-organizations.*','special-numbers.*') ? 'menu-open' : '' }}">
+                                    <a href="#"
+                                       class="nav-link {{ request()->routeIs('special-number-organizations.*','special-numbers.*') ? 'active' : '' }}">
+                                        <i class="fas fa-sort-numeric-down"></i>
                                         <p>
                                             {{__('words.special_numbers')}}
                                             <i class="{{app()->getLocale() == 'ar' ? 'left fas fa-angle-right' :  'right fas fa-angle-left'}}"></i>
                                         </p>
                                     </a>
+
                                     <ul class="nav nav-treeview">
+                                        {{-- Special numbers routes start --}}
                                         @if(auth('admin')->user()->hasPermission('read-special_numbers'))
-                                            <li class="nav-item">
-                                                <a href="{{route('special-numbers.index')}}"
-                                                   class="nav-link {{ request()->routeIs('special-numbers.index') ? 'active' : '' }}">
-                                                    <i class="far fa-eye nav-icon"></i>
-                                                    <p>{{__('words.show_all')}}</p>
+                                            <li class="nav-item {{ request()->routeIs('special-numbers.*') ? 'menu-open' : '' }}">
+                                                <a href="#"
+                                                   class="nav-link {{ request()->routeIs('special-numbers.*') ? 'sub-menu active' : '' }}">
+                                                    <i class="fas fa-award"></i>
+                                                    <p>
+                                                        {{__('words.special_numbers')}}
+                                                        <i class="{{app()->getLocale() == 'ar' ? 'left fas fa-angle-right' :  'right fas fa-angle-left'}}"></i>
+                                                    </p>
                                                 </a>
+                                                <ul class="nav nav-treeview">
+                                                    @if(auth('admin')->user()->hasPermission('read-special_numbers'))
+                                                        <li class="nav-item">
+                                                            <a href="{{route('special-numbers.index')}}"
+                                                               class="nav-link {{ request()->routeIs('special-numbers.index') ? 'active' : '' }}">
+                                                                <i class="far fa-eye nav-icon"></i>
+                                                                <p>{{__('words.show_all')}}</p>
+                                                            </a>
+                                                        </li>
+                                                    @endif
+                                                    @if(auth('admin')->user()->hasPermission('create-special_numbers'))
+                                                        <li class="nav-item">
+                                                            <a href="{{route('special-numbers.create')}}"
+                                                               class="nav-link {{ request()->routeIs('special-numbers.create') ? 'active' : '' }}">
+                                                                <i class="fas fa-folder-plus"></i>
+                                                                <p>{{__('words.create')}}</p>
+                                                            </a>
+                                                        </li>
+                                                    @endif
+                                                </ul>
                                             </li>
                                         @endif
-                                        @if(auth('admin')->user()->hasPermission('create-special_numbers'))
-                                            <li class="nav-item">
-                                                <a href="{{route('special-numbers.create')}}"
-                                                   class="nav-link {{ request()->routeIs('special-numbers.create') ? 'active' : '' }}">
-                                                    <i class="fas fa-folder-plus"></i>
-                                                    <p>{{__('words.create')}}</p>
+                                        {{-- Special numbers routes end --}}
+
+                                        {{-- Special numbers organization routes start --}}
+                                        @if(auth('admin')->user()->hasPermission('read-special_numbers_organizations'))
+                                            <li class="nav-item {{ request()->routeIs('special-number-organizations.*') ? 'menu-open' : '' }}">
+                                                <a href="#"
+                                                   class="nav-link {{ request()->routeIs('special-number-organizations.*') ? 'sub-menu active' : '' }}">
+                                                    <i class="fas fa-archway"></i>
+                                                    <p>
+                                                        {{__('words.special_numbers_organizations')}}
+                                                        <i class="{{app()->getLocale() == 'ar' ? 'left fas fa-angle-right' :  'right fas fa-angle-left'}}"></i>
+                                                    </p>
                                                 </a>
+                                                <ul class="nav nav-treeview">
+                                                    @if(auth('admin')->user()->hasPermission('read-special_numbers_organizations'))
+                                                        <li class="nav-item">
+                                                            <a href="{{route('special-number-organizations.index')}}"
+                                                               class="nav-link {{ request()->routeIs('special-number-organizations.index') ? 'active' : '' }}">
+                                                                <i class="far fa-eye nav-icon"></i>
+                                                                <p>{{__('words.show_all')}}</p>
+                                                            </a>
+                                                        </li>
+                                                    @endif
+                                                    @if(auth('admin')->user()->hasPermission('create-special_numbers_organizations'))
+                                                        <li class="nav-item">
+                                                            <a href="{{route('special-number-organizations.create')}}"
+                                                               class="nav-link {{ request()->routeIs('special-number-organizations.create') ? 'active' : '' }}">
+                                                                <i class="fas fa-folder-plus"></i>
+                                                                <p>{{__('words.create')}}</p>
+                                                            </a>
+                                                        </li>
+                                                    @endif
+                                                </ul>
                                             </li>
                                         @endif
+                                        {{-- Special numbers organization routes end --}}
                                     </ul>
                                 </li>
                             @endif
                             {{-- Special numbers routes end --}}
 
-                            {{-- Special numbers organization routes start --}}
-                            @if(auth('admin')->user()->hasPermission('read-special_numbers_organizations'))
-                                <li class="nav-item {{ request()->routeIs('special-number-organizations.*') ? 'menu-open' : '' }}">
+                            {{-- Wench routes start --}}
+                            @if(auth('admin')->user()->hasPermission('read-wenches'))
+                                <li class="nav-item {{ request()->routeIs('wenches.*') ? 'menu-open' : '' }}">
                                     <a href="#"
-                                       class="nav-link {{ request()->routeIs('special-number-organizations.*') ? 'sub-menu active' : '' }}">
-                                        <i class="fas fa-archway"></i>
+                                       class="nav-link {{ request()->routeIs('wenches.*') ? 'sub-menu active' : '' }}">
+                                        <i class="fas fa-truck-loading"></i>
                                         <p>
-                                            {{__('words.special_numbers_organizations')}}
+                                            {{__('words.wenches')}}
                                             <i class="{{app()->getLocale() == 'ar' ? 'left fas fa-angle-right' :  'right fas fa-angle-left'}}"></i>
                                         </p>
                                     </a>
                                     <ul class="nav nav-treeview">
-                                        @if(auth('admin')->user()->hasPermission('read-special_numbers_organizations'))
+                                        @if(auth('admin')->user()->hasPermission('read-wenches'))
                                             <li class="nav-item">
-                                                <a href="{{route('special-number-organizations.index')}}"
-                                                   class="nav-link {{ request()->routeIs('special-number-organizations.index') ? 'active' : '' }}">
+                                                <a href="{{route('wenches.index')}}"
+                                                   class="nav-link {{ request()->routeIs('wenches.index') ? 'active' : '' }}">
                                                     <i class="far fa-eye nav-icon"></i>
                                                     <p>{{__('words.show_all')}}</p>
                                                 </a>
                                             </li>
                                         @endif
-                                        @if(auth('admin')->user()->hasPermission('create-special_numbers_organizations'))
+
+                                        @if(auth('admin')->user()->hasPermission('create-wenches'))
                                             <li class="nav-item">
-                                                <a href="{{route('special-number-organizations.create')}}"
-                                                   class="nav-link {{ request()->routeIs('special-number-organizations.create') ? 'active' : '' }}">
+                                                <a href="{{route('wenches.create')}}"
+                                                   class="nav-link {{ request()->routeIs('wenches.create') ? 'active' : '' }}">
                                                     <i class="fas fa-folder-plus"></i>
                                                     <p>{{__('words.create')}}</p>
                                                 </a>
@@ -776,10 +937,226 @@
                                     </ul>
                                 </li>
                             @endif
-                            {{-- Special numbers organization routes end --}}
+                            {{-- Wench routes end --}}
 
+                            {{-- Insurance Company routes start --}}
+                            @if(auth('admin')->user()->hasPermission('read-insurance_companies'))
+                                <li class="nav-item {{ request()->routeIs('insurance_companies.*') ? 'menu-open' : '' }}">
+                                    <a href="#"
+                                       class="nav-link {{ request()->routeIs('insurance_companies.*') ? 'sub-menu active' : '' }}">
+                                        <i class="fas fa-car-crash"></i>
+                                        <p>
+                                            {{__('words.insurance_companies')}}
+                                            <i class="{{app()->getLocale() == 'ar' ? 'left fas fa-angle-right' :  'right fas fa-angle-left'}}"></i>
+                                        </p>
+                                    </a>
+                                    <ul class="nav nav-treeview">
+                                        @if(auth('admin')->user()->hasPermission('read-insurance_companies'))
+                                            <li class="nav-item">
+                                                <a href="{{route('insurance_companies.index')}}"
+                                                   class="nav-link {{ request()->routeIs('insurance_companies.index') ? 'active' : '' }}">
+                                                    <i class="far fa-eye nav-icon"></i>
+                                                    <p>{{__('words.show_all')}}</p>
+                                                </a>
+                                            </li>
+                                        @endif
+
+                                        @if(auth('admin')->user()->hasPermission('create-insurance_companies'))
+                                            <li class="nav-item">
+                                                <a href="{{route('insurance_companies.create')}}"
+                                                   class="nav-link {{ request()->routeIs('insurance_companies.create') ? 'active' : '' }}">
+                                                    <i class="fas fa-folder-plus"></i>
+                                                    <p>{{__('words.create')}}</p>
+                                                </a>
+                                            </li>
+                                        @endif
+                                    </ul>
+                                </li>
+                            @endif
+                            {{-- Insurance Company routes end --}}
+
+                            {{-- Broker routes start --}}
+                            @if(auth('admin')->user()->hasPermission('read-brokers'))
+                                <li class="nav-item {{ request()->routeIs('brokers.*') ? 'menu-open' : '' }}">
+                                    <a href="#"
+                                       class="nav-link {{ request()->routeIs('brokers.*') ? 'sub-menu active' : '' }}">
+                                        <i class="far fa-handshake"></i>
+                                        <p>
+                                            {{__('words.brokers')}}
+                                            <i class="{{app()->getLocale() == 'ar' ? 'left fas fa-angle-right' :  'right fas fa-angle-left'}}"></i>
+                                        </p>
+                                    </a>
+                                    <ul class="nav nav-treeview">
+                                        @if(auth('admin')->user()->hasPermission('read-brokers'))
+                                            <li class="nav-item">
+                                                <a href="{{route('brokers.index')}}"
+                                                   class="nav-link {{ request()->routeIs('brokers.index') ? 'active' : '' }}">
+                                                    <i class="far fa-eye nav-icon"></i>
+                                                    <p>{{__('words.show_all')}}</p>
+                                                </a>
+                                            </li>
+                                        @endif
+
+                                        @if(auth('admin')->user()->hasPermission('create-brokers'))
+                                            <li class="nav-item">
+                                                <a href="{{route('brokers.create')}}"
+                                                   class="nav-link {{ request()->routeIs('brokers.create') ? 'active' : '' }}">
+                                                    <i class="fas fa-folder-plus"></i>
+                                                    <p>{{__('words.create')}}</p>
+                                                </a>
+                                            </li>
+                                        @endif
+                                    </ul>
+                                </li>
+                            @endif
+                            {{-- Broker routes end --}}
+
+                            {{-- Delivery routes start --}}
+                            @if(auth('admin')->user()->hasPermission('read-delivery'))
+                                <li class="nav-item {{ request()->routeIs('delivery.*') ? 'menu-open' : '' }}">
+                                    <a href="#"
+                                       class="nav-link {{ request()->routeIs('delivery.*') ? 'sub-menu active' : '' }}">
+                                        <i class="fas fa-truck"></i>
+                                        <p>
+                                            {{__('words.delivery')}}
+                                            <i class="{{app()->getLocale() == 'ar' ? 'left fas fa-angle-right' :  'right fas fa-angle-left'}}"></i>
+                                        </p>
+                                    </a>
+                                    <ul class="nav nav-treeview">
+                                        @if(auth('admin')->user()->hasPermission('read-delivery'))
+                                            <li class="nav-item">
+                                                <a href="{{route('delivery.index')}}"
+                                                   class="nav-link {{ request()->routeIs('delivery.index') ? 'active' : '' }}">
+                                                    <i class="far fa-eye nav-icon"></i>
+                                                    <p>{{__('words.show_all')}}</p>
+                                                </a>
+                                            </li>
+                                        @endif
+
+                                        @if(auth('admin')->user()->hasPermission('create-delivery'))
+                                            <li class="nav-item">
+                                                <a href="{{route('delivery.create')}}"
+                                                   class="nav-link {{ request()->routeIs('delivery.create') ? 'active' : '' }}">
+                                                    <i class="fas fa-folder-plus"></i>
+                                                    <p>{{__('words.create')}}</p>
+                                                </a>
+                                            </li>
+                                        @endif
+                                    </ul>
+                                </li>
+                            @endif
+                            {{-- Delivery routes end --}}
+
+                            {{-- Trainers routes start --}}
+                            @if(auth('admin')->user()->hasPermission('read-driving_trainers'))
+                                <li class="nav-item {{ request()->routeIs('trainers.*') ? 'menu-open' : '' }}">
+                                    <a href="#"
+                                       class="nav-link {{ request()->routeIs('trainers.*') ? 'sub-menu active' : '' }}">
+                                        <i class="fas fa-car-side"></i>
+                                        <p>
+                                            {{__('words.driving_trainers')}}
+                                            <i class="{{app()->getLocale() == 'ar' ? 'left fas fa-angle-right' :  'right fas fa-angle-left'}}"></i>
+                                        </p>
+                                    </a>
+                                    <ul class="nav nav-treeview">
+                                        @if(auth('admin')->user()->hasPermission('read-driving_trainers'))
+                                            <li class="nav-item">
+                                                <a href="{{route('trainers.index')}}"
+                                                   class="nav-link {{ request()->routeIs('trainers.index') ? 'active' : '' }}">
+                                                    <i class="far fa-eye nav-icon"></i>
+                                                    <p>{{__('words.show_all')}}</p>
+                                                </a>
+                                            </li>
+                                        @endif
+
+                                        @if(auth('admin')->user()->hasPermission('create-driving_trainers'))
+                                            <li class="nav-item">
+                                                <a href="{{route('trainers.create')}}"
+                                                   class="nav-link {{ request()->routeIs('trainers.create') ? 'active' : '' }}">
+                                                    <i class="fas fa-folder-plus"></i>
+                                                    <p>{{__('words.create')}}</p>
+                                                </a>
+                                            </li>
+                                        @endif
+                                    </ul>
+                                </li>
+                            @endif
+                            {{-- Trainers routes end --}}
+
+                            {{-- Fuel Stattion routes start --}}
+                            @if(auth('admin')->user()->hasPermission('read-fuel_stations'))
+                                <li class="nav-item {{ request()->routeIs('fuel-stations.*') ? 'menu-open' : '' }}">
+                                    <a href="#"
+                                       class="nav-link {{ request()->routeIs('fuel-stations.*') ? 'sub-menu active' : '' }}">
+                                        <i class="fas fa-gas-pump"></i>
+                                        <p>
+                                            {{__('words.fuel_stations')}}
+                                            <i class="{{app()->getLocale() == 'ar' ? 'left fas fa-angle-right' :  'right fas fa-angle-left'}}"></i>
+                                        </p>
+                                    </a>
+                                    <ul class="nav nav-treeview">
+                                        @if(auth('admin')->user()->hasPermission('read-fuel_stations'))
+                                            <li class="nav-item">
+                                                <a href="{{route('fuel-stations.index')}}"
+                                                   class="nav-link {{ request()->routeIs('fuel-stations.index') ? 'active' : '' }}">
+                                                    <i class="far fa-eye nav-icon"></i>
+                                                    <p>{{__('words.show_all')}}</p>
+                                                </a>
+                                            </li>
+                                        @endif
+
+                                        @if(auth('admin')->user()->hasPermission('create-fuel_stations'))
+                                            <li class="nav-item">
+                                                <a href="{{route('fuel-stations.create')}}"
+                                                   class="nav-link {{ request()->routeIs('fuel-stations.create') ? 'active' : '' }}">
+                                                    <i class="fas fa-folder-plus"></i>
+                                                    <p>{{__('words.create')}}</p>
+                                                </a>
+                                            </li>
+                                        @endif
+                                    </ul>
+                                </li>
+                            @endif
+                            {{-- Fuel Stattion routes end --}}
+
+                            {{-- Traffic Clearing Office routes start --}}
+                            @if(auth('admin')->user()->hasPermission('read-traffic_clearing_offices'))
+                                <li class="nav-item {{ request()->routeIs('traffic-clearing-offices.*') ? 'menu-open' : '' }}">
+                                    <a href="#"
+                                       class="nav-link {{ request()->routeIs('traffic-clearing-offices.*') ? 'sub-menu active' : '' }}">
+                                        <i class="fas fa-traffic-light"></i>
+                                        <p>
+                                            {{__('words.traffic_clearing_offices')}}
+                                            <i class="{{app()->getLocale() == 'ar' ? 'left fas fa-angle-right' :  'right fas fa-angle-left'}}"></i>
+                                        </p>
+                                    </a>
+                                    <ul class="nav nav-treeview">
+                                        @if(auth('admin')->user()->hasPermission('read-traffic_clearing_offices'))
+                                            <li class="nav-item">
+                                                <a href="{{route('traffic-clearing-offices.index')}}"
+                                                   class="nav-link {{ request()->routeIs('traffic-clearing-offices.index') ? 'active' : '' }}">
+                                                    <i class="far fa-eye nav-icon"></i>
+                                                    <p>{{__('words.show_all')}}</p>
+                                                </a>
+                                            </li>
+                                        @endif
+
+                                        @if(auth('admin')->user()->hasPermission('create-traffic_clearing_offices'))
+                                            <li class="nav-item">
+                                                <a href="{{route('traffic-clearing-offices.create')}}"
+                                                   class="nav-link {{ request()->routeIs('traffic-clearing-offices.create') ? 'active' : '' }}">
+                                                    <i class="fas fa-folder-plus"></i>
+                                                    <p>{{__('words.create')}}</p>
+                                                </a>
+                                            </li>
+                                        @endif
+                                    </ul>
+                                </li>
+                            @endif
+                            {{-- Traffic Clearing Office routes end --}}
                         </ul>
                     </li>
+
                 @endif
                 {{-- Organizations toggle end --}}
 

@@ -294,7 +294,7 @@ trait HasFiles
 
     }
 
-    public function updateImage()
+    public function updateSliderImage()
     {
         if (request()->has('slider_file')) {
             foreach (request()->slider_file as $file) {

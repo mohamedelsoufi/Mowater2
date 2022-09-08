@@ -132,7 +132,7 @@ class SpecialNumberOrganization extends Model
 
     public function getReservationActive()
     {
-        return $this->reservation_active == 1 ? __('words.active') : __('words.active');
+        return $this->reservation_active == 1 ? __('words.inactive') : __('words.inactive');
     }
 
     public function getDeliveryActive()

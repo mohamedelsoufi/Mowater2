@@ -24,7 +24,7 @@ class CreateWenchesTable extends Migration {
             $table->string('year_founded')->nullable();
             $table->decimal('latitude', 10, 8)->nullable();
             $table->decimal('longitude', 11, 8)->nullable();
-            $table->enum('location_type', array('local', 'national', 'international'))->nullable();
+            $table->enum('location_type', array('local', 'national'))->nullable();
             $table->string('status')->nullable();
             $table->boolean('reservation_availability')->nullable()->default(1);
             $table->boolean('delivery_availability')->nullable();

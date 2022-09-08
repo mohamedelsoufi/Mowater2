@@ -26,8 +26,8 @@ class AdminGarageRequest extends FormRequest
         return [
             'name_en' => 'unique:garages,name_en,'.$this->id,
             'name_ar' => 'unique:garages,name_ar,'.$this->id,
-            'description_en' => 'unique:garages,description_en,'.$this->id,
-            'description_ar' => 'unique:garages,description_ar,'.$this->id,
+            'description_en' => 'nullable',
+            'description_ar' => 'nullable',
             'tax_number' => 'unique:garages,tax_number,'.$this->id,
             'logo' => 'image|max:10000',
             'country_id' => 'required|exists:countries,id',

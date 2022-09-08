@@ -149,7 +149,7 @@
                                                         class="form-control @error('status') is-invalid @enderror">
                                                     @foreach(discount_card_status_arr() as $key=>$value)
                                                         <option
-                                                            {{ old('status') == $key ? "selected" : "" }} value="{{$key}}">{{$value}}</option>
+                                                            value="{{$key}}" {{ old('status') == $key ? "selected" : "" }} >{{$value}}</option>
                                                     @endforeach
                                                 </select>
                                                 @error('status')

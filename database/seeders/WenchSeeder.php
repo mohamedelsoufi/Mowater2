@@ -41,7 +41,7 @@ class WenchSeeder extends Seeder
             'سطحه عالي',
         ];
         $types = ['wench', 'rooftop_vehicle'];
-        $location_types = ['local', 'national', 'international'];
+        $location_types = ['local', 'national'];
         $cities = [1, 1, 1, 2, 2, 2, 3, 3, 3];
         $areas = [2, 1, 3, 5, 7, 9, 12, 14, 16];
         $is_negotiable = [0, 1];

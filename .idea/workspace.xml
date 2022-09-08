@@ -204,24 +204,24 @@
     <property name="DatabaseDriversLRU" value="mysql" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/resources/views/admin/organizations/special_numbers" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/resources/views/admin/organizations" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\xampp\htdocs\mawatery-web\resources\views\admin\organizations" />
       <recent name="D:\xampp\htdocs\mawatery-web\app\Http\Requests\Admin" />
       <recent name="D:\xampp\htdocs\mawatery-web\resources\views\admin\vehicle_details" />
       <recent name="D:\xampp\htdocs\mawatery-web\resources\views\admin\general" />
       <recent name="D:\xampp\htdocs\mawatery-web\resources\views\admin\Auth" />
-      <recent name="D:\xampp\htdocs\mawatery-web\app\Http\Resources\TrafficClearingOffices" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\xampp\htdocs\mawatery-web\resources\views\admin\organizations" />
       <recent name="D:\xampp\htdocs\mawatery-web\resources\views\admin\organizations\special_numbers" />
       <recent name="D:\xampp\htdocs\mawatery-web\resources\views\admin\organizations\special_numbers\special_number" />
       <recent name="D:\xampp\htdocs\mawatery-web\app\Http\Controllers\Dashboard\Organizations" />
       <recent name="D:\xampp\htdocs\mawatery-web\resources\views\admin\general" />
-      <recent name="D:\xampp\htdocs\mawatery-web\resources\views\admin\general\payment_methods" />
     </key>
   </component>
   <component name="RunManager" selected="PHP Script.general.php">
@@ -306,6 +306,11 @@
       <workItem from="1661847611683" duration="24481000" />
       <workItem from="1661935349753" duration="25041000" />
       <workItem from="1662020137215" duration="21891000" />
+      <workItem from="1662366693212" duration="21515000" />
+      <workItem from="1662452301302" duration="25542000" />
+      <workItem from="1662538748992" duration="25850000" />
+      <workItem from="1662625471759" duration="10755000" />
+      <workItem from="1662640440498" duration="4571000" />
     </task>
     <servers />
   </component>
@@ -325,21 +330,26 @@
     </state>
     <state x="426" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/0.0.1536.816/-1920.5.1920.1032@0.0.1536.816" timestamp="1660734382931" />
     <state x="391" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/0.0.1536.816@0.0.1536.816" timestamp="1661692387552" />
-    <state x="499" y="164" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog" timestamp="1662026022187">
+    <state x="499" y="164" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog" timestamp="1662639090517">
       <screen x="0" y="0" width="1536" height="816" />
     </state>
-    <state x="-1296" y="212" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.0.1536.816/-1920.5.1920.1032@-1920.5.1920.1032" timestamp="1660643788462" />
-    <state x="499" y="164" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.0.1536.816/-1920.5.1920.1032@0.0.1536.816" timestamp="1662026022187" />
+    <state x="-1296" y="212" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.0.1536.816/-1920.5.1920.1032@-1920.5.1920.1032" timestamp="1662370135082" />
+    <state x="499" y="164" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.0.1536.816/-1920.5.1920.1032@0.0.1536.816" timestamp="1662639090517" />
     <state x="499" y="164" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.0.1536.816@0.0.1536.816" timestamp="1660566339354" />
     <state x="516" y="97" key="#com.jetbrains.php.refactoring.extract.interface.PhpExtractInterfaceDialog#" timestamp="1660734466163">
       <screen x="0" y="0" width="1536" height="816" />
     </state>
     <state x="516" y="97" key="#com.jetbrains.php.refactoring.extract.interface.PhpExtractInterfaceDialog#/0.0.1536.816/-1920.5.1920.1032@0.0.1536.816" timestamp="1660734466163" />
     <state x="516" y="97" key="#com.jetbrains.php.refactoring.extract.interface.PhpExtractInterfaceDialog#/0.0.1536.816@0.0.1536.816" timestamp="1660565534108" />
-    <state x="496" y="98" key="#general.php" timestamp="1657026263249">
+    <state x="496" y="98" key="#general.php" timestamp="1662371306532">
       <screen x="0" y="0" width="1536" height="816" />
     </state>
+    <state x="496" y="98" key="#general.php/0.0.1536.816/-1920.5.1920.1032@0.0.1536.816" timestamp="1662371306532" />
     <state x="496" y="98" key="#general.php/0.0.1536.816@0.0.1536.816" timestamp="1657026263249" />
+    <state x="549" y="164" key="FileChooserDialogImpl" timestamp="1662388222939">
+      <screen x="0" y="0" width="1536" height="816" />
+    </state>
+    <state x="549" y="164" key="FileChooserDialogImpl/0.0.1536.816/-1920.5.1920.1032@0.0.1536.816" timestamp="1662388222939" />
     <state width="1493" height="208" key="GridCell.Tab.0.bottom" timestamp="1657016702823">
       <screen x="0" y="0" width="1536" height="816" />
     </state>
@@ -365,10 +375,10 @@
       <screen x="0" y="0" width="1536" height="816" />
     </state>
     <state x="277" y="52" key="SettingsEditor/0.0.1536.816@0.0.1536.816" timestamp="1657016701511" />
-    <state width="498" height="446" key="SwitcherDM" timestamp="1661938722230">
+    <state width="498" height="446" key="SwitcherDM" timestamp="1662454318384">
       <screen x="0" y="0" width="1536" height="816" />
     </state>
-    <state width="498" height="446" key="SwitcherDM/0.0.1536.816/-1920.5.1920.1032@0.0.1536.816" timestamp="1661938722230" />
+    <state width="498" height="446" key="SwitcherDM/0.0.1536.816/-1920.5.1920.1032@0.0.1536.816" timestamp="1662454318384" />
     <state x="297" y="3" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser" timestamp="1661787608348">
       <screen x="0" y="0" width="1536" height="816" />
     </state>
@@ -377,21 +387,33 @@
       <screen x="0" y="0" width="1536" height="816" />
     </state>
     <state x="578" y="326" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1536.816@0.0.1536.816" timestamp="1661695387921" />
-    <state x="-1527" y="5" width="1208" height="801" maximized="true" key="dock-window-1" timestamp="1661870550433">
+    <state x="-1435" y="5" width="1154" height="801" maximized="true" key="dock-window-1" timestamp="1662627813137">
       <screen x="-1920" y="5" width="1920" height="1032" />
     </state>
-    <state x="-1527" y="5" width="1208" height="801" maximized="true" key="dock-window-1/0.0.1536.816/-1920.5.1920.1032@0.0.1536.816" timestamp="1661870550433" />
-    <state x="-1401" y="5" width="1112" height="801" maximized="true" key="dock-window-2" timestamp="1660049449920">
+    <state x="-1435" y="5" width="1154" height="801" maximized="true" key="dock-window-1/0.0.1536.816/-1920.5.1920.1032@0.0.1536.816" timestamp="1662627813137" />
+    <state x="-1550" y="5" width="1154" height="801" maximized="true" key="dock-window-2" timestamp="1662640458451">
       <screen x="-1920" y="5" width="1920" height="1032" />
     </state>
     <state x="-1784" y="52" width="1153" height="801" maximized="true" key="dock-window-2/0.0.1536.816/-1920.5.1920.1032@-1920.5.1920.1032" timestamp="1657110800605" />
-    <state x="-1401" y="5" width="1112" height="801" maximized="true" key="dock-window-2/0.0.1536.816/-1920.5.1920.1032@0.0.1536.816" timestamp="1660049449920" />
-    <state x="387" y="58" width="868" height="606" key="find.popup" timestamp="1662021769048">
+    <state x="-1550" y="5" width="1154" height="801" maximized="true" key="dock-window-2/0.0.1536.816/-1920.5.1920.1032@0.0.1536.816" timestamp="1662640458451" />
+    <state x="-1320" y="5" width="1169" height="801" maximized="true" key="dock-window-3" timestamp="1662379069018">
+      <screen x="-1920" y="5" width="1920" height="1032" />
+    </state>
+    <state x="-1320" y="5" width="1169" height="801" maximized="true" key="dock-window-3/0.0.1536.816/-1920.5.1920.1032@0.0.1536.816" timestamp="1662379069018" />
+    <state x="-1519" y="5" width="1169" height="801" key="dock-window-4" timestamp="1662388039479">
+      <screen x="-1920" y="5" width="1920" height="1032" />
+    </state>
+    <state x="-1519" y="5" width="1169" height="801" key="dock-window-4/0.0.1536.816/-1920.5.1920.1032@0.0.1536.816" timestamp="1662388039479" />
+    <state x="-1551" y="85" width="1169" height="801" key="dock-window-5" timestamp="1662390353978">
+      <screen x="-1920" y="5" width="1920" height="1032" />
+    </state>
+    <state x="-1551" y="85" width="1169" height="801" key="dock-window-5/0.0.1536.816/-1920.5.1920.1032@0.0.1536.816" timestamp="1662390353978" />
+    <state x="387" y="58" width="868" height="606" key="find.popup" timestamp="1662641828395">
       <screen x="0" y="0" width="1536" height="816" />
     </state>
     <state x="387" y="58" width="868" height="606" key="find.popup/0.0.1536.816/-1920.0.1920.1032@0.0.1536.816" timestamp="1661848063916" />
     <state x="-1341" y="182" width="764" height="678" key="find.popup/0.0.1536.816/-1920.5.1920.1032@-1920.5.1920.1032" timestamp="1659014141537" />
-    <state x="387" y="58" width="868" height="606" key="find.popup/0.0.1536.816/-1920.5.1920.1032@0.0.1536.816" timestamp="1662021769048" />
+    <state x="387" y="58" width="868" height="606" key="find.popup/0.0.1536.816/-1920.5.1920.1032@0.0.1536.816" timestamp="1662641828395" />
     <state x="463" y="140" width="794" height="588" key="find.popup/0.0.1536.816@0.0.1536.816" timestamp="1661265117267" />
     <state x="425" y="185" key="run.anything.popup" timestamp="1661782047670">
       <screen x="0" y="0" width="1536" height="816" />
@@ -409,7 +431,7 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="php">
           <url>file://$PROJECT_DIR$/resources/views/admin/organizations/special_numbers/special_number_organizations/edit.blade.php</url>
-          <line>234</line>
+          <line>248</line>
           <option name="timeStamp" value="3" />
         </line-breakpoint>
       </breakpoints>

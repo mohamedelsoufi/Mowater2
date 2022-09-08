@@ -26,8 +26,8 @@ class AdminAgencyRequest extends FormRequest
         return [
             'name_en' => 'unique:agencies,name_en,'.$this->id,
             'name_ar' => 'unique:agencies,name_ar,'.$this->id,
-            'description_en' => 'unique:agencies,description_en,'.$this->id,
-            'description_ar' => 'unique:agencies,description_ar,'.$this->id,
+            'description_en' => 'nullable',
+            'description_ar' => 'nullable',
             'brand_id' => 'exists:brands,id',
             'tax_number' => 'unique:agencies,tax_number,'.$this->id,
             'logo' => 'image|max:10000',

@@ -70,6 +70,7 @@ class DrivingTrainersSeeder extends Seeder
 
             $driving_trainer->file()->create([
                 'path' => $vehicle_images[$i],
+                'type' => 'trainer_vehicle',
             ]);
 
             $payment_methods = PaymentMethod::pluck('id');

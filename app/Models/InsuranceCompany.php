@@ -25,7 +25,7 @@ class InsuranceCompany extends Model
     protected $hidden = ['name_en', 'name_ar', 'description_en', 'description_ar', 'created_at', 'updated_at'];
     protected $appends = ['name', 'description', 'is_reviewed', 'rating', 'rating_count', 'is_favorite','favorites_count'];
 
-    //appends//
+    // appends start
     public function getNameAttribute()
     {
         if (App::getLocale() == 'ar') {
@@ -41,9 +41,9 @@ class InsuranceCompany extends Model
         }
         return $this->description_en;
     }
-    //end of appends
+    // end of appends
 
-    //relations start
+    // relations start
     public function request_insurance_organizations()
     {
         return $this->morphToMany(RequestInsurance::class, 'organizationable', 'request_insurance_organization')->withPivot('status', 'price');
@@ -64,16 +64,6 @@ class InsuranceCompany extends Model
         return $this->belongsTo('App\Models\Area');
     }
 
-//    public function coverage_types()
-//    {
-//        return $this->morphedByMany(CoverageType::class, 'usable', 'insurance_company_uses');
-//    }
-//
-//    public function features()
-//    {
-//        return $this->morphedByMany(Feature::class, 'usable', 'insurance_company_uses');
-//    }
-
     public function laws()
     {
         return $this->morphMany(Law::class, 'lawable');
@@ -88,9 +78,9 @@ class InsuranceCompany extends Model
     {
         return $this->hasMany(InsuranceCompanyPackage::class);
     }
-    //relations end
+    // relations end
 
-    //scopes
+    // Scopes start
     public function scopeActive($query)
     {
         return $query->where('active', 1);
@@ -116,8 +106,9 @@ class InsuranceCompany extends Model
             return $q->where('area_id', request()->area);
         });
     }
+    // Scopes end
 
-    //Scopes
+    // accessors & Mutator start
     public function getActive()
     {
         return $this->active == 1 ? __('words.active') : __('words.inactive');
@@ -128,28 +119,24 @@ class InsuranceCompany extends Model
         return $this->available == 1 ? __('words.available_prop') : __('words.not_available_prop');
     }
 
-    public function getReservation_availability()
+    public function getActiveNumberOfViews()
+    {
+        return $this->active_number_of_views == 1 ? __('words.active') : __('words.inactive');
+    }
+
+    public function getReservationAvailability()
     {
         return $this->reservation_availability == 1 ? __('words.available_prop') : __('words.not_available_prop');
     }
 
-    public function getDelivery_availability()
+    public function getReservationActive()
     {
-        return $this->delivery_availability == 1 ? __('words.available_prop') : __('words.not_available_prop');
-    }
-
-    public function getReservation_active()
-    {
-        return $this->reservation_active == 1 ? __('words.available_prop') : __('words.not_available_prop');
-    }
-
-    public function getDelivery_active()
-    {
-        return $this->delivery_active == 1 ? __('words.available_prop') : __('words.not_available_prop');
+        return $this->reservation_active == 1 ? __('words.inactive') : __('words.inactive');
     }
 
     public function getLogoAttribute($val)
     {
         return asset('uploads') . '/' . $val;
     }
+    // accessors & Mutator end
 }

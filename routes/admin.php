@@ -88,9 +88,9 @@ Route::group(['prefix' => LaravelLocalization::setLocale(),
 
             //agency routes
             Route::resource('agencies', 'Organizations\AgencyController');
+
             //Insurance Company routes
             Route::resource('insurance_companies', 'Organizations\InsuranceCompanyController');
-
 
             //car-showroom routes
             Route::resource('car-showrooms', 'Organizations\CarShowroomController');
@@ -122,21 +122,35 @@ Route::group(['prefix' => LaravelLocalization::setLocale(),
             //fuel station routes
             Route::resource('fuel-stations', 'Organizations\FuelStationController');
 
+            //fuel station routes
+            Route::resource('traffic-clearing-offices', 'Organizations\TrafficClearingOfficeController');
+
             //user
             Route::get('agency-user-org/{org_id}/id/{user_id}', 'Organizations\AgencyController@getUser')->name('agency.user');
+            Route::get('agency-users-org/{org_id}', 'Organizations\AgencyController@getUsers')->name('agency.users');
             Route::get('broker-user-org/{org_id}/id/{user_id}', 'Organizations\BrokerController@getUser')->name('broker.user');
+            Route::get('broker-users-org/{org_id}', 'Organizations\BrokerController@getUsers')->name('broker.users');
             Route::get('car-showroom-user-org/{org_id}/id/{user_id}', 'Organizations\CarShowroomController@getUser')->name('car-showroom.user');
-            Route::get('delivery-user-user-org/{org_id}/id/{user_id}', 'Organizations\DeliveryController@getUser')->name('delivery-user.user');
+            Route::get('car-showroom-users-org/{org_id}', 'Organizations\CarShowroomController@getUsers')->name('car-showroom.users');
+            Route::get('delivery-user-org/{org_id}/id/{user_id}', 'Organizations\DeliveryController@getUser')->name('delivery-user.user');
+            Route::get('delivery-users-org/{org_id}', 'Organizations\DeliveryController@getUsers')->name('delivery-user.users');
             Route::get('trainer-user-org/{org_id}/id/{user_id}', 'Organizations\DrivingTrainersController@getUser')->name('trainer.user');
+            Route::get('trainer-users-org/{org_id}', 'Organizations\DrivingTrainersController@getUsers')->name('trainer.users');
             Route::get('garage-user-org/{org_id}/id/{user_id}', 'Organizations\GarageController@getUser')->name('garage.user');
             Route::get('insurance-user-org/{org_id}/id/{user_id}', 'Organizations\InsuranceCompanyController@getUser')->name('insurance.user');
+            Route::get('insurance-users-org/{org_id}', 'Organizations\InsuranceCompanyController@getUsers')->name('insurance.users');
             Route::get('rental-user-org/{org_id}/id/{user_id}', 'Organizations\RentalOfficeController@getUser')->name('rental.user');
+            Route::get('rental-users-org/{org_id}', 'Organizations\RentalOfficeController@getUsers')->name('rental.users');
             Route::get('scrap-user-org/{org_id}/id/{user_id}', 'Organizations\ScrapController@getUser')->name('scrap.user');
             Route::get('sparepart-user-org/{org_id}/id/{user_id}', 'Organizations\SparePartController@getUser')->name('sparepart.user');
             Route::get('special-org-user/{org_id}/id/{user_id}', 'Organizations\SpecialNumberOrganizationController@getUser')->name('special-org.user');
             Route::get('special-org-users/{org_id}', 'Organizations\SpecialNumberOrganizationController@getUsers')->name('special-org.users');
             Route::get('wench-user-org/{org_id}/id/{user_id}', 'Organizations\WenchController@getUser')->name('wench.user');
+            Route::get('wench-users-org/{org_id}', 'Organizations\WenchController@getUsers')->name('wench.users');
             Route::get('fuel-station-user-org/{org_id}/id/{user_id}', 'Organizations\FuelStationController@getUser')->name('fuel-station.user');
+            Route::get('fuel-station-users-org/{org_id}', 'Organizations\FuelStationController@getUsers')->name('fuel-station.users');
+            Route::get('traffic-clearing-user-org/{org_id}/id/{user_id}', 'Organizations\TrafficClearingOfficeController@getUser')->name('traffic.user');
+            Route::get('traffic-clearing-users-org/{org_id}', 'Organizations\TrafficClearingOfficeController@getUsers')->name('traffic.users');
 
         });
 

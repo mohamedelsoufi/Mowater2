@@ -21,16 +21,16 @@ use App\Traits\Phones\HasPhones;
 class CarShowroom extends Model
 {
     use HasFactory, CanBeFavourites, HasContacts, HasReviews, HasWorkTimes, HasDayoffs,
-        HasVehicles, HasAds, HasOrgUsers, HasPhones, HasBranches, HasOrganizationDiscountCard,HasPaymentMethods;
+        HasVehicles, HasAds, HasOrgUsers, HasPhones, HasBranches, HasOrganizationDiscountCard, HasPaymentMethods;
     protected $table = 'car_showrooms';
     public $timestamps = true;
     protected $guarded = [];
 
     protected $hidden = ['name_ar', 'name_en', 'description_ar', 'description_en', 'created_at', 'updated_at'];
 
-    protected $appends = ['name', 'description', 'rating', 'rating_count', 'is_reviewed', 'is_favorite','favorites_count'];
+    protected $appends = ['name', 'description', 'rating', 'rating_count', 'is_reviewed', 'is_favorite', 'favorites_count'];
 
-    //// appends attributes start //////
+    // appends attributes start
     public function getNameAttribute()
     {
         if (App::getLocale() == 'ar')
@@ -44,9 +44,9 @@ class CarShowroom extends Model
             return $this->description_ar;
         return $this->description_en;
     }
-    //// appends attributes end //////
+    // appends attributes end
 
-    //relationship start
+    // relationship start
     public function country()
     {
         return $this->belongsTo('App\Models\Country');
@@ -72,39 +72,9 @@ class CarShowroom extends Model
         return $this->hasManyThrough(ReserveVehicle::class, Vehicle::class, 'vehicable_id', 'vehicle_id');
     }
 
-    //relationship end
+    // relationship end
 
-    //Scopes
-    public function getActive()
-    {
-        return $this->active == 1 ? __('words.active') : __('words.inactive');
-    }
-
-    public function getAvailable()
-    {
-        return $this->available == 1 ? __('words.available_prop') : __('words.not_available_prop');
-    }
-
-    public function getReservation_availability()
-    {
-        return $this->reservation_availability == 1 ? __('words.available_prop') : __('words.not_available_prop');
-    }
-
-    public function getDelivery_availability()
-    {
-        return $this->delivery_availability == 1 ? __('words.available_prop') : __('words.not_available_prop');
-    }
-
-    public function getReservation_active()
-    {
-        return $this->reservation_active == 1 ? __('words.available_prop') : __('words.not_available_prop');
-    }
-
-    public function getDelivery_active()
-    {
-        return $this->delivery_active == 1 ? __('words.available_prop') : __('words.not_available_prop');
-    }
-
+    // Scopes start
     public function scopeActive($query)
     {
         return $query->where('active', 1);
@@ -119,7 +89,7 @@ class CarShowroom extends Model
     {
         return $query->select('id', 'name_en', 'name_ar', 'description_en', 'description_ar',
             'tax_number', 'logo', 'reservation_availability', 'delivery_availability', 'reservation_active',
-            'delivery_active', 'country_id', 'city_id', 'area_id', 'year_founded','active_number_of_views', 'number_of_views');
+            'delivery_active', 'country_id', 'city_id', 'area_id', 'year_founded', 'active_number_of_views', 'number_of_views');
     }
 
     public function scopeSearch($query)
@@ -141,6 +111,43 @@ class CarShowroom extends Model
                 $q2->where('vehicle_type', request()->vehicle_type);
             });
         });
+    }
+    // Scopes end
+
+    // accessors & Mutator start
+    public function getActive()
+    {
+        return $this->active == 1 ? __('words.active') : __('words.inactive');
+    }
+
+    public function getAvailable()
+    {
+        return $this->available == 1 ? __('words.available_prop') : __('words.not_available_prop');
+    }
+
+    public function getActiveNumberOfViews()
+    {
+        return $this->active_number_of_views == 1 ? __('words.active') : __('words.inactive');
+    }
+
+    public function getReservationAvailability()
+    {
+        return $this->reservation_availability == 1 ? __('words.available_prop') : __('words.not_available_prop');
+    }
+
+    public function getDeliveryAvailability()
+    {
+        return $this->delivery_availability == 1 ? __('words.available_prop') : __('words.not_available_prop');
+    }
+
+    public function getReservationActive()
+    {
+        return $this->reservation_active == 1 ? __('words.inactive') : __('words.inactive');
+    }
+
+    public function getDeliveryActive()
+    {
+        return $this->delivery_active == 1 ? __('words.available_prop') : __('words.not_available_prop');
     }
 
     public function available_reservation($id, $date, $vehicle_id)
@@ -251,7 +258,7 @@ class CarShowroom extends Model
                         ->where('manufacturing_year', $manufacturing_year)->where('active', 1)->pluck('car_class_id'))
                         ->get();
                     foreach ($classes as $class) {
-                        $vehicle =$car_showroom->vehicles()->where('active', 1)
+                        $vehicle = $car_showroom->vehicles()->where('active', 1)
                             ->where('brand_id', $brand->id)->where('car_model_id', $car_model->id)
                             ->where('car_class_id', $class->id)->where('manufacturing_year', $manufacturing_year)->first();
 
@@ -273,4 +280,6 @@ class CarShowroom extends Model
             return $brands;
         }
     }
+
+    // accessors & Mutator end
 }

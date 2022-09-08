@@ -25,6 +25,7 @@
             <div class="container-fluid">
                 <!-- Small boxes (Stat box) -->
                 <div class="row">
+                    @if(auth('admin')->user()->hasPermission('read-admins'))
                     <div class="col-lg-4 col-6">
                         <!-- small box -->
                         <div class="small-box bg-info">
@@ -36,9 +37,10 @@
                             <div class="icon">
                                 <i class="ion ion-person-add"></i>
                             </div>
-                            <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                            <a href="{{route('admin-users.index')}}" class="small-box-footer">{{__('words.more_info')}} <i class="fas fa-arrow-circle-right"></i></a>
                         </div>
                     </div>
+                    @endif
                     <!-- ./col -->
                     <div class="col-lg-4 col-6">
                         <!-- small box -->
@@ -51,7 +53,7 @@
                             <div class="icon">
                                 <i class="fas fa-place-of-worship"></i>
                             </div>
-                            <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                            <a href="#" class="small-box-footer">{{__('words.more_info')}} <i class="fas fa-arrow-circle-right"></i></a>
                         </div>
                     </div>
                     <!-- ./col -->
@@ -66,7 +68,7 @@
                             <div class="icon">
                                 <i class="fas fa-mobile"></i>
                             </div>
-                            <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                            <a href="#" class="small-box-footer">{{__('words.more_info')}} <i class="fas fa-arrow-circle-right"></i></a>
                         </div>
                     </div>
 

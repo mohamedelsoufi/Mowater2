@@ -23,15 +23,15 @@ use App\Traits\Phones\HasPhones;
 class Broker extends Model
 {
     use HasDayoffs, HasWorkTimes, HasReviews, CanBeFavourites, HasContacts, HasFactory, HasAds, HasPhones,
-        HasOrgUsers, HasOrganizationDiscountCard, HasBranches,HasPaymentMethods;
+        HasOrgUsers, HasOrganizationDiscountCard, HasBranches, HasPaymentMethods;
     protected $guarded = [];
     protected $hidden = ['name_en', 'name_ar', 'description_en', 'description_ar', 'created_at', 'updated_at'];
 
     protected $appends = ['name', 'description',
 //        'requirements',
-        'is_reviewed', 'rating', 'rating_count', 'is_favorite','favorites_count'];
+        'is_reviewed', 'rating', 'rating_count', 'is_favorite', 'favorites_count'];
 
-    //appends//
+    // appends start
     public function getNameAttribute()
     {
         if (App::getLocale() == 'ar') {
@@ -48,16 +48,9 @@ class Broker extends Model
         return $this->description_en;
     }
 
-//    public function getRequirementsAttribute()
-//    {
-//        if (App::getLocale() == 'ar') {
-//            return $this->requirements_ar;
-//        }
-//        return $this->requirements_en;
-//    }
-    //end of appends
+    // end of appends
 
-    //relationships//
+    // relations start
     public function country()
     {
         return $this->belongsTo('App\Models\Country');
@@ -73,16 +66,6 @@ class Broker extends Model
         return $this->belongsTo('App\Models\Area');
     }
 
-//    public function coverage_types()
-//    {
-//        return $this->morphedByMany(CoverageType::class, 'usable', 'broker_uses');
-//    }
-//
-//    public function features()
-//    {
-//        return $this->morphedByMany(Feature::class, 'usable', 'broker_uses');
-//    }
-
     public function laws()
     {
         return $this->morphMany(Law::class, 'lawable');
@@ -93,45 +76,13 @@ class Broker extends Model
         return $this->hasMany(BrokerPackage::class);
     }
 
-
     public function request_insurance_organizations()
     {
         return $this->morphToMany(RequestInsurance::class, 'organizationable', 'request_insurance_organization')->withPivot('status', 'price');
     }
+    // relations end
 
-//end
-
-    //Scopes
-    public function getActive()
-    {
-        return $this->active == 1 ? __('words.active') : __('words.inactive');
-    }
-
-    public function getAvailable()
-    {
-        return $this->available == 1 ? __('words.available_prop') : __('words.not_available_prop');
-    }
-
-    public function getReservation_availability()
-    {
-        return $this->reservation_availability == 1 ? __('words.available_prop') : __('words.not_available_prop');
-    }
-
-    public function getDelivery_availability()
-    {
-        return $this->delivery_availability == 1 ? __('words.available_prop') : __('words.not_available_prop');
-    }
-
-    public function getReservation_active()
-    {
-        return $this->reservation_active == 1 ? __('words.available_prop') : __('words.not_available_prop');
-    }
-
-    public function getDelivery_active()
-    {
-        return $this->delivery_active == 1 ? __('words.available_prop') : __('words.not_available_prop');
-    }
-
+    // Scopes start
     public function scopeActive($query)
     {
         return $query->where('active', 1);
@@ -157,9 +108,37 @@ class Broker extends Model
             return $q->where('area_id', request()->area);
         });
     }
+    // Scopes end
+
+    // accessors & Mutator start
+    public function getActive()
+    {
+        return $this->active == 1 ? __('words.active') : __('words.inactive');
+    }
+
+    public function getAvailable()
+    {
+        return $this->available == 1 ? __('words.available_prop') : __('words.not_available_prop');
+    }
+
+    public function getActiveNumberOfViews()
+    {
+        return $this->active_number_of_views == 1 ? __('words.active') : __('words.inactive');
+    }
+
+    public function getReservationAvailability()
+    {
+        return $this->reservation_availability == 1 ? __('words.available_prop') : __('words.not_available_prop');
+    }
+
+    public function getReservationActive()
+    {
+        return $this->reservation_active == 1 ? __('words.inactive') : __('words.inactive');
+    }
 
     public function getLogoAttribute($val)
     {
         return asset('uploads') . '/' . $val;
     }
+    // accessors & Mutator end
 }

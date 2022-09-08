@@ -15,31 +15,27 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
     <link rel="stylesheet" type="text/css"
           href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+    <link href='https://fonts.googleapis.com/css?family=Cairo' rel='stylesheet'>
 
 @if(App::isLocale('ar'))
     <!-- Font Awesome -->
-        <link rel="stylesheet" href="{{asset('dashboard/plugins/fontawesome-free/css/allAr.min.css')}}">
+        <link rel="stylesheet" href="{{asset('Dashboard/plugins/fontawesome-free/css/allAr.min.css')}}">
         <!-- icheck bootstrap -->
-        <link rel="stylesheet" href="{{asset('dashboard/plugins/icheck-bootstrap/icheck-bootstrapAr.min.css')}}">
+        <link rel="stylesheet" href="{{asset('Dashboard/plugins/icheck-bootstrap/icheck-bootstrapAr.min.css')}}">
         <!-- Theme style -->
-        <link rel="stylesheet" href="{{asset('dashboard/dist/css/adminlteAr.css')}}">
-        <link rel="stylesheet" href="{{asset('dashboard/custom/styleAr.css')}}">
-        <style>
-            body {
-                font-family: 'Cairo', sans-serif;
-            }
-        </style>
+        <link rel="stylesheet" href="{{asset('Dashboard/dist/css/adminlteAr.css')}}">
+        <link rel="stylesheet" href="{{asset('Dashboard/custom/styleAr.css')}}">
 @else
     <!-- Google Font: Source Sans Pro -->
         <link rel="stylesheet"
               href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
         <!-- Font Awesome -->
-        <link rel="stylesheet" href="{{asset('dashboard/plugins/fontawesome-free/css/all.min.css')}}">
+        <link rel="stylesheet" href="{{asset('Dashboard/plugins/fontawesome-free/css/all.min.css')}}">
         <!-- icheck bootstrap -->
-        <link rel="stylesheet" href="{{asset('dashboard/plugins/icheck-bootstrap/icheck-bootstrap.min.css')}}">
+        <link rel="stylesheet" href="{{asset('Dashboard/plugins/icheck-bootstrap/icheck-bootstrap.min.css')}}">
         <!-- Theme style -->
-        <link rel="stylesheet" href="{{asset('dashboard/dist/css/adminlte.min.css')}}">
-        <link rel="stylesheet" href="{{asset('dashboard/custom/style.css')}}">
+        <link rel="stylesheet" href="{{asset('Dashboard/dist/css/adminlte.min.css')}}">
+        <link rel="stylesheet" href="{{asset('Dashboard/custom/style.css')}}">
     @endif
     @yield('styles')
     @yield('head')
@@ -103,13 +99,13 @@
 
 
     <!-- jQuery -->
-    <script src="{{asset('dashboard/plugins/jquery/jquery.min.js')}}"></script>
+    <script src="{{asset('Dashboard/plugins/jquery/jquery.min.js')}}"></script>
     <!-- jQuery -->
-    <script src="{{asset('dashboard/plugins/jquery/jquery.min.js')}}"></script>
+    <script src="{{asset('Dashboard/plugins/jquery/jquery.min.js')}}"></script>
     <!-- Bootstrap 4 -->
-    <script src="{{asset('dashboard/plugins/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
+    <script src="{{asset('Dashboard/plugins/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
     <!-- AdminLTE App -->
-    <script src="{{asset('dashboard/dist/js/adminlte.min.js')}}"></script>
+    <script src="{{asset('Dashboard/dist/js/adminlte.min.js')}}"></script>
 </div>
 </body>
 </html>

@@ -26,8 +26,8 @@ class AdminCarShowroomRequest extends FormRequest
         return [
             'name_en' => 'unique:car_showrooms,name_en,'.$this->id,
             'name_ar' => 'unique:car_showrooms,name_ar,'.$this->id,
-            'description_en' => 'unique:car_showrooms,description_en,'.$this->id,
-            'description_ar' => 'unique:car_showrooms,description_ar,'.$this->id,
+            'description_en' => 'nullable',
+            'description_ar' => 'nullable',
             'tax_number' => 'unique:car_showrooms,tax_number,'.$this->id,
             'logo' => 'image|max:10000',
             'country_id' => 'required|exists:countries,id',

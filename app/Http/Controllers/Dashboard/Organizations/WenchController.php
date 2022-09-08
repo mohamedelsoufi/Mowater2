@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Dashboard\Organizations;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\AdminWenchRequest;
+use App\Models\Area;
+use App\Models\City;
 use App\Models\Country;
 use App\Models\Wench;
 use Illuminate\Http\Request;
@@ -11,153 +13,212 @@ use Illuminate\Support\Facades\File;
 
 class WenchController extends Controller
 {
-    public function index()
+    private $model;
+    private $country;
+    private $city;
+    private $area;
+
+    public function __construct(Wench $model, Country $country, City $city, Area $area)
     {
-        $wenches = Wench::latest('id')->get();
-        $countries = Country::all();
-        return view('dashboard.organizations.wenches.index', compact('wenches', 'countries'));
+        $this->middleware(['permission:read-wenches'])->only('index');
+        $this->middleware(['permission:create-wenches'])->only('create');
+        $this->middleware(['permission:update-wenches'])->only('edit');
+        $this->middleware(['permission:delete-wenches'])->only('delete');
+
+        $this->model = $model;
+        $this->country = $country;
+        $this->city = $city;
+        $this->area = $area;
     }
 
+    public function index()
+    {
+        try {
+            $wenches = $this->model->latest('id')->get();
+            return view('admin.organizations.wenches.index', compact('wenches'));
+        } catch (\Exception $e) {
+            return redirect()->back()->with(['error' => __('message.something_wrong')]);
+        }
+    }
 
     public function create()
     {
-        //
+        try {
+            $countries = $this->country->latest('id')->get();
+            return view('admin.organizations.wenches.create', compact('countries'));
+        } catch (\Exception $e) {
+            return redirect()->back()->with(['error' => __('message.something_wrong')]);
+        }
     }
-
 
     public function store(AdminWenchRequest $request)
     {
-//        return $request;
-        if (!$request->has('active'))
-            $request->request->add(['active' => 0]);
-        else
-            $request->request->add(['active' => 1]);
+        try {
+            if (!$request->has('active'))
+                $request->request->add(['active' => 0]);
+            else
+                $request->request->add(['active' => 1]);
 
-        if (!$request->has('reservation_active'))
-            $request->request->add(['reservation_active' => 0]);
-        else
-            $request->request->add(['reservation_active' => 1]);
+            if (!$request->has('active_number_of_views'))
+                $request->request->add(['active_number_of_views' => 0]);
+            else
+                $request->request->add(['active_number_of_views' => 1]);
 
-        if (!$request->has('delivery_active'))
-            $request->request->add(['delivery_active' => 0]);
-        else
-            $request->request->add(['delivery_active' => 1]);
+            if (!$request->has('reservation_active'))
+                $request->request->add(['reservation_active' => 0]);
+            else
+                $request->request->add(['reservation_active' => 1]);
 
-        $request_data = $request->except(['_token', 'logo']);
+            if (!$request->has('delivery_active'))
+                $request->request->add(['delivery_active' => 0]);
+            else
+                $request->request->add(['delivery_active' => 1]);
 
-        if ($request->has('logo')) {
-            $image = $request->logo->store('logos');
-            $request_data['logo'] = $image;
-        }
+            $request_data = $request->except(['_token', 'logo', 'user_name', 'email', 'password', 'password_confirmation']);
 
-        $wench = Wench::create($request_data);
+            if ($request->has('logo')) {
+                $image = $request->logo->store('logos');
+                $request_data['logo'] = $image;
+            }
 
-        if ($wench) {
+            $wench = $this->model->create($request_data);
+
             $wench->organization_users()->create([
                 'user_name' => $request->user_name,
                 'email' => $request->email,
                 'password' => $request->password,
             ]);
             return redirect()->route('wenches.index')->with(['success' => __('message.created_successfully')]);
-        } else {
-
+        } catch (\Exception $e) {
             return redirect()->back()->with(['error' => __('message.something_wrong')]);
         }
     }
 
+    private function getModelById($id)
+    {
+        $model = $this->model->find($id);
+        return $model;
+    }
 
     public function show($id)
     {
-        $show_wench = Wench::find($id);
-        $show_wench->makeVisible('name_en', 'name_ar', 'description_en', 'description_ar');
-        $users = $show_wench->organization_users()->get();
-
-        $data = compact('show_wench', 'users');
-        return response()->json(['status' => true, 'data' => $data]);
-    }
-
-    public function getUser($org_id, $user_id)
-    {
-        $show_wench = Wench::find($org_id);
-        $user = $show_wench->organization_users()->find($user_id);
-
-        $data = compact('user');
-        return response()->json(['status' => true, 'data' => $data]);
+        try {
+            $wench = $this->getModelById($id);
+            $users = $wench->organization_users()->latest('id')->get();
+            return view('admin.organizations.wenches.show', compact('wench', 'users'));
+        } catch (\Exception $e) {
+            return redirect()->back()->with(['error' => __('message.something_wrong')]);
+        }
     }
 
     public function edit($id)
     {
-        //
-    }
-
-
-    public function update(AdminWenchRequest $request, $id)
-    {
-//        return $request;
-        $wench = Wench::find($id);
-        if (!$request->has('active'))
-            $request->request->add(['active' => 0]);
-        else
-            $request->request->add(['active' => 1]);
-
-        if (!$request->has('reservation_active'))
-            $request->request->add(['reservation_active' => 0]);
-        else
-            $request->request->add(['reservation_active' => 1]);
-
-        if (!$request->has('delivery_active'))
-            $request->request->add(['delivery_active' => 0]);
-        else
-            $request->request->add(['delivery_active' => 1]);
-
-        $request_data = $request->except(['_token', 'logo', 'user_name', 'password', 'password_confirmation']);
-
-        if ($request->has('logo')) {
-            $image_path = public_path('uploads/');
-
-            if (File::exists($image_path . $wench->getRawOriginal('logo'))) {
-                File::delete($image_path . $wench->getRawOriginal('logo'));
-            }
-
-            $image = $request->logo->store('logos');
-            $request_data['logo'] = $image;
-        }
-
-        $user = $wench->organization_users()->find($request->organization_user_id);
-        if ($request->user_name) {
-
-            $user->update([
-                'user_name' => $request->user_name,
-            ]);
-        }
-        if ($request->password) {
-
-            $user->update([
-                'password' => $request->password,
-            ]);
-        }
-
-        $wench->update($request_data);
-
-
-        if ($wench) {
-            return redirect()->route('wenches.index')->with(['success' => __('message.updated_successfully')]);
-        } else {
-
+        try {
+            $wench = $this->getModelById($id);
+            $users = $wench->organization_users()->get();
+            $countries = $this->country->latest('id')->get();
+            $cities = $this->city->latest('id')->get();
+            $areas = $this->area->latest('id')->get();
+            return view('admin.organizations.wenches.edit', compact('wench', 'users', 'countries', 'cities', 'areas'));
+        } catch (\Exception $e) {
             return redirect()->back()->with(['error' => __('message.something_wrong')]);
         }
     }
 
+    public function update(AdminWenchRequest $request, $id)
+    {
+        try {
+            $wench = $this->getModelById($id);
+            if (!$request->has('active'))
+                $request->request->add(['active' => 0]);
+            else
+                $request->request->add(['active' => 1]);
+
+            if (!$request->has('active_number_of_views'))
+                $request->request->add(['active_number_of_views' => 0]);
+            else
+                $request->request->add(['active_number_of_views' => 1]);
+
+            if (!$request->has('reservation_active'))
+                $request->request->add(['reservation_active' => 0]);
+            else
+                $request->request->add(['reservation_active' => 1]);
+
+            if (!$request->has('delivery_active'))
+                $request->request->add(['delivery_active' => 0]);
+            else
+                $request->request->add(['delivery_active' => 1]);
+
+            $request_data = $request->except(['_token', 'logo', 'user_name', 'password', 'password_confirmation', 'organization_user_id']);
+            if ($request->has('logo')) {
+                $image_path = public_path('uploads/');
+
+                if (File::exists($image_path . $wench->getRawOriginal('logo'))) {
+                    File::delete($image_path . $wench->getRawOriginal('logo'));
+                }
+
+                $image = $request->logo->store('logos');
+                $request_data['logo'] = $image;
+            }
+            $user = $wench->organization_users()->find($request->organization_user_id);
+            if ($request->user_name) {
+
+                $user->update([
+                    'user_name' => $request->user_name,
+                ]);
+            }
+            if ($request->password) {
+
+                $user->update([
+                    'password' => $request->password,
+                ]);
+            }
+            $wench->update($request_data);
+            return redirect()->route('wenches.index')->with(['success' => __('message.updated_successfully')]);
+        } catch (\Exception $e) {
+            return redirect()->back()->with(['error' => __('message.something_wrong')]);
+        }
+    }
 
     public function destroy($id)
     {
-        $wench = Wench::find($id);
+        try {
+            $wench = $this->getModelById($id);
 
-        $image_path = public_path('uploads/');
-        if (File::exists($image_path . $wench->getRawOriginal('logo'))) {
-            File::delete($image_path . $wench->getRawOriginal('logo'));
+            $image_path = public_path('uploads/');
+            if (File::exists($image_path . $wench->getRawOriginal('logo'))) {
+                File::delete($image_path . $wench->getRawOriginal('logo'));
+            }
+            $wench->delete();
+            return redirect()->route('wenches.index')->with(['success' => __('message.deleted_successfully')]);
+        } catch (\Exception $e) {
+            return redirect()->back()->with(['error' => __('message.something_wrong')]);
         }
-        $wench->delete();
-        return redirect()->route('wenches.index')->with(['success' => __('message.deleted_successfully')]);
+    }
+
+    public function getUser($org_id, $user_id)
+    {
+        try {
+            $wench = $this->model->find($org_id);
+            $user = $wench->organization_users()->find($user_id);
+
+            $data = compact('user');
+            return response()->json(['status' => true, 'data' => $data]);
+        } catch (\Exception $e) {
+            return responseJson(0, 'error', $e->getMessage());
+        }
+    }
+
+    public function getUsers($org_id)
+    {
+        try {
+            $wench = $this->model->find($org_id);
+            $users = $wench->organization_users()->latest('id')->get();
+
+            $data = compact('users');
+            return response()->json(['status' => true, 'data' => $data]);
+        } catch (\Exception $e) {
+            return responseJson(0, 'error', $e->getMessage());
+        }
     }
 }

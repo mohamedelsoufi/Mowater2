@@ -7,11 +7,11 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>@yield('title','Mawatery')</title>
+    <title>@yield('title',__('words.mowater'))</title>
     <!-- Favicon icon -->
     <link rel="icon" type="image/png" sizes="16x16" href="{{asset('dashboard/images/favicon.png')}}">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-
+    <link href='https://fonts.googleapis.com/css?family=Cairo' rel='stylesheet'>
     @if(App::isLocale('ar'))
 
         <link href="{{asset('/dashboard/css/style-ar.css')}}" rel="stylesheet">
@@ -71,7 +71,7 @@
     </div>
 
     <!-- Footer start -->
-@include('dashboard.includes.footer')
+@include('admin.includes.footer')
 <!-- Footer end -->
 </div>
 

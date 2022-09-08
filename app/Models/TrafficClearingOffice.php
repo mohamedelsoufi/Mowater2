@@ -30,7 +30,7 @@ class TrafficClearingOffice extends Model
     protected $hidden = ['name_en', 'name_ar', 'description_en', 'description_ar', 'created_at', 'updated_at'];
     protected $appends = ['name', 'description', 'rating', 'rating_count', 'is_reviewed', 'is_favorite','favorites_count'];
 
-    //// appends attributes start //////
+    // appends attributes start
     public function getNameAttribute()
     {
         if (App::getLocale() == 'ar') {
@@ -46,8 +46,9 @@ class TrafficClearingOffice extends Model
         }
         return $this->description_en;
     }
+    // appends attributes end
 
-    //relationship start
+    // relationship start
     public function country()
     {
         return $this->belongsTo('App\Models\Country');
@@ -72,24 +73,9 @@ class TrafficClearingOffice extends Model
     {
         return $this->belongsToMany(TrafficClearingService::class, 'traffic_clearing_service_uses')->withPivot('fees','price');
     }
-    //relationship end
+    // relationship end
 
-    //Scopes
-    public function getActive()
-    {
-        return $this->active == 1 ? __('words.active') : __('words.inactive');
-    }
-
-    public function getAvailable()
-    {
-        return $this->available == 1 ? __('words.available_prop') : __('words.not_available_prop');
-    }
-
-    public function getReservation_availability()
-    {
-        return $this->reservation_availability == 1 ? __('words.available_prop') : __('words.not_available_prop');
-    }
-
+    // Scopes start
     public function scopeActive($query)
     {
         return $query->where('active', 1);
@@ -124,10 +110,37 @@ class TrafficClearingOffice extends Model
             });
         });
     }
+    // Scopes end
+
+    // accessors & Mutator start
+    public function getActive()
+    {
+        return $this->active == 1 ? __('words.active') : __('words.inactive');
+    }
+
+    public function getAvailable()
+    {
+        return $this->available == 1 ? __('words.available_prop') : __('words.not_available_prop');
+    }
+
+    public function getReservationAvailability()
+    {
+        return $this->reservation_availability == 1 ? __('words.available_prop') : __('words.not_available_prop');
+    }
+
+    public function getReservationActive()
+    {
+        return $this->reservation_active == 1 ? __('words.active') : __('words.inactive');
+    }
+
+    public function getActiveNumberOfViews()
+    {
+        return $this->active_number_of_views == 1 ? __('words.active') : __('words.inactive');
+    }
 
     public function getLogoAttribute($val)
     {
         return asset('uploads') . '/' . $val;
     }
-
+    // accessors & Mutator end
 }

@@ -188,6 +188,20 @@ function wench_type_arr()
     ];
 }
 
+function location_type()
+{
+    $location_type = array_keys(location_type_arr());
+    return implode(',', $location_type);
+}
+
+function location_type_arr()
+{
+    return [
+        'local' => __('words.local'),
+        'national' => __('words.national')
+    ];
+}
+
 function user_vehicle_status()
 {
     $user_vehicle_status = ['for_sale', 'not_for_sale', 'reverse'];
@@ -233,8 +247,8 @@ function transmission_type()
 function transmission_type_arr()
 {
     return [
-        'Manual' => __('vehicle.Manual'),
-        'Automatic' => __('vehicle.Automatic')
+        'manual' => __('vehicle.Manual'),
+        'automatic' => __('vehicle.Automatic')
     ];
 }
 

@@ -13,6 +13,7 @@
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet"
           href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+    <link href='https://fonts.googleapis.com/css?family=Cairo' rel='stylesheet'>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
@@ -24,8 +25,14 @@
     <link rel="stylesheet"
           href="{{asset('Dashboard/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css')}}">
 
+    <!-- daterange picker -->
+    <link rel="stylesheet" href="{{asset('Dashboard/plugins/daterangepicker/daterangepicker.css')}}">
+
+    <!-- Tempusdominus Bootstrap 4 -->
+    <link rel="stylesheet" href="{{asset('Dashboard/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css')}}">
+
     {{--YearPicker--}}
-    <link rel="stylesheet" href="{{asset('Dashboard/dist/css/yearpicker.css')}}">
+    <link rel="stylesheet" href="{{asset('Dashboard/custom/yearpicker.css')}}">
 
     @if(App::isLocale('ar'))
     <!-- Font Awesome -->
@@ -46,11 +53,7 @@
         <!-- Ekko Lightbox -->
         <link rel="stylesheet" href="{{asset('Dashboard/plugins/ekko-lightbox/ekko-lightboxAr.css')}}">
         <!-- Select2 -->
-        <style>
-            body {
-                font-family: 'Cairo', sans-serif;
-            }
-        </style>
+
     @else
     <!-- Font Awesome -->
         <link rel="stylesheet" href="{{asset('Dashboard/plugins/fontawesome-free/css/all.min.css')}}">
@@ -154,12 +157,27 @@
 <!-- bs-custom-file-input -->
 <script src="{{asset('Dashboard/plugins/bs-custom-file-input/bs-custom-file-input.min.js')}}"></script>
 
+<!-- InputMask -->
+<script src="{{asset('Dashboard/plugins/moment/moment.min.js')}}"></script>
+<script src="{{asset('Dashboard/plugins/inputmask/jquery.inputmask.min.js')}}"></script>
+
+<!-- date-range-picker -->
+<script src="{{asset('Dashboard/plugins/daterangepicker/daterangepicker.js')}}"></script>
+
+<!-- Tempusdominus Bootstrap 4 -->
+<script src="{{asset('Dashboard/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js')}}"></script>
+
 <!-- YearPicker -->
-<script src="{{asset('Dashboard/dist/js/yearpicker.js')}}"></script>
+<script src="{{asset('Dashboard/custom/yearpicker.js')}}"></script>
+
 <script>
+    var year_num = Number($('.yearpicker').val());
+    $('.yearpicker').yearpicker({
+        year: year_num,
+    });
     $(function () {
         //Initialize Select2 Elements
-        $('.select2').select2()
+        $('.select2').select2();
 
         //Initialize Select2 Elements
         $('.select2bs4').select2({
@@ -167,13 +185,52 @@
         });
 
         bsCustomFileInput.init();
+        //Date picker
+        $('#reservationdate').datetimepicker({
+            format: 'YYYY-MM-DD'
+        });
+        //Date and time picker
+        $('#reservationdatetime').datetimepicker({ icons: { time: 'far fa-clock' } });
+
+        //Date range picker
+        $('#reservation').daterangepicker();
+        //Date range picker with time picker
+        $('#reservationtime').daterangepicker({
+            timePicker: true,
+            timePickerIncrement: 30,
+            locale: {
+                format: 'MM/DD/YYYY hh:mm A'
+            }
+        });
+        //Date range as a button
+        $('#daterange-btn').daterangepicker(
+            {
+                ranges   : {
+                    'Today'       : [moment(), moment()],
+                    'Yesterday'   : [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+                    'Last 7 Days' : [moment().subtract(6, 'days'), moment()],
+                    'Last 30 Days': [moment().subtract(29, 'days'), moment()],
+                    'This Month'  : [moment().startOf('month'), moment().endOf('month')],
+                    'Last Month'  : [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+                },
+                startDate: moment().subtract(29, 'days'),
+                endDate  : moment()
+            },
+            function (start, end) {
+                $('#reportrange span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'))
+            }
+        );
+
+        //Timepicker
+        $('#timepicker').datetimepicker({
+            format: 'LT'
+        });
     });
-    // $(".yearpicker").yearpicker();
-    $('.yearpicker').yearpicker({
-        // Initial Year
-        year: null,
-        startYear: 2022,
-    });
+    // $('.yearpicker').yearpicker({
+    //     // Initial Year
+    //     year: null,
+    //     startYear: 2022,
+    // });
 </script>
 <script>
     $(function () {
@@ -239,6 +296,7 @@
 
 </script>
 @include('location')
+@include('change_brand')
 @yield('scripts')
 
 

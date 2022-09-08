@@ -30,7 +30,7 @@ class RentalOffice extends Model
 
     protected $appends = ['name', 'description', 'rating', 'rating_count', 'is_reviewed', 'is_favorite','favorites_count'];
 
-    //// appends attributes start //////
+    // appends attributes start
     public function getNameAttribute()
     {
         if (App::getLocale() == 'ar')
@@ -44,9 +44,9 @@ class RentalOffice extends Model
             return $this->description_ar;
         return $this->description_en;
     }
-    //// appends attributes end //////
+    // appends attributes end
 
-    //relationship start
+    // relationship start
     public function rental_laws()
     {
         return $this->hasMany('App\Models\RentalLaw');
@@ -56,39 +56,29 @@ class RentalOffice extends Model
     {
         return $this->hasMany(RentalOfficeCar::class);
     }
-    //relationship end
 
-    //Scopes
-    public function getActive()
+    public function rental_reservations()
     {
-        return $this->active == 1 ? __('words.active') : __('words.inactive');
+        return $this->hasManyThrough(RentalReservation::class, RentalOfficeCar::class , 'rental_office_id' , 'rental_office_car_id');
     }
 
-    public function getAvailable()
+    public function country()
     {
-        return $this->available == 1 ? __('words.available_prop') : __('words.not_available_prop');
+        return $this->belongsTo('App\Models\Country');
     }
 
-    public function getReservation_availability()
+    public function city()
     {
-        return $this->reservation_availability == 1 ? __('words.available_prop') : __('words.not_available_prop');
+        return $this->belongsTo('App\Models\City');
     }
 
-    public function getDelivery_availability()
+    public function area()
     {
-        return $this->delivery_availability == 1 ? __('words.available_prop') : __('words.not_available_prop');
+        return $this->belongsTo('App\Models\Area');
     }
+    // relationship end
 
-    public function getReservation_active()
-    {
-        return $this->reservation_active == 1 ? __('words.available_prop') : __('words.not_available_prop');
-    }
-
-    public function getDelivery_active()
-    {
-        return $this->delivery_active == 1 ? __('words.available_prop') : __('words.not_available_prop');
-    }
-
+    // Scopes start
     public function scopeActive($query)
     {
         return $query->where('active', 1);
@@ -131,29 +121,47 @@ class RentalOffice extends Model
             });
         });
     }
+    // Scopes end
 
-    public function country()
+    // accessors & Mutator start
+    public function getActive()
     {
-        return $this->belongsTo('App\Models\Country');
+        return $this->active == 1 ? __('words.active') : __('words.inactive');
     }
 
-    public function city()
+    public function getAvailable()
     {
-        return $this->belongsTo('App\Models\City');
+        return $this->available == 1 ? __('words.available_prop') : __('words.not_available_prop');
     }
 
-    public function area()
+    public function getActiveNumberOfViews()
     {
-        return $this->belongsTo('App\Models\Area');
+        return $this->active_number_of_views == 1 ? __('words.active') : __('words.inactive');
+    }
+
+    public function getReservationAvailability()
+    {
+        return $this->reservation_availability == 1 ? __('words.available_prop') : __('words.not_available_prop');
+    }
+
+    public function getDeliveryAvailability()
+    {
+        return $this->delivery_availability == 1 ? __('words.available_prop') : __('words.not_available_prop');
+    }
+
+    public function getReservationActive()
+    {
+        return $this->reservation_active == 1 ? __('words.inactive') : __('words.inactive');
+    }
+
+    public function getDeliveryActive()
+    {
+        return $this->delivery_active == 1 ? __('words.available_prop') : __('words.not_available_prop');
     }
 
     public function getLogoAttribute($val)
     {
         return asset('uploads') . '/' . $val;
     }
-
-    public function rental_reservations()
-    {
-        return $this->hasManyThrough(RentalReservation::class, RentalOfficeCar::class , 'rental_office_id' , 'rental_office_car_id');
-    }
+    // accessors & Mutator end
 }

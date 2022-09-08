@@ -29,7 +29,7 @@ class FuelStation extends Model
     protected $hidden = ['name_en', 'name_ar', 'address_en', 'address_ar', 'created_at', 'updated_at'];
     protected $appends = ['name', 'address', 'rating', 'rating_count', 'is_reviewed', 'is_favorite','favorites_count'];
 
-    //// appends attributes start //////
+    // appends attributes start
     public function getNameAttribute()
     {
         if (App::getLocale() == 'ar') {
@@ -44,9 +44,9 @@ class FuelStation extends Model
             return $this->address_ar;
         return $this->address_en;
     }
-    //// appends attributes end //////
+    // appends attributes end
 
-    //// relations start//////
+    // relations start
     public function country()
     {
         return $this->belongsTo('App\Models\Country');
@@ -61,25 +61,9 @@ class FuelStation extends Model
     {
         return $this->belongsTo('App\Models\Area');
     }
-    //// relations end//////
+    // relations end
 
-
-    //Scopes
-    public function getFuelTypesAttribute($val)
-    {
-        return explode(",", $val);
-    }
-
-    public function getActive()
-    {
-        return $this->active == 1 ? __('words.active') : __('words.inactive');
-    }
-
-    public function getAvailable()
-    {
-        return $this->available == 1 ? __('words.available_prop') : __('words.not_available_prop');
-    }
-
+    // Scopes start
     public function scopeActive($query)
     {
         return $query->where('active', 1);
@@ -111,9 +95,32 @@ class FuelStation extends Model
             return $q->where('area_id', request()->area);
         });
     }
+    // Scopes end
+
+    // accessors & Mutator start
+    public function getFuelTypesAttribute($val)
+    {
+        return explode(",", $val);
+    }
+
+    public function getActive()
+    {
+        return $this->active == 1 ? __('words.active') : __('words.inactive');
+    }
+
+    public function getActiveNumberOfViews()
+    {
+        return $this->active_number_of_views == 1 ? __('words.active') : __('words.inactive');
+    }
+
+    public function getAvailable()
+    {
+        return $this->available == 1 ? __('words.available_prop') : __('words.not_available_prop');
+    }
 
     public function getLogoAttribute($val)
     {
         return asset('uploads') . '/' . $val;
     }
+    // accessors & Mutator end
 }

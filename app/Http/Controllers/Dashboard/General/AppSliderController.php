@@ -71,7 +71,7 @@ class AppSliderController extends Controller
                 return redirect()->back()->with(['error' => __('message.something_wrong')]);
 
             } else {
-                $slider->updateImage();
+                $slider->updateSliderImage();
                 return redirect()->back()->with(['success' => __('message.updated_successfully')]);
             }
         } catch (\Exception $e) {

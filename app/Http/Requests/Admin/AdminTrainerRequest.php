@@ -33,9 +33,9 @@ class AdminTrainerRequest extends FormRequest
 //            'car_class_id' => 'required|exists:car_classes,id',
 //            'brand_id' => 'required|exists:brands,id',
 //            'car_model_id' => 'required|exists:car_models,id',
-            'email' => 'required|email|unique:organization_users,email',
-            'password' => 'required',
-            'user_name' => 'required',
+            'email' => 'required_without:id|email|unique:organization_users,email,' . $this->id,
+            'password' => 'required_without:id',
+            'user_name' => 'required_without:id',
         ];
     }
 

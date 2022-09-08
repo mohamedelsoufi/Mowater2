@@ -21,8 +21,8 @@ class DiscountCardRequest extends FormRequest
         return [
             'title_en' => 'required|unique:discount_cards,title_en,'.$this->id,
             'title_ar' => 'required|unique:discount_cards,title_ar,'.$this->id,
-            'description_en'=> 'nullable|unique:discount_cards,description_en,'.$this->id,
-            'description_ar'=> 'nullable|unique:discount_cards,description_ar,'.$this->id,
+            'description_en' => 'nullable',
+            'description_ar' => 'nullable',
             'price'=>'required|between:0,9999999999.99',
             'year'=>'required|numeric',
             'image'=>'image|max:10000',

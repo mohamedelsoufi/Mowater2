@@ -26,8 +26,8 @@ class AdminFuelStationRequest extends FormRequest
         return [
             'name_en' => 'unique:fuel_stations,name_en,'.$this->id,
             'name_ar' => 'unique:fuel_stations,name_ar,'.$this->id,
-            'address_en' => 'unique:fuel_stations,address_en,'.$this->id,
-            'address_ar' => 'unique:fuel_stations,address_ar,'.$this->id,
+            'address_en' => 'nullable',
+            'address_ar' => 'nullable',
             'tax_number' => 'unique:fuel_stations,tax_number,'.$this->id,
             'logo' => 'image|max:10000',
             'country_id' => 'required|exists:countries,id',

@@ -126,8 +126,8 @@
 
                                             <div class="form-group col-md-6">
                                                 <label>{{__('words.year_founded')}}</label>
-                                                <input type="number" min="1900" name="year_founded"
-                                                       class="form-control @error('year_founded') is-invalid @enderror"
+                                                <input type="text" name="year_founded"
+                                                       class="yearpicker form-control @error('year_founded') is-invalid @enderror"
                                                        value="{{ old('year_founded') }}" placeholder="{{__('words.year_founded')}}">
 
                                                 @error('year_founded')
@@ -145,8 +145,15 @@
                                                         class="form-control country_id @error('country_id') is-invalid @enderror">
                                                     <option value="" selected>{{__('words.choose')}}</option>
                                                     @foreach($countries as $country)
-                                                        <option
-                                                            value="{{$country->id}}">{{$country->name}}</option>
+                                                        @if (Input::old('country_id') == $country->id)
+                                                            <option
+                                                                selected
+                                                                value="{{$country->id}}">{{$country->name}}</option>
+                                                        @else
+                                                            <option
+
+                                                                value="{{$country->id}}">{{$country->name}}</option>
+                                                        @endif
                                                     @endforeach
                                                 </select>
                                                 @error('country_id')
@@ -160,6 +167,16 @@
                                                 <label>{{__('words.city')}}</label>
                                                 <select name="city_id"
                                                         class="form-control city_id @error('city_id') is-invalid @enderror">
+                                                    @foreach(\App\Models\City::where('country_id',old('country_id'))->get() as $model)
+                                                        @if (Input::old('city_id') == $model->id)
+
+                                                            <option value="{{ $model->id }}"
+                                                                    selected>{{ $model->name }}</option>
+                                                        @else
+                                                            <option value="{{ $model->id }}"
+                                                            >{{ $model->name }}</option>
+                                                        @endif
+                                                    @endforeach
                                                 </select>
                                                 @error('city_id')
                                                 <span class="invalid-feedback" role="alert">
@@ -167,10 +184,21 @@
                                                 </span>
                                                 @enderror
                                             </div>
+
                                             <div class="form-group col-md-4">
                                                 <label>{{__('words.area')}}</label>
                                                 <select name="area_id"
                                                         class="form-control area_id @error('area_id') is-invalid @enderror">
+                                                    @foreach(\App\Models\Area::where('city_id',old('city_id'))->get() as $model)
+                                                        @if (Input::old('area_id') == $model->id)
+
+                                                            <option value="{{ $model->id }}"
+                                                                    selected>{{ $model->name }}</option>
+                                                        @else
+                                                            <option value="{{ $model->id }}"
+                                                            >{{ $model->name }}</option>
+                                                        @endif
+                                                    @endforeach
                                                 </select>
                                                 @error('area_id')
                                                 <span class="invalid-feedback" role="alert">
@@ -181,7 +209,7 @@
                                         </div>
 
                                         <div class="form-row">
-                                            <div class="form-group col-md-4">
+                                            <div class="form-group col-md-3">
                                                 <div class="form-check">
                                                     <input class="form-check-input" name="active" value="0" type="checkbox">
                                                     <label class="form-check-label">
@@ -190,7 +218,16 @@
                                                 </div>
                                             </div>
 
-                                            <div class="form-group col-md-4">
+                                            <div class="form-group col-md-3">
+                                                <div class="form-check">
+                                                    <input class="form-check-input" name="active_number_of_views" value="0" type="checkbox">
+                                                    <label class="form-check-label">
+                                                        {{__('words.active_number_of_views')}}
+                                                    </label>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group col-md-3">
                                                 <div class="form-check">
                                                     <input class="form-check-input" name="reservation_active" value="0"
                                                            type="checkbox">
@@ -200,7 +237,7 @@
                                                 </div>
                                             </div>
 
-                                            <div class="form-group col-md-4">
+                                            <div class="form-group col-md-3">
                                                 <div class="form-check">
                                                     <input class="form-check-input" name="delivery_active" value="0"
                                                            type="checkbox">

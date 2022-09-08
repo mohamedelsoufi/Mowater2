@@ -17,8 +17,8 @@ class AdminSpecialNumberOrganizationRequest extends FormRequest
         return [
             'name_en' => 'unique:special_number_organizations,name_en,'.$this->id,
             'name_ar' => 'unique:special_number_organizations,name_ar,'.$this->id,
-            'description_en' => '',
-            'description_ar' => '',
+            'description_en' => 'nullable',
+            'description_ar' => 'nullable',
             'tax_number' => 'unique:special_number_organizations,tax_number,'.$this->id,
             'logo' => 'image|max:10000',
             'country_id' => 'required|exists:countries,id',

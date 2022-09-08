@@ -2,6 +2,8 @@
 <html lang="en-US">
 <head>
     <meta charset="utf-8">
+    <title>@yield('title',__('words.mowater'))</title>
+    <link href='https://fonts.googleapis.com/css?family=Cairo' rel='stylesheet'>
 </head>
 <body>
 

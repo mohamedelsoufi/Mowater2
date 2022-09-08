@@ -55,8 +55,8 @@
                                 <div class="row">
                                     @foreach (config('laratrust_seeder.roles') as $key => $values)
                                         <div class="col-md-2">
-                                            <div class="card card-danger">
-                                                <div class="card-header">
+                                            <div class="card">
+                                                <div class="card-header card-role">
                                                     <h3 class="card-title">{{__('words.'.$key)}}</h3>
                                                 </div>
 

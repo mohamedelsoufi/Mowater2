@@ -104,11 +104,11 @@
                                             <td>{{$organization->getActiveNumberOfViews()}}</td>
                                         </tr>
                                         <tr>
-                                            <th class="show-details-table">{{__('words.delivery_active')}}</th>
+                                            <th class="show-details-table">{{__('words.reservation_active')}}</th>
                                             <td>{{$organization->getReservationActive()}}</td>
                                         </tr>
                                         <tr>
-                                            <th class="show-details-table">{{__('words.reservation_active')}}</th>
+                                            <th class="show-details-table">{{__('words.delivery_active')}}</th>
                                             <td>{{$organization->getDeliveryActive()}}</td>
                                         </tr>
                                         <tr>

@@ -84,26 +84,26 @@ class AuthController extends Controller
             $user = User::create($validator);
             $token = JWTAuth::fromUser($user);
 
-//            if ($request->has('email')) {
-//                $verification_code = Str::random(50); //Generate verification code
-//
-//                DB::table('user_verifications')->insert(['user_id' => $user->id, 'token' => $verification_code]);
-//
-//                $subject = "Please verify your email address.";
-//
-////                Mail::send('API.verify-email', ['name' => $name, 'nickname' => $nickname, 'verification_code' => $verification_code],
-////                    function ($mail) use ($email, $name, $subject) {
-////                        $mail->from(getenv('MAIL_FROM_ADDRESS'), getenv('APP_NAME'));
-////                        $mail->to($email, $name);
-////                        $mail->subject($subject);
-////                    });
-//                $details = [
-//                    'name' => $name,
-//                    'nickname' => $nickname,
-//                    'verification_code' => $verification_code
-//                ];
-//                Mail::to($email)->send(new APIRegisterMail($details));
-//            }
+            if ($request->has('email')) {
+                $verification_code = Str::random(50); //Generate verification code
+
+                DB::table('user_verifications')->insert(['user_id' => $user->id, 'token' => $verification_code]);
+
+                $subject = "Please verify your email address.";
+
+//                Mail::send('API.verify-email', ['name' => $name, 'nickname' => $nickname, 'verification_code' => $verification_code],
+//                    function ($mail) use ($email, $name, $subject) {
+//                        $mail->from(getenv('MAIL_FROM_ADDRESS'), getenv('APP_NAME'));
+//                        $mail->to($email, $name);
+//                        $mail->subject($subject);
+//                    });
+                $details = [
+                    'name' => $name,
+                    'nickname' => $nickname,
+                    'verification_code' => $verification_code
+                ];
+                Mail::to($email)->send(new APIRegisterMail($details));
+            }
 
             DB::commit();
             return responseJson(1, 'success', ['token' => $token, 'user' => $user]);

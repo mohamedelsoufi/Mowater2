@@ -82,6 +82,7 @@ class   DeliverySeeder extends Seeder
 
             $delivery1->file()->create([
                 'path' => $vehicle_images[$i],
+                'type' => 'vehicle_image',
             ]);
             $delivery1->file()->create([
                 'path' => 'seeder/driving_license.jpg',

@@ -26,8 +26,8 @@ class AdminWenchRequest extends FormRequest
         return [
             'name_en' => 'unique:wenches,name_en,'.$this->id,
             'name_ar' => 'unique:wenches,name_ar,'.$this->id,
-            'description_en' => 'unique:wenches,description_en,'.$this->id,
-            'description_ar' => 'unique:wenches,description_ar,'.$this->id,
+            'description_en' => 'nullable',
+            'description_ar' => 'nullable',
             'tax_number' => 'unique:wenches,tax_number,'.$this->id,
             'logo' => 'image|max:10000',
             'country_id' => 'required|exists:countries,id',
@@ -35,6 +35,7 @@ class AdminWenchRequest extends FormRequest
             'area_id' => 'required|exists:areas,id',
             'year_founded' => 'nullable|numeric',
             'wench_type' => 'in:'.wench_type(),
+            'location_type' => 'in:'.location_type(),
             'email' => 'required_without:id|email|unique:organization_users,email,'.$this->id,
             'password' => 'required_without:id|confirmed',
             'password_confirmation' => 'required_without:id|same:password',

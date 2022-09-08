@@ -62,6 +62,4 @@
 
 
 </script>
-
-
 <?php /**PATH D:\xampp\htdocs\mawatery-web\resources\views/location.blade.php ENDPATH**/ ?>
