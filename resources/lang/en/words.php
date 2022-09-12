@@ -202,7 +202,9 @@ return [
     'edit_wench' => 'Edit Wench',
     'wench_type' => 'Wench Type',
     'new_garage' => 'Create Garages',
-    'show_garage' => 'Show Garages',
+    'show_garage' => 'Show Garage',
+    'show_garages' => 'Show Garages',
+    'edit_garage' => 'Edit Garage',
     'new_special_number' => 'Create Special Number',
     'show_special_number' => 'Show Special Number',
     'edit_special_number' => 'Edit Special Number',
@@ -736,6 +738,36 @@ return [
     'new_traffic_clearing_office' => 'New Traffic Clearing Office',
 
     'more_info' => 'More info',
+
+    'technical_inspection_centers' => 'Technical Inspection Centers',
+    'show_technical_inspection_center' => 'Show Technical Inspection Center',
+    'show_technical_inspection_centers' => 'Show Technical Inspection Centers',
+    'edit_technical_inspection_center' => 'Edit Technical Inspection Center',
+    'new_technical_inspection_center' => 'New Technical Inspection Center',
+
+    'tire_exchange_centers' => 'Tire Exchange Centers',
+    'show_tire_exchange_center' => 'Show Tire Exchange Center',
+    'show_tire_exchange_centers' => 'Show Tire Exchange Centers',
+    'edit_tire_exchange_center' => 'Edit Tire Exchange Center',
+    'new_tire_exchange_center' => 'New Tire Exchange Center',
+
+    'accessories_stores' => 'Accessories Stores',
+    'show_accessories_store' => 'Show Accessories Store',
+    'show_accessories_stores' => 'Show Accessories Stores',
+    'edit_accessories_store' => 'Edit Accessories Store',
+    'new_accessories_store' => 'New Accessories Store',
+
+    'car_washes' => 'Car Wash, polishing and service',
+    'show_car_wash' => 'Show Car Wash',
+    'show_car_washes' => 'Show Car Washes',
+    'edit_car_wash' => 'Edit Car Wash',
+    'new_car_wash' => 'New Car Wash',
+
+    'mining_centers' => 'Mining centers and energy providers',
+    'show_mining_center' => 'Show Mining center',
+    'show_mining_centers' => 'Show Mining centers',
+    'edit_mining_center' => 'Edit Mining center',
+    'new_mining_center' => 'New Mining center',
 ];
 
 

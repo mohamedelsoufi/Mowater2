@@ -717,10 +717,10 @@
                 
 
                 
-                <?php if(auth('admin')->user()->hasPermission(['read-special_numbers_organizations','read-special_numbers','read-agencies','read-car_showrooms','read-rental_offices','read-wenches','read-insurance_companies','read-brokers','read-delivery','read-driving_trainers','read-fuel_stations','read-traffic_clearing_offices'])): ?>
-                    <li class="nav-item <?php echo e(request()->routeIs('special-number-organizations.*','special-numbers.*','agencies.*','car-showrooms.*','rental-offices.*','wenches.*','insurance_companies.*','brokers.*','delivery.*','trainers.*','fuel-stations.*','traffic-clearing-offices.*') ? 'menu-open' : ''); ?>">
+                <?php if(auth('admin')->user()->hasPermission(['read-special_numbers_organizations','read-special_numbers','read-agencies','read-car_showrooms','read-rental_offices','read-wenches','read-insurance_companies','read-brokers','read-delivery','read-driving_trainers','read-fuel_stations','read-traffic_clearing_offices','read-garages','read-technical_inspection_centers','read-tire_exchange_centers','read-accessories_stores','read-car_washes','read-mining_centers'])): ?>
+                    <li class="nav-item <?php echo e(request()->routeIs('special-number-organizations.*','special-numbers.*','agencies.*','car-showrooms.*','rental-offices.*','wenches.*','insurance_companies.*','brokers.*','delivery.*','trainers.*','fuel-stations.*','traffic-clearing-offices.*','garages.*','inspection-centers.*','tire-exchange-centers.*','accessories-stores.*','car-washes.*','mining-centers.*') ? 'menu-open' : ''); ?>">
                         <a href="#"
-                           class="nav-link <?php echo e(request()->routeIs('special-number-organizations.*','special-numbers.*','agencies.*','car-showrooms.*','rental-offices.*','wenches.*','insurance_companies.*','brokers.*','delivery.*','trainers.*','fuel-stations.*','traffic-clearing-offices.*') ? 'active' : ''); ?>">
+                           class="nav-link <?php echo e(request()->routeIs('special-number-organizations.*','special-numbers.*','agencies.*','car-showrooms.*','rental-offices.*','wenches.*','insurance_companies.*','brokers.*','delivery.*','trainers.*','fuel-stations.*','traffic-clearing-offices.*','garages.*','inspection-centers.*','tire-exchange-centers.*','accessories-stores.*','car-washes.*','mining-centers.*') ? 'active' : ''); ?>">
                             <i class="fas fa-place-of-worship"></i>
                             <p>
                                 <?php echo e(__('words.organizations')); ?>
@@ -967,6 +967,244 @@
                                 </li>
                             <?php endif; ?>
                             
+
+                            <hr class="mt-2 mb-3 sidebar-divider"/>
+
+                            
+                            <?php if(auth('admin')->user()->hasPermission(['read-garages','read-technical_inspection_centers','read-tire_exchange_centers','read-accessories_stores','read-car_washes','read-mining_centers'])): ?>
+                                <li class="nav-item <?php echo e(request()->routeIs('garages.*','inspection-centers.*','tire-exchange-centers.*','accessories-stores.*','car-washes.*','mining-centers.*') ? 'menu-open' : ''); ?>">
+                                    <a href="#"
+                                       class="nav-link <?php echo e(request()->routeIs('garages.*','inspection-centers.*','tire-exchange-centers.*','accessories-stores.*','car-washes.*','mining-centers.*') ? 'active' : ''); ?>">
+                                        <i class="fas fa-tools"></i>
+                                        <p>
+                                            <?php echo e(__('words.AutoServiceCenters')); ?>
+
+                                            <i class="<?php echo e(app()->getLocale() == 'ar' ? 'left fas fa-angle-right' :  'right fas fa-angle-left'); ?>"></i>
+                                        </p>
+                                    </a>
+
+                                    <ul class="nav nav-treeview">
+                                        
+                                        <?php if(auth('admin')->user()->hasPermission('read-garages')): ?>
+                                            <li class="nav-item <?php echo e(request()->routeIs('garages.*') ? 'menu-open' : ''); ?>">
+                                                <a href="#"
+                                                   class="nav-link <?php echo e(request()->routeIs('garages.*') ? 'sub-menu active' : ''); ?>">
+                                                    <i class="fas fa-warehouse"></i>
+                                                    <p>
+                                                        <?php echo e(__('words.garages')); ?>
+
+                                                        <i class="<?php echo e(app()->getLocale() == 'ar' ? 'left fas fa-angle-right' :  'right fas fa-angle-left'); ?>"></i>
+                                                    </p>
+                                                </a>
+                                                <ul class="nav nav-treeview">
+                                                    <?php if(auth('admin')->user()->hasPermission('read-garages')): ?>
+                                                        <li class="nav-item">
+                                                            <a href="<?php echo e(route('garages.index')); ?>"
+                                                               class="nav-link <?php echo e(request()->routeIs('garages.index') ? 'active' : ''); ?>">
+                                                                <i class="far fa-eye nav-icon"></i>
+                                                                <p><?php echo e(__('words.show_all')); ?></p>
+                                                            </a>
+                                                        </li>
+                                                    <?php endif; ?>
+                                                    <?php if(auth('admin')->user()->hasPermission('create-garages')): ?>
+                                                        <li class="nav-item">
+                                                            <a href="<?php echo e(route('garages.create')); ?>"
+                                                               class="nav-link <?php echo e(request()->routeIs('garages.create') ? 'active' : ''); ?>">
+                                                                <i class="fas fa-folder-plus"></i>
+                                                                <p><?php echo e(__('words.create')); ?></p>
+                                                            </a>
+                                                        </li>
+                                                    <?php endif; ?>
+                                                </ul>
+                                            </li>
+                                        <?php endif; ?>
+                                        
+
+                                        
+                                        <?php if(auth('admin')->user()->hasPermission('read-technical_inspection_centers')): ?>
+                                            <li class="nav-item <?php echo e(request()->routeIs('inspection-centers.*') ? 'menu-open' : ''); ?>">
+                                                <a href="#"
+                                                   class="nav-link <?php echo e(request()->routeIs('inspection-centers.*') ? 'sub-menu active' : ''); ?>">
+                                                    <i class="fas fa-toolbox"></i>
+                                                    <p>
+                                                        <?php echo e(__('words.technical_inspection_centers')); ?>
+
+                                                        <i class="<?php echo e(app()->getLocale() == 'ar' ? 'left fas fa-angle-right' :  'right fas fa-angle-left'); ?>"></i>
+                                                    </p>
+                                                </a>
+                                                <ul class="nav nav-treeview">
+                                                    <?php if(auth('admin')->user()->hasPermission('read-technical_inspection_centers')): ?>
+                                                        <li class="nav-item">
+                                                            <a href="<?php echo e(route('inspection-centers.index')); ?>"
+                                                               class="nav-link <?php echo e(request()->routeIs('inspection-centers.index') ? 'active' : ''); ?>">
+                                                                <i class="far fa-eye nav-icon"></i>
+                                                                <p><?php echo e(__('words.show_all')); ?></p>
+                                                            </a>
+                                                        </li>
+                                                    <?php endif; ?>
+                                                    <?php if(auth('admin')->user()->hasPermission('create-technical_inspection_centers')): ?>
+                                                        <li class="nav-item">
+                                                            <a href="<?php echo e(route('inspection-centers.create')); ?>"
+                                                               class="nav-link <?php echo e(request()->routeIs('inspection-centers.create') ? 'active' : ''); ?>">
+                                                                <i class="fas fa-folder-plus"></i>
+                                                                <p><?php echo e(__('words.create')); ?></p>
+                                                            </a>
+                                                        </li>
+                                                    <?php endif; ?>
+                                                </ul>
+                                            </li>
+                                        <?php endif; ?>
+                                        
+
+                                        
+                                        <?php if(auth('admin')->user()->hasPermission('read-tire_exchange_centers')): ?>
+                                            <li class="nav-item <?php echo e(request()->routeIs('tire-exchange-centers.*') ? 'menu-open' : ''); ?>">
+                                                <a href="#"
+                                                   class="nav-link <?php echo e(request()->routeIs('tire-exchange-centers.*') ? 'sub-menu active' : ''); ?>">
+                                                    <i class="fas fa-truck-monster"></i>
+                                                    <p>
+                                                        <?php echo e(__('words.tire_exchange_centers')); ?>
+
+                                                        <i class="<?php echo e(app()->getLocale() == 'ar' ? 'left fas fa-angle-right' :  'right fas fa-angle-left'); ?>"></i>
+                                                    </p>
+                                                </a>
+                                                <ul class="nav nav-treeview">
+                                                    <?php if(auth('admin')->user()->hasPermission('read-tire_exchange_centers')): ?>
+                                                        <li class="nav-item">
+                                                            <a href="<?php echo e(route('tire-exchange-centers.index')); ?>"
+                                                               class="nav-link <?php echo e(request()->routeIs('tire-exchange-centers.index') ? 'active' : ''); ?>">
+                                                                <i class="far fa-eye nav-icon"></i>
+                                                                <p><?php echo e(__('words.show_all')); ?></p>
+                                                            </a>
+                                                        </li>
+                                                    <?php endif; ?>
+                                                    <?php if(auth('admin')->user()->hasPermission('create-tire_exchange_centers')): ?>
+                                                        <li class="nav-item">
+                                                            <a href="<?php echo e(route('tire-exchange-centers.create')); ?>"
+                                                               class="nav-link <?php echo e(request()->routeIs('tire-exchange-centers.create') ? 'active' : ''); ?>">
+                                                                <i class="fas fa-folder-plus"></i>
+                                                                <p><?php echo e(__('words.create')); ?></p>
+                                                            </a>
+                                                        </li>
+                                                    <?php endif; ?>
+                                                </ul>
+                                            </li>
+                                        <?php endif; ?>
+                                        
+
+                                        
+                                        <?php if(auth('admin')->user()->hasPermission('read-accessories_stores')): ?>
+                                            <li class="nav-item <?php echo e(request()->routeIs('accessories-stores.*') ? 'menu-open' : ''); ?>">
+                                                <a href="#"
+                                                   class="nav-link <?php echo e(request()->routeIs('accessories-stores.*') ? 'sub-menu active' : ''); ?>">
+                                                    <i class="fas fa-store-alt"></i>
+                                                    <p>
+                                                        <?php echo e(__('words.accessories_stores')); ?>
+
+                                                        <i class="<?php echo e(app()->getLocale() == 'ar' ? 'left fas fa-angle-right' :  'right fas fa-angle-left'); ?>"></i>
+                                                    </p>
+                                                </a>
+                                                <ul class="nav nav-treeview">
+                                                    <?php if(auth('admin')->user()->hasPermission('read-accessories_stores')): ?>
+                                                        <li class="nav-item">
+                                                            <a href="<?php echo e(route('accessories-stores.index')); ?>"
+                                                               class="nav-link <?php echo e(request()->routeIs('accessories-stores.index') ? 'active' : ''); ?>">
+                                                                <i class="far fa-eye nav-icon"></i>
+                                                                <p><?php echo e(__('words.show_all')); ?></p>
+                                                            </a>
+                                                        </li>
+                                                    <?php endif; ?>
+                                                    <?php if(auth('admin')->user()->hasPermission('create-accessories_stores')): ?>
+                                                        <li class="nav-item">
+                                                            <a href="<?php echo e(route('accessories-stores.create')); ?>"
+                                                               class="nav-link <?php echo e(request()->routeIs('accessories-stores.create') ? 'active' : ''); ?>">
+                                                                <i class="fas fa-folder-plus"></i>
+                                                                <p><?php echo e(__('words.create')); ?></p>
+                                                            </a>
+                                                        </li>
+                                                    <?php endif; ?>
+                                                </ul>
+                                            </li>
+                                        <?php endif; ?>
+                                        
+
+                                        
+                                        <?php if(auth('admin')->user()->hasPermission('read-car_washes')): ?>
+                                            <li class="nav-item <?php echo e(request()->routeIs('car-washes.*') ? 'menu-open' : ''); ?>">
+                                                <a href="#"
+                                                   class="nav-link <?php echo e(request()->routeIs('car-washes.*') ? 'sub-menu active' : ''); ?>">
+                                                    <i class="fas fa-shower"></i>
+                                                    <p>
+                                                        <?php echo e(__('words.car_washes')); ?>
+
+                                                        <i class="<?php echo e(app()->getLocale() == 'ar' ? 'left fas fa-angle-right' :  'right fas fa-angle-left'); ?>"></i>
+                                                    </p>
+                                                </a>
+                                                <ul class="nav nav-treeview">
+                                                    <?php if(auth('admin')->user()->hasPermission('read-car_washes')): ?>
+                                                        <li class="nav-item">
+                                                            <a href="<?php echo e(route('car-washes.index')); ?>"
+                                                               class="nav-link <?php echo e(request()->routeIs('car-washes.index') ? 'active' : ''); ?>">
+                                                                <i class="far fa-eye nav-icon"></i>
+                                                                <p><?php echo e(__('words.show_all')); ?></p>
+                                                            </a>
+                                                        </li>
+                                                    <?php endif; ?>
+                                                    <?php if(auth('admin')->user()->hasPermission('create-car_washes')): ?>
+                                                        <li class="nav-item">
+                                                            <a href="<?php echo e(route('car-washes.create')); ?>"
+                                                               class="nav-link <?php echo e(request()->routeIs('car-washes.create') ? 'active' : ''); ?>">
+                                                                <i class="fas fa-folder-plus"></i>
+                                                                <p><?php echo e(__('words.create')); ?></p>
+                                                            </a>
+                                                        </li>
+                                                    <?php endif; ?>
+                                                </ul>
+                                            </li>
+                                        <?php endif; ?>
+                                        
+
+                                        
+                                        <?php if(auth('admin')->user()->hasPermission('read-mining_centers')): ?>
+                                            <li class="nav-item <?php echo e(request()->routeIs('mining-centers.*') ? 'menu-open' : ''); ?>">
+                                                <a href="#"
+                                                   class="nav-link <?php echo e(request()->routeIs('mining-centers.*') ? 'sub-menu active' : ''); ?>">
+                                                    <i class="fas fa-charging-station"></i>
+                                                    <p>
+                                                        <?php echo e(__('words.mining_centers')); ?>
+
+                                                        <i class="<?php echo e(app()->getLocale() == 'ar' ? 'left fas fa-angle-right' :  'right fas fa-angle-left'); ?>"></i>
+                                                    </p>
+                                                </a>
+                                                <ul class="nav nav-treeview">
+                                                    <?php if(auth('admin')->user()->hasPermission('read-mining_centers')): ?>
+                                                        <li class="nav-item">
+                                                            <a href="<?php echo e(route('mining-centers.index')); ?>"
+                                                               class="nav-link <?php echo e(request()->routeIs('mining-centers.index') ? 'active' : ''); ?>">
+                                                                <i class="far fa-eye nav-icon"></i>
+                                                                <p><?php echo e(__('words.show_all')); ?></p>
+                                                            </a>
+                                                        </li>
+                                                    <?php endif; ?>
+                                                    <?php if(auth('admin')->user()->hasPermission('create-mining_centers')): ?>
+                                                        <li class="nav-item">
+                                                            <a href="<?php echo e(route('mining-centers.create')); ?>"
+                                                               class="nav-link <?php echo e(request()->routeIs('mining-centers.create') ? 'active' : ''); ?>">
+                                                                <i class="fas fa-folder-plus"></i>
+                                                                <p><?php echo e(__('words.create')); ?></p>
+                                                            </a>
+                                                        </li>
+                                                    <?php endif; ?>
+                                                </ul>
+                                            </li>
+                                        <?php endif; ?>
+                                        
+                                    </ul>
+                                </li>
+                            <?php endif; ?>
+                            
+
+                            <hr class="mt-2 mb-3 sidebar-divider"/>
 
                             
                             <?php if(auth('admin')->user()->hasPermission('read-insurance_companies')): ?>

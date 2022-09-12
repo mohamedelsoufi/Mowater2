@@ -73,3 +73,7 @@ a:active, a:focus {
 .show-details-table{
     width: 30%;
 }
+
+.sidebar-divider{
+    background-color: #6d7279;
+}

@@ -201,6 +201,8 @@ return [
     'wench_type' => 'نوع السطحة',
     'new_garage' => 'إنشاء كراج جديد',
     'show_garage' => 'عرض الكراج',
+    'show_garages' => 'عرض الكراجات',
+    'edit_garage' => 'تعديل الكراج',
     'new_special_number' => 'إنشاء رقم مميز جديد',
     'show_special_number' => 'عرض رقم مميز',
     'edit_special_number' => 'تعديل رقم مميز',
@@ -908,4 +910,34 @@ return [
     'new_traffic_clearing_office' => 'إنشاء مكتب المعاملات المرورية',
 
     'more_info' => 'مزيد من المعلومات',
+
+    'technical_inspection_centers' => 'مراكز الفحص الفني',
+    'show_technical_inspection_center' => 'عرض مركز الفحص الفني',
+    'show_technical_inspection_centers' => 'عرض مراكز الفحص الفني',
+    'edit_technical_inspection_center' => 'تعديل مركز الفحص الفني',
+    'new_technical_inspection_center' => 'إنشاء مركز فحص فني',
+
+    'tire_exchange_centers' => 'مراكز تبديل الإطارات',
+    'show_tire_exchange_center' => 'عرض مركز تبديل الإطارات',
+    'show_tire_exchange_centers' => 'عرض مراكز تبديل الإطارات',
+    'edit_tire_exchange_center' => 'تعديل مركز تبديل الإطارات',
+    'new_tire_exchange_center' => 'إنشاء مركز تبديل الإطارات',
+
+    'accessories_stores' => 'متاجر الإكسسوارات',
+    'show_accessories_store' => 'عرض متجر الإكسسوارات',
+    'show_accessories_stores' => 'عرض متاجر الإكسسوارات',
+    'edit_accessories_store' => 'تعديل متجر الإكسسوارات',
+    'new_accessories_store' => 'إنشاء متجر الإكسسوارات',
+
+    'car_washes' => 'مغسلة وتلميع وسرفيس السيارات',
+    'show_car_wash' => 'عرض مغسلة وتلميع وسرفيس السيارات',
+    'show_car_washes' => 'عرض مغاسل وتلميع وسرفيس السيارات',
+    'edit_car_wash' => 'تعديل مغسلة وتلميع وسرفيس السيارات',
+    'new_car_wash' => 'إنشاء مغسلة وتلميع وسرفيس السيارات',
+
+    'mining_centers' => 'مراكز التلغيم ومزودي الطاقة',
+    'show_mining_center' => 'عرض مركز التلغيم ومزودي الطاقة',
+    'show_mining_centers' => 'عرض مراكز التلغيم ومزودي الطاقة',
+    'edit_mining_center' => 'تعديل مركز التلغيم ومزودي الطاقة',
+    'new_mining_center' => 'إنشاء مركز التلغيم ومزودي الطاقة',
 ];

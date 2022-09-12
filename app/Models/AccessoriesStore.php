@@ -52,7 +52,7 @@ class AccessoriesStore extends Model
     }
     // appends attributes end
 
-    //relationship start
+    // relations start
     public function accessories()
     {
         return $this->hasMany(Accessory::class);
@@ -67,9 +67,9 @@ class AccessoriesStore extends Model
     {
         return $this->hasMany(AccessoryStorePurchase::class,'accessories_store_id');
     }
-    //relationship end
+    // relations end
 
-    //Scopes start
+    // Scopes start
     public function scopeActive($query)
     {
         return $query->where('active', 1);
@@ -78,38 +78,6 @@ class AccessoriesStore extends Model
     public function scopeAvailable($query)
     {
         return $query->where('available', 1);
-    }
-    //Scopes end
-
-    // accessors & Mutator start
-    public function getActive()
-    {
-        return $this->active == 1 ? __('words.active') : __('words.inactive');
-    }
-
-    public function getAvailable()
-    {
-        return $this->available == 1 ? __('words.available_prop') : __('words.not_available_prop');
-    }
-
-    public function getReservation_availability()
-    {
-        return $this->reservation_availability == 1 ? __('words.available_prop') : __('words.not_available_prop');
-    }
-
-    public function getReservation_active()
-    {
-        return $this->reservation_active == 1 ? __('words.available_prop') : __('words.not_available_prop');
-    }
-
-    public function getDelivery_availability()
-    {
-        return $this->delivery_availability == 1 ? __('words.available_prop') : __('words.not_available_prop');
-    }
-
-    public function getDelivery_active()
-    {
-        return $this->delivery_active == 1 ? __('words.available_prop') : __('words.not_available_prop');
     }
 
     public function scopeSearch($query)
@@ -147,6 +115,43 @@ class AccessoriesStore extends Model
                 });
             });
         });
+    }
+    //Scopes end
+
+    // accessors & Mutator start
+    public function getActive()
+    {
+        return $this->active == 1 ? __('words.active') : __('words.inactive');
+    }
+
+    public function getAvailable()
+    {
+        return $this->available == 1 ? __('words.available_prop') : __('words.not_available_prop');
+    }
+
+    public function getActiveNumberOfViews()
+    {
+        return $this->active_number_of_views == 1 ? __('words.active') : __('words.inactive');
+    }
+
+    public function getReservationAvailability()
+    {
+        return $this->reservation_availability == 1 ? __('words.available_prop') : __('words.not_available_prop');
+    }
+
+    public function getDeliveryAvailability()
+    {
+        return $this->delivery_availability == 1 ? __('words.available_prop') : __('words.not_available_prop');
+    }
+
+    public function getReservationActive()
+    {
+        return $this->reservation_active == 1 ? __('words.active') : __('words.inactive');
+    }
+
+    public function getDeliveryActive()
+    {
+        return $this->delivery_active == 1 ? __('words.active') : __('words.inactive');
     }
 
     public function getLogoAttribute($val)

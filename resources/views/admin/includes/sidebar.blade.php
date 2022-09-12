@@ -696,10 +696,10 @@
                 {{-- General toggle end --}}
 
                 {{-- Organizations toggle start --}}
-                @if(auth('admin')->user()->hasPermission(['read-special_numbers_organizations','read-special_numbers','read-agencies','read-car_showrooms','read-rental_offices','read-wenches','read-insurance_companies','read-brokers','read-delivery','read-driving_trainers','read-fuel_stations','read-traffic_clearing_offices']))
-                    <li class="nav-item {{ request()->routeIs('special-number-organizations.*','special-numbers.*','agencies.*','car-showrooms.*','rental-offices.*','wenches.*','insurance_companies.*','brokers.*','delivery.*','trainers.*','fuel-stations.*','traffic-clearing-offices.*') ? 'menu-open' : '' }}">
+                @if(auth('admin')->user()->hasPermission(['read-special_numbers_organizations','read-special_numbers','read-agencies','read-car_showrooms','read-rental_offices','read-wenches','read-insurance_companies','read-brokers','read-delivery','read-driving_trainers','read-fuel_stations','read-traffic_clearing_offices','read-garages','read-technical_inspection_centers','read-tire_exchange_centers','read-accessories_stores','read-car_washes','read-mining_centers']))
+                    <li class="nav-item {{ request()->routeIs('special-number-organizations.*','special-numbers.*','agencies.*','car-showrooms.*','rental-offices.*','wenches.*','insurance_companies.*','brokers.*','delivery.*','trainers.*','fuel-stations.*','traffic-clearing-offices.*','garages.*','inspection-centers.*','tire-exchange-centers.*','accessories-stores.*','car-washes.*','mining-centers.*') ? 'menu-open' : '' }}">
                         <a href="#"
-                           class="nav-link {{ request()->routeIs('special-number-organizations.*','special-numbers.*','agencies.*','car-showrooms.*','rental-offices.*','wenches.*','insurance_companies.*','brokers.*','delivery.*','trainers.*','fuel-stations.*','traffic-clearing-offices.*') ? 'active' : '' }}">
+                           class="nav-link {{ request()->routeIs('special-number-organizations.*','special-numbers.*','agencies.*','car-showrooms.*','rental-offices.*','wenches.*','insurance_companies.*','brokers.*','delivery.*','trainers.*','fuel-stations.*','traffic-clearing-offices.*','garages.*','inspection-centers.*','tire-exchange-centers.*','accessories-stores.*','car-washes.*','mining-centers.*') ? 'active' : '' }}">
                             <i class="fas fa-place-of-worship"></i>
                             <p>
                                 {{__('words.organizations')}}
@@ -938,6 +938,237 @@
                                 </li>
                             @endif
                             {{-- Wench routes end --}}
+
+                            <hr class="mt-2 mb-3 sidebar-divider"/>
+
+                            {{-- Auto Service Centers routes start --}}
+                            @if(auth('admin')->user()->hasPermission(['read-garages','read-technical_inspection_centers','read-tire_exchange_centers','read-accessories_stores','read-car_washes','read-mining_centers']))
+                                <li class="nav-item {{ request()->routeIs('garages.*','inspection-centers.*','tire-exchange-centers.*','accessories-stores.*','car-washes.*','mining-centers.*') ? 'menu-open' : '' }}">
+                                    <a href="#"
+                                       class="nav-link {{ request()->routeIs('garages.*','inspection-centers.*','tire-exchange-centers.*','accessories-stores.*','car-washes.*','mining-centers.*') ? 'active' : '' }}">
+                                        <i class="fas fa-tools"></i>
+                                        <p>
+                                            {{__('words.AutoServiceCenters')}}
+                                            <i class="{{app()->getLocale() == 'ar' ? 'left fas fa-angle-right' :  'right fas fa-angle-left'}}"></i>
+                                        </p>
+                                    </a>
+
+                                    <ul class="nav nav-treeview">
+                                        {{-- Garage routes start --}}
+                                        @if(auth('admin')->user()->hasPermission('read-garages'))
+                                            <li class="nav-item {{ request()->routeIs('garages.*') ? 'menu-open' : '' }}">
+                                                <a href="#"
+                                                   class="nav-link {{ request()->routeIs('garages.*') ? 'sub-menu active' : '' }}">
+                                                    <i class="fas fa-warehouse"></i>
+                                                    <p>
+                                                        {{__('words.garages')}}
+                                                        <i class="{{app()->getLocale() == 'ar' ? 'left fas fa-angle-right' :  'right fas fa-angle-left'}}"></i>
+                                                    </p>
+                                                </a>
+                                                <ul class="nav nav-treeview">
+                                                    @if(auth('admin')->user()->hasPermission('read-garages'))
+                                                        <li class="nav-item">
+                                                            <a href="{{route('garages.index')}}"
+                                                               class="nav-link {{ request()->routeIs('garages.index') ? 'active' : '' }}">
+                                                                <i class="far fa-eye nav-icon"></i>
+                                                                <p>{{__('words.show_all')}}</p>
+                                                            </a>
+                                                        </li>
+                                                    @endif
+                                                    @if(auth('admin')->user()->hasPermission('create-garages'))
+                                                        <li class="nav-item">
+                                                            <a href="{{route('garages.create')}}"
+                                                               class="nav-link {{ request()->routeIs('garages.create') ? 'active' : '' }}">
+                                                                <i class="fas fa-folder-plus"></i>
+                                                                <p>{{__('words.create')}}</p>
+                                                            </a>
+                                                        </li>
+                                                    @endif
+                                                </ul>
+                                            </li>
+                                        @endif
+                                        {{-- Garage routes end --}}
+
+                                        {{-- Technical Inspection Center routes start --}}
+                                        @if(auth('admin')->user()->hasPermission('read-technical_inspection_centers'))
+                                            <li class="nav-item {{ request()->routeIs('inspection-centers.*') ? 'menu-open' : '' }}">
+                                                <a href="#"
+                                                   class="nav-link {{ request()->routeIs('inspection-centers.*') ? 'sub-menu active' : '' }}">
+                                                    <i class="fas fa-toolbox"></i>
+                                                    <p>
+                                                        {{__('words.technical_inspection_centers')}}
+                                                        <i class="{{app()->getLocale() == 'ar' ? 'left fas fa-angle-right' :  'right fas fa-angle-left'}}"></i>
+                                                    </p>
+                                                </a>
+                                                <ul class="nav nav-treeview">
+                                                    @if(auth('admin')->user()->hasPermission('read-technical_inspection_centers'))
+                                                        <li class="nav-item">
+                                                            <a href="{{route('inspection-centers.index')}}"
+                                                               class="nav-link {{ request()->routeIs('inspection-centers.index') ? 'active' : '' }}">
+                                                                <i class="far fa-eye nav-icon"></i>
+                                                                <p>{{__('words.show_all')}}</p>
+                                                            </a>
+                                                        </li>
+                                                    @endif
+                                                    @if(auth('admin')->user()->hasPermission('create-technical_inspection_centers'))
+                                                        <li class="nav-item">
+                                                            <a href="{{route('inspection-centers.create')}}"
+                                                               class="nav-link {{ request()->routeIs('inspection-centers.create') ? 'active' : '' }}">
+                                                                <i class="fas fa-folder-plus"></i>
+                                                                <p>{{__('words.create')}}</p>
+                                                            </a>
+                                                        </li>
+                                                    @endif
+                                                </ul>
+                                            </li>
+                                        @endif
+                                        {{-- Technical Inspection Center routes end --}}
+
+                                        {{-- Tire Exchange Center routes start --}}
+                                        @if(auth('admin')->user()->hasPermission('read-tire_exchange_centers'))
+                                            <li class="nav-item {{ request()->routeIs('tire-exchange-centers.*') ? 'menu-open' : '' }}">
+                                                <a href="#"
+                                                   class="nav-link {{ request()->routeIs('tire-exchange-centers.*') ? 'sub-menu active' : '' }}">
+                                                    <i class="fas fa-truck-monster"></i>
+                                                    <p>
+                                                        {{__('words.tire_exchange_centers')}}
+                                                        <i class="{{app()->getLocale() == 'ar' ? 'left fas fa-angle-right' :  'right fas fa-angle-left'}}"></i>
+                                                    </p>
+                                                </a>
+                                                <ul class="nav nav-treeview">
+                                                    @if(auth('admin')->user()->hasPermission('read-tire_exchange_centers'))
+                                                        <li class="nav-item">
+                                                            <a href="{{route('tire-exchange-centers.index')}}"
+                                                               class="nav-link {{ request()->routeIs('tire-exchange-centers.index') ? 'active' : '' }}">
+                                                                <i class="far fa-eye nav-icon"></i>
+                                                                <p>{{__('words.show_all')}}</p>
+                                                            </a>
+                                                        </li>
+                                                    @endif
+                                                    @if(auth('admin')->user()->hasPermission('create-tire_exchange_centers'))
+                                                        <li class="nav-item">
+                                                            <a href="{{route('tire-exchange-centers.create')}}"
+                                                               class="nav-link {{ request()->routeIs('tire-exchange-centers.create') ? 'active' : '' }}">
+                                                                <i class="fas fa-folder-plus"></i>
+                                                                <p>{{__('words.create')}}</p>
+                                                            </a>
+                                                        </li>
+                                                    @endif
+                                                </ul>
+                                            </li>
+                                        @endif
+                                        {{-- Tire Exchange Center routes end --}}
+
+                                        {{-- Accessories Store routes start --}}
+                                        @if(auth('admin')->user()->hasPermission('read-accessories_stores'))
+                                            <li class="nav-item {{ request()->routeIs('accessories-stores.*') ? 'menu-open' : '' }}">
+                                                <a href="#"
+                                                   class="nav-link {{ request()->routeIs('accessories-stores.*') ? 'sub-menu active' : '' }}">
+                                                    <i class="fas fa-store-alt"></i>
+                                                    <p>
+                                                        {{__('words.accessories_stores')}}
+                                                        <i class="{{app()->getLocale() == 'ar' ? 'left fas fa-angle-right' :  'right fas fa-angle-left'}}"></i>
+                                                    </p>
+                                                </a>
+                                                <ul class="nav nav-treeview">
+                                                    @if(auth('admin')->user()->hasPermission('read-accessories_stores'))
+                                                        <li class="nav-item">
+                                                            <a href="{{route('accessories-stores.index')}}"
+                                                               class="nav-link {{ request()->routeIs('accessories-stores.index') ? 'active' : '' }}">
+                                                                <i class="far fa-eye nav-icon"></i>
+                                                                <p>{{__('words.show_all')}}</p>
+                                                            </a>
+                                                        </li>
+                                                    @endif
+                                                    @if(auth('admin')->user()->hasPermission('create-accessories_stores'))
+                                                        <li class="nav-item">
+                                                            <a href="{{route('accessories-stores.create')}}"
+                                                               class="nav-link {{ request()->routeIs('accessories-stores.create') ? 'active' : '' }}">
+                                                                <i class="fas fa-folder-plus"></i>
+                                                                <p>{{__('words.create')}}</p>
+                                                            </a>
+                                                        </li>
+                                                    @endif
+                                                </ul>
+                                            </li>
+                                        @endif
+                                        {{-- Accessories Store routes end --}}
+
+                                        {{-- Car Wash routes start --}}
+                                        @if(auth('admin')->user()->hasPermission('read-car_washes'))
+                                            <li class="nav-item {{ request()->routeIs('car-washes.*') ? 'menu-open' : '' }}">
+                                                <a href="#"
+                                                   class="nav-link {{ request()->routeIs('car-washes.*') ? 'sub-menu active' : '' }}">
+                                                    <i class="fas fa-shower"></i>
+                                                    <p>
+                                                        {{__('words.car_washes')}}
+                                                        <i class="{{app()->getLocale() == 'ar' ? 'left fas fa-angle-right' :  'right fas fa-angle-left'}}"></i>
+                                                    </p>
+                                                </a>
+                                                <ul class="nav nav-treeview">
+                                                    @if(auth('admin')->user()->hasPermission('read-car_washes'))
+                                                        <li class="nav-item">
+                                                            <a href="{{route('car-washes.index')}}"
+                                                               class="nav-link {{ request()->routeIs('car-washes.index') ? 'active' : '' }}">
+                                                                <i class="far fa-eye nav-icon"></i>
+                                                                <p>{{__('words.show_all')}}</p>
+                                                            </a>
+                                                        </li>
+                                                    @endif
+                                                    @if(auth('admin')->user()->hasPermission('create-car_washes'))
+                                                        <li class="nav-item">
+                                                            <a href="{{route('car-washes.create')}}"
+                                                               class="nav-link {{ request()->routeIs('car-washes.create') ? 'active' : '' }}">
+                                                                <i class="fas fa-folder-plus"></i>
+                                                                <p>{{__('words.create')}}</p>
+                                                            </a>
+                                                        </li>
+                                                    @endif
+                                                </ul>
+                                            </li>
+                                        @endif
+                                        {{-- Car Wash routes end --}}
+
+                                        {{-- Mining Center routes start --}}
+                                        @if(auth('admin')->user()->hasPermission('read-mining_centers'))
+                                            <li class="nav-item {{ request()->routeIs('mining-centers.*') ? 'menu-open' : '' }}">
+                                                <a href="#"
+                                                   class="nav-link {{ request()->routeIs('mining-centers.*') ? 'sub-menu active' : '' }}">
+                                                    <i class="fas fa-charging-station"></i>
+                                                    <p>
+                                                        {{__('words.mining_centers')}}
+                                                        <i class="{{app()->getLocale() == 'ar' ? 'left fas fa-angle-right' :  'right fas fa-angle-left'}}"></i>
+                                                    </p>
+                                                </a>
+                                                <ul class="nav nav-treeview">
+                                                    @if(auth('admin')->user()->hasPermission('read-mining_centers'))
+                                                        <li class="nav-item">
+                                                            <a href="{{route('mining-centers.index')}}"
+                                                               class="nav-link {{ request()->routeIs('mining-centers.index') ? 'active' : '' }}">
+                                                                <i class="far fa-eye nav-icon"></i>
+                                                                <p>{{__('words.show_all')}}</p>
+                                                            </a>
+                                                        </li>
+                                                    @endif
+                                                    @if(auth('admin')->user()->hasPermission('create-mining_centers'))
+                                                        <li class="nav-item">
+                                                            <a href="{{route('mining-centers.create')}}"
+                                                               class="nav-link {{ request()->routeIs('mining-centers.create') ? 'active' : '' }}">
+                                                                <i class="fas fa-folder-plus"></i>
+                                                                <p>{{__('words.create')}}</p>
+                                                            </a>
+                                                        </li>
+                                                    @endif
+                                                </ul>
+                                            </li>
+                                        @endif
+                                        {{-- Mining Center routes end --}}
+                                    </ul>
+                                </li>
+                            @endif
+                            {{-- Auto Service Centers routes end --}}
+
+                            <hr class="mt-2 mb-3 sidebar-divider"/>
 
                             {{-- Insurance Company routes start --}}
                             @if(auth('admin')->user()->hasPermission('read-insurance_companies'))

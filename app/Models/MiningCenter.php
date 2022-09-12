@@ -29,7 +29,7 @@ class MiningCenter extends Model
     protected $hidden = ['name_en', 'name_ar', 'description_en', 'description_ar', 'created_at', 'updated_at'];
     protected $appends = ['name', 'description', 'rating', 'rating_count', 'is_reviewed', 'is_favorite', 'favorites_count'];
 
-    //// appends attributes start //////
+    // appends attributes start
     public function getNameAttribute()
     {
         if (App::getLocale() == 'ar') {
@@ -46,9 +46,9 @@ class MiningCenter extends Model
         return $this->description_en;
     }
 
-    //// appends attributes End //////
+    // appends attributes End
 
-    //relationship start
+    // relations start
     public function city()
     {
         return $this->belongsTo('App\Models\City');
@@ -58,7 +58,7 @@ class MiningCenter extends Model
     {
         return $this->hasMany(MiningCenterService::class);
     }
-    //relationship end
+    // relations end
 
     //Scopes start
     public function scopeActive($query)
@@ -94,6 +94,11 @@ class MiningCenter extends Model
     public function getAvailable()
     {
         return $this->available == 1 ? __('words.available_prop') : __('words.not_available_prop');
+    }
+
+    public function getActiveNumberOfViews()
+    {
+        return $this->active_number_of_views == 1 ? __('words.active') : __('words.inactive');
     }
 
     public function getLogoAttribute($val)

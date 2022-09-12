@@ -32,6 +32,12 @@ return [
         'driving_trainers' => ['read', 'create', 'update', 'delete'],
         'fuel_stations' => ['read', 'create', 'update', 'delete'],
         'traffic_clearing_offices' => ['read', 'create', 'update', 'delete'],
+        'garages' => ['read', 'create', 'update', 'delete'],
+        'technical_inspection_centers' => ['read', 'create', 'update', 'delete'],
+        'tire_exchange_centers' => ['read', 'create', 'update', 'delete'],
+        'accessories_stores' => ['read', 'create', 'update', 'delete'],
+        'car_washes' => ['read', 'create', 'update', 'delete'],
+        'mining_centers' => ['read', 'create', 'update', 'delete'],
 
     ],
 ];

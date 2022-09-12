@@ -37,7 +37,7 @@ class Garage extends Model
 
     protected $appends = ['name', 'description', 'rating', 'rating_count', 'is_reviewed', 'is_favorite','favorites_count'];
 
-    //// appends attributes start //////
+    // appends attributes start
     public function getNameAttribute()
     {
         if (App::getLocale() == 'ar')
@@ -51,9 +51,9 @@ class Garage extends Model
             return $this->description_ar;
         return $this->description_en;
     }
-    //// appends attributes end //////
+    // appends attributes end
 
-    /// relations
+    // relations start
     public function country()
     {
         return $this->belongsTo('App\Models\Country');
@@ -68,9 +68,54 @@ class Garage extends Model
     {
         return $this->belongsTo('App\Models\Area');
     }
+    // relations end
 
+    // Scopes start
+    public function scopeActive($query)
+    {
+        return $query->where('active', 1);
+    }
 
-    //    Scopes
+    public function scopeAvailable($query)
+    {
+        return $query->where('available', 1);
+    }
+
+    public function scopeSelection($query)
+    {
+        return $query->select('id', 'name_en', 'name_ar', 'description_en', 'description_ar',
+            'tax_number', 'logo', 'reservation_availability', 'delivery_availability', 'reservation_active',
+            'delivery_active', 'country_id', 'city_id', 'area_id', 'year_founded','number_of_views');
+    }
+
+    public function scopeSearch($query)
+    {
+        $query->when(request()->search, function ($q) {
+            return $q->where('name_ar', 'like', '%' . request()->search . '%')
+                ->orWhere('name_en', 'like', '%' . request()->search . '%')
+                ->orWhere('description_ar', 'like', '%' . request()->search . '%')
+                ->orWhere('description_en', 'like', '%' . request()->search . '%');
+        })->when(request()->country, function ($q) {
+            return $q->where('country_id', request()->country);
+        })->when(request()->city, function ($q) {
+            return $q->where('city_id', request()->city);
+        })->when(request()->area, function ($q) {
+            return $q->where('area_id', request()->area);
+        })->when(request()->category_id, function ($q) {
+            return $q->wherehas('categories', function (Builder $query) {
+                $query->where('category_id', request()->category_id);
+            });
+        })->when(request()->sub_category_id, function ($q) {
+            return $q->wherehas('categories', function (Builder $query) {
+                $query->wherehas('sub_categories', function (Builder $qu){
+                   $qu->where('id',request()->sub_category_id);
+                });
+            });
+        });
+    }
+    // Scopes end
+
+    // accessors & Mutator start
     public function available_reservation(Request $request)
     {
         try {
@@ -154,73 +199,35 @@ class Garage extends Model
         return $this->available == 1 ? __('words.available_prop') : __('words.not_available_prop');
     }
 
-    public function getReservation_availability()
+    public function getActiveNumberOfViews()
+    {
+        return $this->active_number_of_views == 1 ? __('words.active') : __('words.inactive');
+    }
+
+    public function getReservationAvailability()
     {
         return $this->reservation_availability == 1 ? __('words.available_prop') : __('words.not_available_prop');
     }
 
-    public function getDelivery_availability()
+    public function getDeliveryAvailability()
     {
         return $this->delivery_availability == 1 ? __('words.available_prop') : __('words.not_available_prop');
     }
 
-    public function getReservation_active()
+    public function getReservationActive()
     {
-        return $this->reservation_active == 1 ? __('words.available_prop') : __('words.not_available_prop');
+        return $this->reservation_active == 1 ? __('words.active') : __('words.inactive');
     }
 
-    public function getDelivery_active()
+    public function getDeliveryActive()
     {
-        return $this->delivery_active == 1 ? __('words.available_prop') : __('words.not_available_prop');
-    }
-
-    public function scopeActive($query)
-    {
-        return $query->where('active', 1);
-    }
-
-    public function scopeAvailable($query)
-    {
-        return $query->where('available', 1);
-    }
-
-    public function scopeSelection($query)
-    {
-        return $query->select('id', 'name_en', 'name_ar', 'description_en', 'description_ar',
-            'tax_number', 'logo', 'reservation_availability', 'delivery_availability', 'reservation_active',
-            'delivery_active', 'country_id', 'city_id', 'area_id', 'year_founded','number_of_views');
-    }
-
-    public function scopeSearch($query)
-    {
-        $query->when(request()->search, function ($q) {
-            return $q->where('name_ar', 'like', '%' . request()->search . '%')
-                ->orWhere('name_en', 'like', '%' . request()->search . '%')
-                ->orWhere('description_ar', 'like', '%' . request()->search . '%')
-                ->orWhere('description_en', 'like', '%' . request()->search . '%');
-        })->when(request()->country, function ($q) {
-            return $q->where('country_id', request()->country);
-        })->when(request()->city, function ($q) {
-            return $q->where('city_id', request()->city);
-        })->when(request()->area, function ($q) {
-            return $q->where('area_id', request()->area);
-        })->when(request()->category_id, function ($q) {
-            return $q->wherehas('categories', function (Builder $query) {
-                $query->where('category_id', request()->category_id);
-            });
-        })->when(request()->sub_category_id, function ($q) {
-            return $q->wherehas('categories', function (Builder $query) {
-                $query->wherehas('sub_categories', function (Builder $qu){
-                   $qu->where('id',request()->sub_category_id);
-                });
-            });
-        });
+        return $this->delivery_active == 1 ? __('words.active') : __('words.inactive');
     }
 
     public function getLogoAttribute($val)
     {
         return asset('uploads') . '/' . $val;
     }
-
+    // accessors & Mutator end
 }
 
