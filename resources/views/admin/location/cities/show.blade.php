@@ -46,6 +46,15 @@
                                             <th class="show-details-table">{{__('words.country')}}</th>
                                             <td>{{$city->country->name}}</td>
                                         </tr>
+                                        <tr>
+                                            <th class="show-details-table">{{__('words.created_at')}}</th>
+                                            <td>{{createdAtFormat($city->created_at)}}</td>
+                                        </tr>
+
+                                        <tr>
+                                            <th class="show-details-table">{{__('words.updated_at')}}</th>
+                                            <td>{{createdAtFormat($city->created_at) == updatedAtFormat($city->updated_at) ? '--' : updatedAtFormat($city->updated_at)}}</td>
+                                        </tr>
                                     </table>
                                 </div>
 

@@ -106,51 +106,7 @@ class Vehicle extends Model
 
     // relations end
 
-    // scopes
-    public function get_offer($discount_card_id)
-    {
-        return $this->offers()->where('offers.discount_card_id', $discount_card_id)->first();
-    }
-
-    public function getDistanceColorAttribute()
-    {
-        // distance color start [green,orange,red]
-        $year = now()->year;
-        $manufacturing_year = $this->manufacturing_year;
-        $green_distance = 25000.00;
-        $orange_distance = 30000.00;
-
-        $number_of_years = $year - (int)$manufacturing_year;
-        $traveled_distance = (float)$this->traveled_distance;
-
-        if ($traveled_distance != 0 && $number_of_years != 0) {
-            $total_distance_in_year = $traveled_distance / $number_of_years;
-            if ($total_distance_in_year <= $green_distance) {
-                return '#008000'; //green
-            } elseif ($total_distance_in_year > $green_distance && $total_distance_in_year <= $orange_distance) {
-                return '#FFA500'; //orange
-            } else {
-                return '#FF0000'; //red
-            }
-
-        } else {
-            return '#008000'; //green
-        }
-
-
-        // distance color end
-    }
-
-    public function getAvailability()
-    {
-        return $this->availability == 1 ? __('words.available_prop') : __('words.not_available_prop');
-    }
-
-    public function getIsNew()
-    {
-        return $this->is_new == 1 ? __('vehicle.new') : __('vehicle.used');
-    }
-
+    // scopes start
     public function scopeVehicleProperties()
     {
         $features = [];
@@ -248,7 +204,7 @@ class Vehicle extends Model
         ];
         $features[] = [
             'key' => __('vehicle.wheel_drive_system'),
-            'value' => __('vehicle.' . $vehicle->wheel_drive_system)
+            'value' => $vehicle->wheel_drive_system ? __('vehicle.' . $vehicle->wheel_drive_system) : '--'
         ];
         $features[] = [
             'key' => __('vehicle.specifications'),
@@ -302,7 +258,7 @@ class Vehicle extends Model
         ];
         $features[] = [
             'key' => __('vehicle.windows_control'),
-            'value' => __('vehicle.' . $vehicle->windows_control)
+            'value' => $vehicle->windows_control ? __('vehicle.' . $vehicle->windows_control) : '--'
         ];
         $features[] = [
             'key' => __('vehicle.wheel_size'),
@@ -324,7 +280,7 @@ class Vehicle extends Model
             if ($vehicle->selling_by_plate == true) {
                 $features[] = [
                     'key' => __('vehicle.number_plate'),
-                    'value' => $vehicle->number_plate
+                    'value' => $vehicle->number_plate ? $vehicle->number_plate : '--'
                 ];
             }
         }
@@ -399,18 +355,6 @@ class Vehicle extends Model
             'car_class_id', 'manufacturing_year', 'is_new', 'price', 'user_vehicle_status', 'traveled_distance','active_number_of_views', 'number_of_views', 'created_at', 'availability', 'active');
     }
 
-    public function getOneImageAttribute()
-    {
-        $default_image = $this->files()->first();
-        return $default_image ? $default_image->path : '';
-    }
-
-    public function getTrafficPdf()
-    {
-        $default_image = $this->files()->where('type', 'traffic_pdf')->first();
-        return $default_image ? $default_image->path : '';
-    }
-
     public function scopeActive($query)
     {
         return $query->where('active', 1);
@@ -435,6 +379,74 @@ class Vehicle extends Model
         })->when(request()->user_vehicle_status, function ($query) {
             return $query->where('user_vehicle_status', request()->user_vehicle_status);
         });
+    }
+    //Scopes end
+
+    // accessors & Mutator start
+    public function get_offer($discount_card_id)
+    {
+        return $this->offers()->where('offers.discount_card_id', $discount_card_id)->first();
+    }
+
+    public function getDistanceColorAttribute()
+    {
+        // distance color start [green,orange,red]
+        $year = now()->year;
+        $manufacturing_year = $this->manufacturing_year;
+        $green_distance = 25000.00;
+        $orange_distance = 30000.00;
+
+        $number_of_years = $year - (int)$manufacturing_year;
+        $traveled_distance = (float)$this->traveled_distance;
+
+        if ($traveled_distance != 0 && $number_of_years != 0) {
+            $total_distance_in_year = $traveled_distance / $number_of_years;
+            if ($total_distance_in_year <= $green_distance) {
+                return '#008000'; //green
+            } elseif ($total_distance_in_year > $green_distance && $total_distance_in_year <= $orange_distance) {
+                return '#FFA500'; //orange
+            } else {
+                return '#FF0000'; //red
+            }
+
+        } else {
+            return '#008000'; //green
+        }
+
+
+        // distance color end
+    }
+
+    public function getActive()
+    {
+        return $this->active == 1 ? __('words.active') : __('words.inactive');
+    }
+
+    public function getActiveNumberOfViews()
+    {
+        return $this->active_number_of_views == 1 ? __('words.active') : __('words.inactive');
+    }
+
+    public function getAvailability()
+    {
+        return $this->availability == 1 ? __('words.available_prop') : __('words.not_available_prop');
+    }
+
+    public function getIsNew()
+    {
+        return $this->is_new == 1 ? __('vehicle.new') : __('vehicle.used');
+    }
+
+    public function getOneImageAttribute()
+    {
+        $default_image = $this->files()->first();
+        return $default_image ? $default_image->path : '';
+    }
+
+    public function getTrafficPdf()
+    {
+        $default_image = $this->files()->where('type', 'traffic_pdf')->first();
+        return $default_image ? $default_image->path : '';
     }
 
     public function getNameAttribute()
@@ -464,5 +476,6 @@ class Vehicle extends Model
         }
         return 0;
     }
+    // accessors & Mutator end
 
 }

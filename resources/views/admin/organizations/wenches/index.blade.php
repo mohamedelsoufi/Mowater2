@@ -41,6 +41,8 @@
                                         <th>{{__('words.name_en')}}</th>
                                         <th>{{__('words.wench_type')}}</th>
                                         <th>{{__('words.activity')}}</th>
+                                        <th>{{__('words.created_at')}}</th>
+                                        <th>{{__('words.updated_at')}}</th>
                                         <th>{{__('words.actions')}}</th>
                                     </tr>
                                     </thead>
@@ -77,6 +79,8 @@
                                                 @endforeach
                                             </td>
                                             <td>{{$wench->getActive()}}</td>
+                                            <td>{{createdAtFormat($wench->created_at)}}</td>
+                                            <td>{{createdAtFormat($wench->created_at) == updatedAtFormat($wench->updated_at) ? '--' : updatedAtFormat($wench->updated_at)}}</td>
                                             <td>
                                                 @if(auth('admin')->user()->hasPermission('read-wenches'))
                                                     <a href="{{route('wenches.show',$wench->id)}}"

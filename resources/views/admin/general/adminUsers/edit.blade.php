@@ -14,13 +14,8 @@
                         <ol class="breadcrumb {{app()->getLocale() == 'ar' ? 'float-sm-left' :  'float-sm-right'}}">
                             <li class="breadcrumb-item"><a href="{{route('admin.home')}}">{{__('words.home')}}</a></li>
                             <li class="breadcrumb-item"><a
-                                    href="{{route('admin-users.index')}}">{{__('words.admin_users')}}</a></li>
+                                    href="{{route('admin-users.index')}}">{{__('words.show_admin_users')}}</a></li>
 
-                            {{--                            @if(!str_contains(url()->previous(),'edit'))--}}
-                            {{--                                <li class="breadcrumb-item"><a--}}
-                            {{--                                        href="{{url()->previous()}}">{{__('words.show_user')}}</a>--}}
-                            {{--                                </li>--}}
-                            {{--                            @endif--}}
                             <li class="breadcrumb-item active">{{__('words.edit_admin_user')}}</li>
                         </ol>
                     </div>

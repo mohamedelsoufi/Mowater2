@@ -77,6 +77,15 @@
                                             <th class="show-details-table">{{__('words.section_parent')}}</th>
                                             <td>{{$section->getSubSectionName($section->section_id) == null ? '--' : $section->getSubSectionName($section->section_id)}}</td>
                                         </tr>
+                                        <tr>
+                                            <th class="show-details-table">{{__('words.created_at')}}</th>
+                                            <td>{{createdAtFormat($section->created_at)}}</td>
+                                        </tr>
+
+                                        <tr>
+                                            <th class="show-details-table">{{__('words.updated_at')}}</th>
+                                            <td>{{createdAtFormat($section->created_at) == updatedAtFormat($section->updated_at) ? '--' : updatedAtFormat($section->updated_at)}}</td>
+                                        </tr>
                                     </table>
                                 </div>
 

@@ -142,7 +142,7 @@ The right of the insured to compensation shall be forfeited, and the United Insu
                     'instagram_link' => 'https://www.google.com/',
                 ]);
                 $branch->organization_users()->create([
-                    'user_name' => 'Agency branch user ' . $b,
+                    'user_name' => 'Broker branch user ' . $b,
                     'email' => 'insurance_ba' . $b . $counter . '@gmail.com',
                     'password' => "123456",
                 ]);

@@ -1,5 +1,5 @@
 @extends('admin.layouts.standard')
-@section('title', __('words.show_users'))
+@section('title', __('words.show_admin_users'))
 @section('content')
 
     <div class="content-wrapper">
@@ -13,7 +13,7 @@
                     <div class="col-sm-6">
                         <ol class="breadcrumb {{app()->getLocale() == 'ar' ? 'float-sm-left' :  'float-sm-right'}}">
                             <li class="breadcrumb-item"><a href="{{route('admin.home')}}">{{__('words.home')}}</a></li>
-                            <li class="breadcrumb-item active">{{__('words.admin_users')}}</li>
+                            <li class="breadcrumb-item active">{{__('words.show_admin_users')}}</li>
                         </ol>
                     </div>
                 </div>
@@ -41,6 +41,8 @@
                                         <th>{{__('words.email')}}</th>
                                         <th>{{__('words.roles')}}</th>
                                         <th>{{__('words.activity')}}</th>
+                                        <th>{{__('words.created_at')}}</th>
+                                        <th>{{__('words.updated_at')}}</th>
                                         <th>{{__('words.actions')}}</th>
                                     </tr>
                                     </thead>
@@ -53,6 +55,8 @@
                                             <td>{{$user->email}}</td>
                                             <td>{{$user->roles()->first() ? $user->roles()->first()->name : ''}}</td>
                                             <td>{{$user->getActive()}}</td>
+                                            <td>{{createdAtFormat($user->created_at)}}</td>
+                                            <td>{{createdAtFormat($user->created_at) == updatedAtFormat($user->updated_at) ? '--' : updatedAtFormat($user->updated_at)}}</td>
                                             <td>
                                                 @if(auth('admin')->user()->hasPermission('read-admins'))
                                                     <a href="{{route('admin-users.show',$user->id)}}"

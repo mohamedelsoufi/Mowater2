@@ -14,7 +14,7 @@ class AdminRequest extends FormRequest
     public function rules()
     {
         return [
-            'email' => 'required_without:id|email|unique:organization_users,email,'.$this->id,
+            'email' => 'required_without:id|email|unique:admins,email,'.$this->id,
             'password' => 'required_without:id|confirmed',
             'password_confirmation' => 'required_without:id|same:password',
             'first_name' => 'required_without:id',

@@ -47,6 +47,15 @@
                                             <th class="show-details-table">{{__('words.main_category')}}</th>
                                             <td>{{$sub_category->category ? $sub_category->category->name : '--'}}</td>
                                         </tr>
+                                        <tr>
+                                            <th class="show-details-table">{{__('words.created_at')}}</th>
+                                            <td>{{createdAtFormat($sub_category->created_at)}}</td>
+                                        </tr>
+
+                                        <tr>
+                                            <th class="show-details-table">{{__('words.updated_at')}}</th>
+                                            <td>{{createdAtFormat($sub_category->created_at) == updatedAtFormat($sub_category->updated_at) ? '--' : updatedAtFormat($sub_category->updated_at)}}</td>
+                                        </tr>
                                     </table>
                                 </div>
                             </div>

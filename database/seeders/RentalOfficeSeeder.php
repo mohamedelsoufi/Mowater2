@@ -171,7 +171,7 @@ class RentalOfficeSeeder extends Seeder
                     'instagram_link' => 'https://www.google.com/',
                 ]);
                 $branch->organization_users()->create([
-                    'user_name' => 'Agency branch user ' . $b,
+                    'user_name' => 'Rental office branch user ' . $b,
                     'email' => 'bac' . $counter . $b . '@gmail.com',
                     'password' => "123456",
                 ]);

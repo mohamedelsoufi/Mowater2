@@ -24,10 +24,17 @@ class OrganizationUser extends Authenticatable
 
     // relations end
 
+    // accessors & Mutator start
     public function setPasswordAttribute($val)
     {
         if (!empty($val)) {
             $this->attributes['password'] = bcrypt($val);
         }
     }
+
+    public function getActive()
+    {
+        return $this->active == 1 ? __('words.active') : __('words.inactive');
+    }
+    // accessors & Mutator end
 }

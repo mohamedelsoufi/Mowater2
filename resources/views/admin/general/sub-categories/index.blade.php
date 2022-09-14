@@ -39,6 +39,8 @@
                                         <th>{{__('words.name_ar')}}</th>
                                         <th>{{__('words.name_en')}}</th>
                                         <th>{{__('words.main_category')}}</th>
+                                        <th>{{__('words.created_at')}}</th>
+                                        <th>{{__('words.updated_at')}}</th>
                                         <th>{{__('words.actions')}}</th>
                                     </tr>
                                     </thead>
@@ -49,6 +51,8 @@
                                             <td>{{$sub_category->name_ar}}</td>
                                             <td>{{$sub_category->name_en}}</td>
                                             <td>{{$sub_category->category ? $sub_category->category->name : '--'}}</td>
+                                            <td>{{createdAtFormat($sub_category->created_at)}}</td>
+                                            <td>{{createdAtFormat($sub_category->created_at) == updatedAtFormat($sub_category->updated_at) ? '--' : updatedAtFormat($sub_category->updated_at)}}</td>
                                             <td>
                                                 @if(auth('admin')->user()->hasPermission('read-sub_categories'))
                                                     <a href="{{route('sub-categories.show',$sub_category->id)}}"

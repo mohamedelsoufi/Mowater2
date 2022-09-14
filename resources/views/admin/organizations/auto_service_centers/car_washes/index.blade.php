@@ -40,6 +40,8 @@
                                         <th>{{__('words.name_ar')}}</th>
                                         <th>{{__('words.name_en')}}</th>
                                         <th>{{__('words.activity')}}</th>
+                                        <th>{{__('words.created_at')}}</th>
+                                        <th>{{__('words.updated_at')}}</th>
                                         <th>{{__('words.actions')}}</th>
                                     </tr>
                                     </thead>
@@ -69,6 +71,8 @@
                                             <td>{{$car_wash->name_ar}}</td>
                                             <td>{{$car_wash->name_en}}</td>
                                             <td>{{$car_wash->getActive()}}</td>
+                                            <td>{{createdAtFormat($car_wash->created_at)}}</td>
+                                            <td>{{createdAtFormat($car_wash->created_at) == updatedAtFormat($car_wash->updated_at) ? '--' : updatedAtFormat($car_wash->updated_at)}}</td>
                                             <td>
                                                 @if(auth('admin')->user()->hasPermission('read-car_washes'))
                                                     <a href="{{route('car-washes.show',$car_wash->id)}}"

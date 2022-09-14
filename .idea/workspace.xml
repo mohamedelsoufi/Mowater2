@@ -204,17 +204,17 @@
     <property name="DatabaseDriversLRU" value="mysql" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/resources/views/admin/organizations/auto_service_centers" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/resources/views/admin/vehicle_details" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\xampp\htdocs\mawatery-web\resources\views\admin\vehicle_details" />
+      <recent name="D:\xampp\htdocs\mawatery-web\resources\views\admin\general" />
       <recent name="D:\xampp\htdocs\mawatery-web\resources\views\admin\organizations\auto_service_centers" />
       <recent name="D:\xampp\htdocs\mawatery-web\resources\views\admin\organizations" />
       <recent name="D:\xampp\htdocs\mawatery-web\resources\views\admin\organizations\special_numbers" />
-      <recent name="D:\xampp\htdocs\mawatery-web\resources\views\admin\organizations\special_numbers\special_number" />
-      <recent name="D:\xampp\htdocs\mawatery-web\app\Http\Controllers\Dashboard\Organizations" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="D:\xampp\htdocs\mawatery-web\resources\views\admin\organizations" />
@@ -312,6 +312,9 @@
       <workItem from="1662625471759" duration="10755000" />
       <workItem from="1662640440498" duration="4571000" />
       <workItem from="1662885277780" duration="21776000" />
+      <workItem from="1662988711131" duration="6418000" />
+      <workItem from="1663065979242" duration="23178000" />
+      <workItem from="1663144504785" duration="23662000" />
     </task>
     <servers />
   </component>
@@ -331,12 +334,12 @@
     </state>
     <state x="426" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/0.0.1536.816/-1920.5.1920.1032@0.0.1536.816" timestamp="1660734382931" />
     <state x="391" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/0.0.1536.816@0.0.1536.816" timestamp="1661692387552" />
-    <state x="499" y="164" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog" timestamp="1662906198559">
+    <state x="499" y="164" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog" timestamp="1663163910486">
       <screen x="0" y="0" width="1536" height="816" />
     </state>
     <state x="-1296" y="212" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.0.1536.816/-1920.5.1920.1032@-1920.5.1920.1032" timestamp="1662370135082" />
-    <state x="499" y="164" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.0.1536.816/-1920.5.1920.1032@0.0.1536.816" timestamp="1662906198559" />
-    <state x="499" y="164" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.0.1536.816@0.0.1536.816" timestamp="1660566339354" />
+    <state x="499" y="164" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.0.1536.816/-1920.5.1920.1032@0.0.1536.816" timestamp="1663145224681" />
+    <state x="499" y="164" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.0.1536.816@0.0.1536.816" timestamp="1663163910486" />
     <state x="516" y="97" key="#com.jetbrains.php.refactoring.extract.interface.PhpExtractInterfaceDialog#" timestamp="1660734466163">
       <screen x="0" y="0" width="1536" height="816" />
     </state>
@@ -388,15 +391,16 @@
       <screen x="0" y="0" width="1536" height="816" />
     </state>
     <state x="578" y="326" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1536.816@0.0.1536.816" timestamp="1661695387921" />
-    <state x="-1469" y="87" width="1144" height="801" maximized="true" key="dock-window-1" timestamp="1662903832193">
-      <screen x="-1920" y="5" width="1920" height="1032" />
+    <state x="-1125" y="12" width="1129" height="801" maximized="true" key="dock-window-1" timestamp="1663166144112">
+      <screen x="0" y="0" width="1536" height="816" />
     </state>
-    <state x="-1469" y="87" width="1144" height="801" maximized="true" key="dock-window-1/0.0.1536.816/-1920.5.1920.1032@0.0.1536.816" timestamp="1662903832193" />
-    <state x="-1550" y="5" width="1154" height="801" maximized="true" key="dock-window-2" timestamp="1662640458451">
+    <state x="-1125" y="12" width="1129" height="801" maximized="true" key="dock-window-1/0.0.1536.816/-1920.5.1920.1032@0.0.1536.816" timestamp="1663145175536" />
+    <state x="-1125" y="12" width="1129" height="801" maximized="true" key="dock-window-1/0.0.1536.816@0.0.1536.816" timestamp="1663166144112" />
+    <state x="-1239" y="5" width="1134" height="801" key="dock-window-2" timestamp="1663089360096">
       <screen x="-1920" y="5" width="1920" height="1032" />
     </state>
     <state x="-1784" y="52" width="1153" height="801" maximized="true" key="dock-window-2/0.0.1536.816/-1920.5.1920.1032@-1920.5.1920.1032" timestamp="1657110800605" />
-    <state x="-1550" y="5" width="1154" height="801" maximized="true" key="dock-window-2/0.0.1536.816/-1920.5.1920.1032@0.0.1536.816" timestamp="1662640458451" />
+    <state x="-1239" y="5" width="1134" height="801" key="dock-window-2/0.0.1536.816/-1920.5.1920.1032@0.0.1536.816" timestamp="1663089360096" />
     <state x="-1320" y="5" width="1169" height="801" maximized="true" key="dock-window-3" timestamp="1662379069018">
       <screen x="-1920" y="5" width="1920" height="1032" />
     </state>
@@ -409,12 +413,12 @@
       <screen x="-1920" y="5" width="1920" height="1032" />
     </state>
     <state x="-1551" y="85" width="1169" height="801" key="dock-window-5/0.0.1536.816/-1920.5.1920.1032@0.0.1536.816" timestamp="1662390353978" />
-    <state x="387" y="58" width="868" height="606" key="find.popup" timestamp="1662892768796">
+    <state x="387" y="58" width="868" height="606" key="find.popup" timestamp="1663082253254">
       <screen x="0" y="0" width="1536" height="816" />
     </state>
     <state x="387" y="58" width="868" height="606" key="find.popup/0.0.1536.816/-1920.0.1920.1032@0.0.1536.816" timestamp="1661848063916" />
     <state x="-1341" y="182" width="764" height="678" key="find.popup/0.0.1536.816/-1920.5.1920.1032@-1920.5.1920.1032" timestamp="1659014141537" />
-    <state x="387" y="58" width="868" height="606" key="find.popup/0.0.1536.816/-1920.5.1920.1032@0.0.1536.816" timestamp="1662892768796" />
+    <state x="387" y="58" width="868" height="606" key="find.popup/0.0.1536.816/-1920.5.1920.1032@0.0.1536.816" timestamp="1663082253254" />
     <state x="463" y="140" width="794" height="588" key="find.popup/0.0.1536.816@0.0.1536.816" timestamp="1661265117267" />
     <state x="425" y="185" key="run.anything.popup" timestamp="1661782047670">
       <screen x="0" y="0" width="1536" height="816" />
@@ -434,6 +438,36 @@
           <url>file://$PROJECT_DIR$/resources/views/admin/organizations/special_numbers/special_number_organizations/edit.blade.php</url>
           <line>248</line>
           <option name="timeStamp" value="3" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="php">
+          <url>file://$PROJECT_DIR$/app/Traits/Files/HasFiles.php</url>
+          <line>25</line>
+          <option name="timeStamp" value="4" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="php">
+          <url>file://$PROJECT_DIR$/app/Traits/Files/HasFiles.php</url>
+          <line>31</line>
+          <option name="timeStamp" value="5" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="php">
+          <url>file://$PROJECT_DIR$/app/Traits/Files/HasFiles.php</url>
+          <line>34</line>
+          <option name="timeStamp" value="6" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="php">
+          <url>file://$PROJECT_DIR$/app/Traits/Files/HasFiles.php</url>
+          <line>40</line>
+          <option name="timeStamp" value="7" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="php">
+          <url>file://$PROJECT_DIR$/app/Traits/Files/HasFiles.php</url>
+          <line>16</line>
+          <option name="timeStamp" value="8" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="php">
+          <url>file://$PROJECT_DIR$/app/Traits/Files/HasFiles.php</url>
+          <line>46</line>
+          <option name="timeStamp" value="9" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

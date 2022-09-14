@@ -37,10 +37,10 @@
         <nav class="mt-2">
             <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                 
-                <?php if(auth('admin')->user()->hasPermission(['read-admins','read-roles'])): ?>
-                    <li class="nav-item <?php echo e(request()->routeIs('admin-roles.*','admin-users.*') ? 'menu-open' : ''); ?>">
+                <?php if(auth('admin')->user()->hasPermission(['read-admins','read-roles','read-app_users','read-org_users'])): ?>
+                    <li class="nav-item <?php echo e(request()->routeIs('admin-roles.*','admin-users.*','app-users.*','org-users.*') ? 'menu-open' : ''); ?>">
                         <a href="#"
-                           class="nav-link <?php echo e(request()->routeIs('admin-roles.*','admin-users.*') ? 'active' : ''); ?>">
+                           class="nav-link <?php echo e(request()->routeIs('admin-roles.*','admin-users.*','app-users.*','org-users.*') ? 'active' : ''); ?>">
                             <i class="nav-icon fas fa-users"></i>
                             <p>
                                 <?php echo e(__('words.users')); ?>
@@ -85,7 +85,7 @@
                                     </ul>
                                 </li>
                             <?php endif; ?>
-                        <!-- Permissions Users end -->
+                            <!-- Permissions Users end -->
 
                             <!-- Admin Users Start -->
                             <?php if(auth('admin')->user()->hasPermission('read-admins')): ?>
@@ -121,18 +121,72 @@
                                         <?php endif; ?>
                                     </ul>
                                 </li>
+                            <?php endif; ?>
+                            <!-- Admin Users end -->
+
+                            <!-- App Users Start -->
+                            <?php if(auth('admin')->user()->hasPermission('read-app_users')): ?>
+                                <li class="nav-item <?php echo e(request()->routeIs('app-users.*') ? 'menu-open' : ''); ?>">
+                                    <a href="#"
+                                       class="nav-link <?php echo e(request()->routeIs('app-users.*') ? 'sub-menu active' : ''); ?>">
+                                        <i class="fas fa-mobile"></i>
+                                        <p>
+                                            <?php echo e(__('words.app_users')); ?>
+
+                                            <i class="<?php echo e(app()->getLocale() == 'ar' ? 'left fas fa-angle-right' :  'right fas fa-angle-left'); ?>"></i>
+                                        </p>
+                                    </a>
+                                    <ul class="nav nav-treeview">
+                                        <?php if(auth('admin')->user()->hasPermission('read-app_users')): ?>
+                                            <li class="nav-item">
+                                                <a href="<?php echo e(route('app-users.index')); ?>"
+                                                   class="nav-link <?php echo e(request()->routeIs('app-users.index') ? 'active' : ''); ?>">
+                                                    <i class="far fa-eye nav-icon"></i>
+                                                    <p><?php echo e(__('words.show_all')); ?></p>
+                                                </a>
+                                            </li>
+                                        <?php endif; ?>
+                                    </ul>
+                                </li>
+                            <?php endif; ?>
+                            <!-- App Users end -->
+
+                            <!-- Organization Users Start -->
+                            <?php if(auth('admin')->user()->hasPermission('read-org_users')): ?>
+                                <li class="nav-item <?php echo e(request()->routeIs('org-users.*') ? 'menu-open' : ''); ?>">
+                                    <a href="#"
+                                       class="nav-link <?php echo e(request()->routeIs('org-users.*') ? 'sub-menu active' : ''); ?>">
+                                        <i class="fas fa-place-of-worship"></i>
+                                        <p>
+                                            <?php echo e(__('words.org_users')); ?>
+
+                                            <i class="<?php echo e(app()->getLocale() == 'ar' ? 'left fas fa-angle-right' :  'right fas fa-angle-left'); ?>"></i>
+                                        </p>
+                                    </a>
+                                    <ul class="nav nav-treeview">
+                                        <?php if(auth('admin')->user()->hasPermission('read-org_users')): ?>
+                                            <li class="nav-item">
+                                                <a href="<?php echo e(route('org-users.index')); ?>"
+                                                   class="nav-link <?php echo e(request()->routeIs('org-users.index') ? 'active' : ''); ?>">
+                                                    <i class="far fa-eye nav-icon"></i>
+                                                    <p><?php echo e(__('words.show_all')); ?></p>
+                                                </a>
+                                            </li>
+                                        <?php endif; ?>
+                                    </ul>
+                                </li>
                         <?php endif; ?>
-                        <!-- Admin Users end -->
+                            <!-- Organization Users end -->
                         </ul>
                     </li>
                 <?php endif; ?>
                 
 
                 
-                <?php if(auth('admin')->user()->hasPermission(['read-brands','read-car_models','read-car_classes','read-manufacture_countries'])): ?>
-                    <li class="nav-item <?php echo e(request()->routeIs('brands.*','car-models.*','car-classes.*','manufacture-countries.*') ? 'menu-open' : ''); ?>">
+                <?php if(auth('admin')->user()->hasPermission(['read-brands','read-car_models','read-car_classes','read-manufacture_countries','read-used_vehicles'])): ?>
+                    <li class="nav-item <?php echo e(request()->routeIs('brands.*','car-models.*','car-classes.*','manufacture-countries.*','used-vehicles.*') ? 'menu-open' : ''); ?>">
                         <a href="#"
-                           class="nav-link <?php echo e(request()->routeIs('brands.*','car-models.*','car-classes.*','manufacture-countries.*') ? 'active' : ''); ?>">
+                           class="nav-link <?php echo e(request()->routeIs('brands.*','car-models.*','car-classes.*','manufacture-countries.*','used-vehicles.*') ? 'active' : ''); ?>">
                             <i class="fa fa-car"></i>
                             <p>
                                 <?php echo e(__('words.vehicles_details')); ?>
@@ -279,6 +333,43 @@
                                             <li class="nav-item">
                                                 <a href="<?php echo e(route('manufacture-countries.create')); ?>"
                                                    class="nav-link <?php echo e(request()->routeIs('manufacture-countries.create') ? 'active' : ''); ?>">
+                                                    <i class="fas fa-folder-plus"></i>
+                                                    <p><?php echo e(__('words.create')); ?></p>
+                                                </a>
+                                            </li>
+                                        <?php endif; ?>
+                                    </ul>
+                                </li>
+                            <?php endif; ?>
+                            
+
+                            
+                            <?php if(auth('admin')->user()->hasPermission('read-used_vehicles')): ?>
+                                <li class="nav-item <?php echo e(request()->routeIs('used-vehicles.*') ? 'menu-open' : ''); ?>">
+                                    <a href="#"
+                                       class="nav-link <?php echo e(request()->routeIs('used-vehicles.*') ? 'sub-menu active' : ''); ?>">
+                                        <i class="fas fa-car"></i>
+                                        <p>
+                                            <?php echo e(__('words.used_vehicles')); ?>
+
+                                            <i class="<?php echo e(app()->getLocale() == 'ar' ? 'left fas fa-angle-right' :  'right fas fa-angle-left'); ?>"></i>
+                                        </p>
+                                    </a>
+                                    <ul class="nav nav-treeview">
+                                        <?php if(auth('admin')->user()->hasPermission('read-used_vehicles')): ?>
+                                            <li class="nav-item">
+                                                <a href="<?php echo e(route('used-vehicles.index')); ?>"
+                                                   class="nav-link <?php echo e(request()->routeIs('used-vehicles.index') ? 'active' : ''); ?>">
+                                                    <i class="far fa-eye nav-icon"></i>
+                                                    <p><?php echo e(__('words.show_all')); ?></p>
+                                                </a>
+                                            </li>
+                                        <?php endif; ?>
+
+                                        <?php if(auth('admin')->user()->hasPermission('create-used_vehicles')): ?>
+                                            <li class="nav-item">
+                                                <a href="<?php echo e(route('used-vehicles.create')); ?>"
+                                                   class="nav-link <?php echo e(request()->routeIs('used-vehicles.create') ? 'active' : ''); ?>">
                                                     <i class="fas fa-folder-plus"></i>
                                                     <p><?php echo e(__('words.create')); ?></p>
                                                 </a>

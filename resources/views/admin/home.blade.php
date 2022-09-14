@@ -53,7 +53,7 @@
                             <div class="icon">
                                 <i class="fas fa-place-of-worship"></i>
                             </div>
-                            <a href="#" class="small-box-footer">{{__('words.more_info')}} <i class="fas fa-arrow-circle-right"></i></a>
+                            <a href="{{route('org-users.index')}}" class="small-box-footer">{{__('words.more_info')}} <i class="fas fa-arrow-circle-right"></i></a>
                         </div>
                     </div>
                     <!-- ./col -->
@@ -68,7 +68,7 @@
                             <div class="icon">
                                 <i class="fas fa-mobile"></i>
                             </div>
-                            <a href="#" class="small-box-footer">{{__('words.more_info')}} <i class="fas fa-arrow-circle-right"></i></a>
+                            <a href="{{route('app-users.index')}}" class="small-box-footer">{{__('words.more_info')}} <i class="fas fa-arrow-circle-right"></i></a>
                         </div>
                     </div>
 

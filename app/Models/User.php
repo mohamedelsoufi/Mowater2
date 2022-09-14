@@ -8,13 +8,12 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Tymon\JWTAuth\Contracts\JWTSubject;
-use App\Models\RequestProduct;
 use Laratrust\Traits\LaratrustUserTrait;
 
 class User extends Authenticatable implements JWTSubject
 {
     use LaratrustUserTrait;
-    use HasFactory, Notifiable, HasVehicles,HasPaymentMethods;
+    use HasFactory, Notifiable, HasVehicles, HasPaymentMethods;
     protected $table = 'users';
     public $timestamps = true;
     protected $fillable = array('id', 'first_name', 'last_name', 'nickname', 'email', 'phone_code', 'phone', 'password',
@@ -35,8 +34,8 @@ class User extends Authenticatable implements JWTSubject
 
     // JWT auth end
 
-    //relationship start
-       public function broker_reservatione()
+    // relation start
+    public function broker_reservatione()
     {
         return $this->hasMany(BrokerReservation::class);
     }
@@ -152,15 +151,18 @@ class User extends Authenticatable implements JWTSubject
         return $this->belongsToMany(Auction::class, 'auction_subscription', 'user_id', 'auction_id');
     }
 
-    public function bids(){
+    public function bids()
+    {
         return $this->hasMany(Bid::class);
     }
 
-    public function wallet(){
+    public function wallet()
+    {
         return $this->hasOne(Wallet::class);
     }
 
-    public function trafficClearingOfficeRequests(){
+    public function trafficClearingOfficeRequests()
+    {
         return $this->hasMany(TrafficClearingOfficeRequest::class);
     }
 
@@ -194,27 +196,53 @@ class User extends Authenticatable implements JWTSubject
         return $this->hasMany(AccessoryStorePurchase::class);
     }
 
-//   relationship end
-
-    public function setPasswordAttribute($val)
+    public function replies()
     {
-        $this->attributes['password'] = bcrypt($val);
+        return $this->hasManyThrough(RequestProductOrg::class, RequestProduct::class, 'user_id', 'request_product_id');
     }
+    // relations end
 
-    //Scopes
+    // Scopes start
     public function scopeSelection($query)
     {
         return $query->select('id', 'first_name', 'last_name', 'nickname', 'email', 'phone_code', 'phone', 'active',
             'date_of_birth', 'gender', 'nationality', 'country_id', 'city_id', 'area_id', 'fcm_token', 'device_token', 'platform', 'profile_image' . 'is_verified');
     }
+    // Scopes end
 
-    public function replies()
+    // accessors & Mutator start
+    public function setPasswordAttribute($val)
     {
-        return $this->hasManyThrough(RequestProductOrg::class, RequestProduct::class, 'user_id', 'request_product_id');
+        $this->attributes['password'] = bcrypt($val);
+    }
+
+    public function setFirstNameAttribute($val)
+    {
+        $this->attributes['first_name'] =ucfirst($val);
+    }
+
+    public function setLastNameAttribute($val)
+    {
+        $this->attributes['last_name'] =ucfirst($val);
+    }
+
+    public function setNicknameAttribute($val)
+    {
+        $this->attributes['nickname'] =ucfirst($val);
     }
 
     public function getProfileImageAttribute($val)
     {
         return asset('uploads') . '/' . $val;
     }
+
+    public function getIsVerified(){
+        return $this->is_verified == 1 ? __('words.is_verified') : __('words.not_verified');
+    }
+
+    public function getActive()
+    {
+        return $this->active == 1 ? __('words.active') : __('words.inactive');
+    }
+    // accessors & Mutator end
 }

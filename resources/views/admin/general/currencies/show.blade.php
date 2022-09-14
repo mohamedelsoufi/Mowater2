@@ -46,6 +46,15 @@
                                             <th class="show-details-table">{{__('words.currency_code')}}</th>
                                             <td>{{$currency->code}}</td>
                                         </tr>
+                                        <tr>
+                                            <th class="show-details-table">{{__('words.created_at')}}</th>
+                                            <td>{{createdAtFormat($currency->created_at)}}</td>
+                                        </tr>
+
+                                        <tr>
+                                            <th class="show-details-table">{{__('words.updated_at')}}</th>
+                                            <td>{{createdAtFormat($currency->created_at) == updatedAtFormat($currency->updated_at) ? '--' : updatedAtFormat($currency->updated_at)}}</td>
+                                        </tr>
                                     </table>
                                 </div>
                             </div>

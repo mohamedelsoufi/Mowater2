@@ -105,6 +105,15 @@
                                             <td>
                                                 {{\Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $discount_card->created_at)->format('d-m-Y H:i A')}}</td>
                                         </tr>
+                                        <tr>
+                                            <th class="show-details-table">{{__('words.created_at')}}</th>
+                                            <td>{{createdAtFormat($discount_card->created_at)}}</td>
+                                        </tr>
+
+                                        <tr>
+                                            <th class="show-details-table">{{__('words.updated_at')}}</th>
+                                            <td>{{createdAtFormat($discount_card->created_at) == updatedAtFormat($discount_card->updated_at) ? '--' : updatedAtFormat($discount_card->updated_at)}}</td>
+                                        </tr>
                                     </table>
                                 </div>
 

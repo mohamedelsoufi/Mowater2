@@ -40,6 +40,8 @@
                                         <th>{{__('words.name_ar')}}</th>
                                         <th>{{__('words.name_en')}}</th>
                                         <th>{{__('words.activity')}}</th>
+                                        <th>{{__('words.created_at')}}</th>
+                                        <th>{{__('words.updated_at')}}</th>
                                         <th>{{__('words.actions')}}</th>
                                     </tr>
                                     </thead>
@@ -69,6 +71,8 @@
                                             <td>{{$rental_office->name_ar}}</td>
                                             <td>{{$rental_office->name_en}}</td>
                                             <td>{{$rental_office->getActive()}}</td>
+                                            <td>{{createdAtFormat($rental_office->created_at)}}</td>
+                                            <td>{{createdAtFormat($rental_office->created_at) == updatedAtFormat($rental_office->updated_at) ? '--' : updatedAtFormat($rental_office->updated_at)}}</td>
                                             <td>
                                                 @if(auth('admin')->user()->hasPermission('read-rental_offices'))
                                                     <a href="{{route('rental-offices.show',$rental_office->id)}}"

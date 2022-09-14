@@ -37,10 +37,10 @@
         <nav class="mt-2">
             <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                 {{-- Users details toggle start --}}
-                @if(auth('admin')->user()->hasPermission(['read-admins','read-roles']))
-                    <li class="nav-item {{ request()->routeIs('admin-roles.*','admin-users.*') ? 'menu-open' : '' }}">
+                @if(auth('admin')->user()->hasPermission(['read-admins','read-roles','read-app_users','read-org_users']))
+                    <li class="nav-item {{ request()->routeIs('admin-roles.*','admin-users.*','app-users.*','org-users.*') ? 'menu-open' : '' }}">
                         <a href="#"
-                           class="nav-link {{ request()->routeIs('admin-roles.*','admin-users.*') ? 'active' : '' }}">
+                           class="nav-link {{ request()->routeIs('admin-roles.*','admin-users.*','app-users.*','org-users.*') ? 'active' : '' }}">
                             <i class="nav-icon fas fa-users"></i>
                             <p>
                                 {{__('words.users')}}
@@ -83,7 +83,7 @@
                                     </ul>
                                 </li>
                             @endif
-                        <!-- Permissions Users end -->
+                            <!-- Permissions Users end -->
 
                             <!-- Admin Users Start -->
                             @if(auth('admin')->user()->hasPermission('read-admins'))
@@ -118,18 +118,70 @@
                                         @endif
                                     </ul>
                                 </li>
+                            @endif
+                            <!-- Admin Users end -->
+
+                            <!-- App Users Start -->
+                            @if(auth('admin')->user()->hasPermission('read-app_users'))
+                                <li class="nav-item {{ request()->routeIs('app-users.*') ? 'menu-open' : '' }}">
+                                    <a href="#"
+                                       class="nav-link {{ request()->routeIs('app-users.*') ? 'sub-menu active' : '' }}">
+                                        <i class="fas fa-mobile"></i>
+                                        <p>
+                                            {{__('words.app_users')}}
+                                            <i class="{{app()->getLocale() == 'ar' ? 'left fas fa-angle-right' :  'right fas fa-angle-left'}}"></i>
+                                        </p>
+                                    </a>
+                                    <ul class="nav nav-treeview">
+                                        @if(auth('admin')->user()->hasPermission('read-app_users'))
+                                            <li class="nav-item">
+                                                <a href="{{route('app-users.index')}}"
+                                                   class="nav-link {{ request()->routeIs('app-users.index') ? 'active' : '' }}">
+                                                    <i class="far fa-eye nav-icon"></i>
+                                                    <p>{{__('words.show_all')}}</p>
+                                                </a>
+                                            </li>
+                                        @endif
+                                    </ul>
+                                </li>
+                            @endif
+                            <!-- App Users end -->
+
+                            <!-- Organization Users Start -->
+                            @if(auth('admin')->user()->hasPermission('read-org_users'))
+                                <li class="nav-item {{ request()->routeIs('org-users.*') ? 'menu-open' : '' }}">
+                                    <a href="#"
+                                       class="nav-link {{ request()->routeIs('org-users.*') ? 'sub-menu active' : '' }}">
+                                        <i class="fas fa-place-of-worship"></i>
+                                        <p>
+                                            {{__('words.org_users')}}
+                                            <i class="{{app()->getLocale() == 'ar' ? 'left fas fa-angle-right' :  'right fas fa-angle-left'}}"></i>
+                                        </p>
+                                    </a>
+                                    <ul class="nav nav-treeview">
+                                        @if(auth('admin')->user()->hasPermission('read-org_users'))
+                                            <li class="nav-item">
+                                                <a href="{{route('org-users.index')}}"
+                                                   class="nav-link {{ request()->routeIs('org-users.index') ? 'active' : '' }}">
+                                                    <i class="far fa-eye nav-icon"></i>
+                                                    <p>{{__('words.show_all')}}</p>
+                                                </a>
+                                            </li>
+                                        @endif
+                                    </ul>
+                                </li>
                         @endif
-                        <!-- Admin Users end -->
+                            <!-- Organization Users end -->
                         </ul>
                     </li>
                 @endif
                 {{-- Users details toggle end --}}
 
                 {{-- Vehicle details toggle start --}}
-                @if(auth('admin')->user()->hasPermission(['read-brands','read-car_models','read-car_classes','read-manufacture_countries']))
-                    <li class="nav-item {{ request()->routeIs('brands.*','car-models.*','car-classes.*','manufacture-countries.*') ? 'menu-open' : '' }}">
+                @if(auth('admin')->user()->hasPermission(['read-brands','read-car_models','read-car_classes','read-manufacture_countries','read-used_vehicles']))
+                    <li class="nav-item {{ request()->routeIs('brands.*','car-models.*','car-classes.*','manufacture-countries.*','used-vehicles.*') ? 'menu-open' : '' }}">
                         <a href="#"
-                           class="nav-link {{ request()->routeIs('brands.*','car-models.*','car-classes.*','manufacture-countries.*') ? 'active' : '' }}">
+                           class="nav-link {{ request()->routeIs('brands.*','car-models.*','car-classes.*','manufacture-countries.*','used-vehicles.*') ? 'active' : '' }}">
                             <i class="fa fa-car"></i>
                             <p>
                                 {{__('words.vehicles_details')}}
@@ -280,6 +332,42 @@
                                 </li>
                             @endif
                             {{-- Manufaturing countries routes end --}}
+
+                            {{-- Used Vehicles For Sale routes start --}}
+                            @if(auth('admin')->user()->hasPermission('read-used_vehicles'))
+                                <li class="nav-item {{ request()->routeIs('used-vehicles.*') ? 'menu-open' : '' }}">
+                                    <a href="#"
+                                       class="nav-link {{ request()->routeIs('used-vehicles.*') ? 'sub-menu active' : '' }}">
+                                        <i class="fas fa-car"></i>
+                                        <p>
+                                            {{__('words.used_vehicles')}}
+                                            <i class="{{app()->getLocale() == 'ar' ? 'left fas fa-angle-right' :  'right fas fa-angle-left'}}"></i>
+                                        </p>
+                                    </a>
+                                    <ul class="nav nav-treeview">
+                                        @if(auth('admin')->user()->hasPermission('read-used_vehicles'))
+                                            <li class="nav-item">
+                                                <a href="{{route('used-vehicles.index')}}"
+                                                   class="nav-link {{ request()->routeIs('used-vehicles.index') ? 'active' : '' }}">
+                                                    <i class="far fa-eye nav-icon"></i>
+                                                    <p>{{__('words.show_all')}}</p>
+                                                </a>
+                                            </li>
+                                        @endif
+
+                                        @if(auth('admin')->user()->hasPermission('create-used_vehicles'))
+                                            <li class="nav-item">
+                                                <a href="{{route('used-vehicles.create')}}"
+                                                   class="nav-link {{ request()->routeIs('used-vehicles.create') ? 'active' : '' }}">
+                                                    <i class="fas fa-folder-plus"></i>
+                                                    <p>{{__('words.create')}}</p>
+                                                </a>
+                                            </li>
+                                        @endif
+                                    </ul>
+                                </li>
+                            @endif
+                            {{-- Used Vehicles For Sale routes end --}}
                         </ul>
                     </li>
                 @endif

@@ -68,6 +68,15 @@
                                             {{__('words.name_en')}}</th>
                                             <td>{{$payment_method->name_en}}</td>
                                         </tr>
+                                        <tr>
+                                            <th class="show-details-table">{{__('words.created_at')}}</th>
+                                            <td>{{createdAtFormat($payment_method->created_at)}}</td>
+                                        </tr>
+
+                                        <tr>
+                                            <th class="show-details-table">{{__('words.updated_at')}}</th>
+                                            <td>{{createdAtFormat($payment_method->created_at) == updatedAtFormat($payment_method->updated_at) ? '--' : updatedAtFormat($payment_method->updated_at)}}</td>
+                                        </tr>
                                     </table>
                                 </div>
                             </div>

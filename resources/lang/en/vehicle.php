@@ -87,8 +87,8 @@ return [
     'front_plus_back' => 'Front plus back',
     'panoramic_sunroof' => 'Panoramic sunroof',
     'none' => 'None',
-    'Manual' => 'Manual',
-    'Automatic' => 'Automatic',
+    'manual' => 'Manual',
+    'automatic' => 'Automatic',
     'high_level' => 'High level',
     'low_level' => 'Low level',
     'Full' => 'Full',
@@ -425,4 +425,6 @@ return [
     'pick_up' => 'Pick up',
     'van' => 'Van',
     'hatchback' => 'Hatchback',
+    'chassis_number' => 'Chassis Number',
+    'battery_size' => 'Battery Size',
 ];

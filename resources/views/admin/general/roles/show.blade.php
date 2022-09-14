@@ -50,6 +50,15 @@
                                             <th class="show-details-table">{{__('words.description_en')}}</th>
                                             <td>{{$role->description_en}}</td>
                                         </tr>
+                                        <tr>
+                                            <th class="show-details-table">{{__('words.created_at')}}</th>
+                                            <td>{{createdAtFormat($role->created_at)}}</td>
+                                        </tr>
+
+                                        <tr>
+                                            <th class="show-details-table">{{__('words.updated_at')}}</th>
+                                            <td>{{createdAtFormat($role->created_at) == updatedAtFormat($role->updated_at) ? '--' : updatedAtFormat($role->updated_at)}}</td>
+                                        </tr>
                                     </table>
                                 </div>
                                 <div class="row">

@@ -18,9 +18,9 @@ class UserFactory extends Factory
             'first_name' => $this->faker->firstName(),
             'last_name' => $this->faker->lastName(),
             'nickname' => '',
-            'phone' => $this->faker->unique()->phoneNumber(),
+            'phone' => $this->faker->unique()->numberBetween(45698752,63259874),
             'email' => $this->faker->unique()->safeEmail(),
-            'phone_code' => $this->faker->countryCode(),
+            'phone_code' => '+973',
             'password' => bcrypt('123456'), // password
             'active' => true,
             'date_of_birth' => $this->faker->dateTimeBetween('-7 days', '+2 months')->format('Y-m-d'),

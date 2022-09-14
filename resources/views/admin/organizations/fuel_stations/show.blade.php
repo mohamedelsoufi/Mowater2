@@ -120,6 +120,15 @@
                                             <th class="show-details-table">{{__('words.activity')}}</th>
                                             <td>{{$fuel_station->getActive()}}</td>
                                         </tr>
+                                        <tr>
+                                            <th class="show-details-table">{{__('words.created_at')}}</th>
+                                            <td>{{createdAtFormat($fuel_station->created_at)}}</td>
+                                        </tr>
+
+                                        <tr>
+                                            <th class="show-details-table">{{__('words.updated_at')}}</th>
+                                            <td>{{createdAtFormat($fuel_station->created_at) == updatedAtFormat($fuel_station->updated_at) ? '--' : updatedAtFormat($fuel_station->updated_at)}}</td>
+                                        </tr>
                                     </table>
                                 </div>
                             </div>

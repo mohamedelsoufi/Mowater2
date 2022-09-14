@@ -32,16 +32,31 @@
                                 <h3 class="card-title">{{__('words.show_car_class')}}</h3>
                             </div>
                             <div class="card-body">
-                                <dl class="row">
-                                    <dt class="col-sm-4">{{__('words.name_ar')}}</dt>
-                                    <dd class="col-sm-8">: {{$car_class->name_ar}}</dd>
+                                <div class="table-responsive">
+                                    <table class="table table-striped">
+                                        <tr>
+                                            <th class="show-details-table">{{__('words.name_ar')}}</th>
+                                            <td>{{$car_class->name_ar}}</td>
+                                        </tr>
+                                        <tr>
+                                            <th class="show-details-table">{{__('words.name_en')}}</th>
+                                            <td>{{$car_class->name_en}}</td>
+                                        </tr>
+                                        <tr>
+                                            <th class="show-details-table">{{__('words.activity')}}</th>
+                                            <td>{{$car_class->getActive()}}</td>
+                                        </tr>
+                                        <tr>
+                                            <th class="show-details-table">{{__('words.created_at')}}</th>
+                                            <td>{{createdAtFormat($car_class->created_at)}}</td>
+                                        </tr>
 
-                                    <dt class="col-sm-4">{{__('words.name_en')}}</dt>
-                                    <dd class="col-sm-8">: {{$car_class->name_en}}</dd>
-
-                                    <dt class="col-sm-4">{{__('words.activity')}}</dt>
-                                    <dd class="col-sm-8">: {{$car_class->getActive()}}</dd>
-                                </dl>
+                                        <tr>
+                                            <th class="show-details-table">{{__('words.updated_at')}}</th>
+                                            <td>{{createdAtFormat($car_class->created_at) == updatedAtFormat($car_class->updated_at) ? '--' : updatedAtFormat($car_class->updated_at)}}</td>
+                                        </tr>
+                                    </table>
+                                </div>
                             </div>
 
                             @if(auth('admin')->user()->hasPermission('update-car_classes'))

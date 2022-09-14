@@ -122,7 +122,7 @@ class InsuranceCompaniesSeeder extends Seeder
                     'instagram_link' => 'https://www.google.com/',
                 ]);
                 $branch->organization_users()->create([
-                    'user_name' => 'Agency branch user ' . $b,
+                    'user_name' => 'Insurance company branch user ' . $b,
                     'email' => 'broker_ba' . $b . $counter . '@gmail.com',
                     'password' => "123456",
                 ]);

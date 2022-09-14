@@ -40,6 +40,8 @@
                                         <th>{{__('words.name_en')}}</th>
                                         <th>{{__('words.section')}}</th>
                                         <th>{{__('words.ref_name')}}</th>
+                                        <th>{{__('words.created_at')}}</th>
+                                        <th>{{__('words.updated_at')}}</th>
                                         <th>{{__('words.actions')}}</th>
                                     </tr>
                                     </thead>
@@ -51,6 +53,8 @@
                                             <td>{{$category->name_en}}</td>
                                             <td>{{$category->section ? $category->section->name : '--'}}</td>
                                             <td>{{$category->ref_name ? __('words.' . $category->ref_name) : '--'}}</td>
+                                            <td>{{createdAtFormat($category->created_at)}}</td>
+                                            <td>{{createdAtFormat($category->created_at) == updatedAtFormat($category->updated_at) ? '--' : updatedAtFormat($category->updated_at)}}</td>
                                             <td>
                                                 @if(auth('admin')->user()->hasPermission('read-categories'))
                                                     <a href="{{route('categories.show',$category->id)}}"

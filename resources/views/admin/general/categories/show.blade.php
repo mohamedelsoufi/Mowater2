@@ -50,6 +50,15 @@
                                             <th class="show-details-table">{{__('words.ref_name')}}</th>
                                             <td>{{$category->ref_name ? __('words.' . $category->ref_name) : '--'}}</td>
                                         </tr>
+                                        <tr>
+                                            <th class="show-details-table">{{__('words.created_at')}}</th>
+                                            <td>{{createdAtFormat($category->created_at)}}</td>
+                                        </tr>
+
+                                        <tr>
+                                            <th class="show-details-table">{{__('words.updated_at')}}</th>
+                                            <td>{{createdAtFormat($category->created_at) == updatedAtFormat($category->updated_at) ? '--' : updatedAtFormat($category->updated_at)}}</td>
+                                        </tr>
                                     </table>
                                 </div>
                             </div>

@@ -33,16 +33,31 @@
                                 <h3 class="card-title">{{__('words.show_manufacture_country')}}</h3>
                             </div>
                             <div class="card-body">
-                                <dl class="row">
-                                    <dt class="col-sm-4">{{__('words.name_ar')}}</dt>
-                                    <dd class="col-sm-8">: {{$manufacture_country->name_ar}}</dd>
+                                <div class="table-responsive">
+                                    <table class="table table-striped">
+                                        <tr>
+                                            <th class="show-details-table">{{__('words.name_ar')}}</th>
+                                            <td>{{$manufacture_country->name_ar}}</td>
+                                        </tr>
+                                        <tr>
+                                            <th class="show-details-table">{{__('words.name_en')}}</th>
+                                            <td>{{$manufacture_country->name_en}}</td>
+                                        </tr>
+                                        <tr>
+                                            <th class="show-details-table">{{__('words.activity')}}</th>
+                                            <td>{{$manufacture_country->getActive()}}</td>
+                                        </tr>
+                                        <tr>
+                                            <th class="show-details-table">{{__('words.created_at')}}</th>
+                                            <td>{{createdAtFormat($manufacture_country->created_at)}}</td>
+                                        </tr>
 
-                                    <dt class="col-sm-4">{{__('words.name_en')}}</dt>
-                                    <dd class="col-sm-8">: {{$manufacture_country->name_en}}</dd>
-
-                                    <dt class="col-sm-4">{{__('words.activity')}}</dt>
-                                    <dd class="col-sm-8">: {{$manufacture_country->getActive()}}</dd>
-                                </dl>
+                                        <tr>
+                                            <th class="show-details-table">{{__('words.updated_at')}}</th>
+                                            <td>{{createdAtFormat($manufacture_country->created_at) == updatedAtFormat($manufacture_country->updated_at) ? '--' : updatedAtFormat($manufacture_country->updated_at)}}</td>
+                                        </tr>
+                                    </table>
+                                </div>
                             </div>
 
                             @if(auth('admin')->user()->hasPermission('update-manufacture_countries'))

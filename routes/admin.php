@@ -23,8 +23,14 @@ Route::group(['prefix' => LaravelLocalization::setLocale(),
             //AdminRoles routes
             Route::resource('admin-roles', 'General\AdminRolesController');
 
-            //user routes
+            //AdminUser routes
             Route::resource('admin-users', 'General\AdminUserController');
+
+            //AppUser routes
+            Route::resource('app-users', 'General\AppUserController');
+
+            //OrgUser routes
+            Route::resource('org-users', 'General\OrganizationUserController');
 
             //brand routes
             Route::resource('brands', 'VehicleDetails\BrandsController');
@@ -38,6 +44,9 @@ Route::group(['prefix' => LaravelLocalization::setLocale(),
 
             //car class routes
             Route::resource('car-classes', 'VehicleDetails\CarClassController');
+
+            //used vehicle for sale routes
+            Route::resource('used-vehicles', 'VehicleDetails\UsedVehicleController');
 
             //country routes
             Route::resource('countries', 'Location\CountryController');

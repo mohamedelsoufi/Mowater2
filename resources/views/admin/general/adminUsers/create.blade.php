@@ -13,7 +13,7 @@
                     <div class="col-sm-6">
                         <ol class="breadcrumb {{app()->getLocale() == 'ar' ? 'float-sm-left' :  'float-sm-right'}}">
                             <li class="breadcrumb-item"><a href="{{route('admin.home')}}">{{__('words.home')}}</a></li>
-                            <li class="breadcrumb-item"><a href="{{route('admin-users.index')}}">{{__('words.admin_users')}}</a></li>
+                            <li class="breadcrumb-item"><a href="{{route('admin-users.index')}}">{{__('words.show_admin_users')}}</a></li>
                             <li class="breadcrumb-item active">{{__('words.create_admin_user')}}</li>
                         </ol>
                     </div>

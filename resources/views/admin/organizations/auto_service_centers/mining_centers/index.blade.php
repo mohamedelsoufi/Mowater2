@@ -40,6 +40,8 @@
                                         <th>{{__('words.name_ar')}}</th>
                                         <th>{{__('words.name_en')}}</th>
                                         <th>{{__('words.activity')}}</th>
+                                        <th>{{__('words.created_at')}}</th>
+                                        <th>{{__('words.updated_at')}}</th>
                                         <th>{{__('words.actions')}}</th>
                                     </tr>
                                     </thead>
@@ -69,6 +71,8 @@
                                             <td>{{$mining_center->name_ar}}</td>
                                             <td>{{$mining_center->name_en}}</td>
                                             <td>{{$mining_center->getActive()}}</td>
+                                            <td>{{createdAtFormat($mining_center->created_at)}}</td>
+                                            <td>{{createdAtFormat($mining_center->created_at) == updatedAtFormat($mining_center->updated_at) ? '--' : updatedAtFormat($mining_center->updated_at)}}</td>
                                             <td>
                                                 @if(auth('admin')->user()->hasPermission('read-mining_centers'))
                                                     <a href="{{route('mining-centers.show',$mining_center->id)}}"

@@ -247,8 +247,8 @@ function transmission_type()
 function transmission_type_arr()
 {
     return [
-        'manual' => __('vehicle.Manual'),
-        'automatic' => __('vehicle.Automatic')
+        'manual' => __('vehicle.manual'),
+        'automatic' => __('vehicle.automatic')
     ];
 }
 
@@ -357,8 +357,8 @@ function windows_control()
 function windows_control_arr()
 {
     return [
-        'Manual' => __('vehicle.Manual'),
-        'Automatic' => __('vehicle.Automatic')
+        'manual' => __('vehicle.manual'),
+        'automatic' => __('vehicle.automatic')
     ];
 }
 

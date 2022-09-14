@@ -32,41 +32,59 @@
                                 <h3 class="card-title">{{__('words.show_brand')}}</h3>
                             </div>
                             <div class="card-body">
-                                <dl class="row">
-                                    <dt class="col-sm-4">{{__('words.image_s')}}</dt>
-                                    <dd class="col-sm-8">
+                                <div class="table-responsive">
+                                    <table class="table table-striped">
+                                        <tr>
+                                            <th class="show-details-table">{{__('words.image_s')}}</th>
+                                            <td>
 
-                                        @if(!$brand->logo)
-                                            <a href="{{asset('uploads/default_image.png')}}"
-                                               data-toggle="lightbox" data-title="{{$brand->name}}"
-                                               data-gallery="gallery">
-                                                <img class="index_image"
-                                                     src="{{asset('uploads/default_image.png')}}" alt="logo">
-                                            </a>
-                                        @else
-                                            <a href="{{$brand->logo}}"
-                                               data-toggle="lightbox" data-title="{{$brand->name}}"
-                                               data-gallery="gallery">
-                                                <img class="index_image"
-                                                     src="{{$brand->logo}}"
-                                                     onerror="this.src='{{asset('uploads/default_image.png')}}'"
-                                                     alt="logo">
-                                            </a>
-                                        @endif
-                                    </dd>
+                                                @if(!$brand->logo)
+                                                    <a href="{{asset('uploads/default_image.png')}}"
+                                                       data-toggle="lightbox" data-title="{{$brand->name}}"
+                                                       data-gallery="gallery">
+                                                        <img class="index_image"
+                                                             src="{{asset('uploads/default_image.png')}}" alt="logo">
+                                                    </a>
+                                                @else
+                                                    <a href="{{$brand->logo}}"
+                                                       data-toggle="lightbox" data-title="{{$brand->name}}"
+                                                       data-gallery="gallery">
+                                                        <img class="index_image"
+                                                             src="{{$brand->logo}}"
+                                                             onerror="this.src='{{asset('uploads/default_image.png')}}'"
+                                                             alt="logo">
+                                                    </a>
+                                                @endif
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th class="show-details-table">{{__('words.name_ar')}}</th>
+                                            <td>{{$brand->name_ar}}</td>
+                                        </tr>
+                                        <tr>
+                                            <th class="show-details-table">{{__('words.name_en')}}</th>
+                                            <td>{{$brand->name_en}}</td>
+                                        </tr>
+                                        <tr>
+                                            <th class="show-details-table">{{__('words.manufacture_country')}}</th>
+                                            <td>{{$brand->manufacture_country->name}}</td>
+                                        </tr>
+                                        <tr>
+                                            <th class="show-details-table">{{__('words.activity')}}</th>
+                                            <td>{{$brand->getActive()}}</td>
+                                        </tr>
 
-                                    <dt class="col-sm-4">{{__('words.name_ar')}}</dt>
-                                    <dd class="col-sm-8">: {{$brand->name_ar}}</dd>
+                                        <tr>
+                                            <th class="show-details-table">{{__('words.created_at')}}</th>
+                                            <td>{{createdAtFormat($brand->created_at)}}</td>
+                                        </tr>
 
-                                    <dt class="col-sm-4">{{__('words.name_en')}}</dt>
-                                    <dd class="col-sm-8">: {{$brand->name_en}}</dd>
-
-                                    <dt class="col-sm-4">{{__('words.manufacture_country')}}</dt>
-                                    <dd class="col-sm-8">: {{$brand->manufacture_country->name}}</dd>
-
-                                    <dt class="col-sm-4">{{__('words.activity')}}</dt>
-                                    <dd class="col-sm-8">: {{$brand->getActive()}}</dd>
-                                </dl>
+                                        <tr>
+                                            <th class="show-details-table">{{__('words.updated_at')}}</th>
+                                            <td>{{createdAtFormat($brand->created_at) == updatedAtFormat($brand->updated_at) ? '--' : updatedAtFormat($brand->updated_at)}}</td>
+                                        </tr>
+                                    </table>
+                                </div>
                             </div>
 
                             @if(auth('admin')->user()->hasPermission('update-brands'))

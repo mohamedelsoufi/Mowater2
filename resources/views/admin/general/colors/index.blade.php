@@ -38,6 +38,8 @@
                                         <th>{{__('words.color_name_ar')}}</th>
                                         <th>{{__('words.color_name')}}</th>
                                         <th>{{__('words.color_code')}}</th>
+                                        <th>{{__('words.created_at')}}</th>
+                                        <th>{{__('words.updated_at')}}</th>
                                         <th>{{__('words.actions')}}</th>
                                     </tr>
                                     </thead>
@@ -48,6 +50,8 @@
                                             <td>{{$color->color_name_ar}}</td>
                                             <td>{{$color->color_name}}</td>
                                             <td>{{$color->color_code}}</td>
+                                            <td>{{createdAtFormat($color->created_at)}}</td>
+                                            <td>{{createdAtFormat($color->created_at) == updatedAtFormat($color->updated_at) ? '--' : updatedAtFormat($color->updated_at)}}</td>
                                             <td>
                                                 @if(auth('admin')->user()->hasPermission('read-colors'))
                                                     <a href="{{route('colors.show',$color->id)}}"

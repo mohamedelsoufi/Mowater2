@@ -87,8 +87,8 @@ return [
     'front_plus_back' => 'أمامي و خلفي',
     'panoramic_sunroof' => 'فتحة سقف بانوراما',
     'none' => 'لا يوجد',
-    'Manual' => 'يدوي',
-    'Automatic' => 'أتوماتيك',
+    'manual' => 'يدوي',
+    'automatic' => 'أتوماتيك',
     'high_level' => 'مستوى عالي',
     'low_level' => 'مستوى منخفض',
     'Full' => 'كامل',
@@ -160,9 +160,9 @@ return [
     'permanent_four-wheel_drive' => 'رباعي الدائم AWD',
 
     'specifications' => 'المواصفات',
-    'full_option' => 'فل أوبشن',
-    'mid_option' => 'ميد أوبشن',
-    'low_option' => 'لو أوبشن',
+    'full_option' => 'مواصفات كاملة',
+    'mid_option' => 'مواصفات متوسطة',
+    'low_option' => 'مواصفات منخفضة',
 
     'start_with_fingerprint' => 'تشغيل بالبصمة',
     'remote_start' => 'تشغيل عن بعد',
@@ -428,4 +428,6 @@ return [
     'pick_up' => 'بيك اب',
     'van' => 'فان',
     'hatchback' => 'هاتش باك',
+    "chassis_number" => "رقم الشاسيه",
+    'battery_size' => 'سعة البطارية',
 ];

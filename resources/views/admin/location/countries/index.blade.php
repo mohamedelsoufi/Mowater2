@@ -39,6 +39,8 @@
                                         <th>{{__('words.image_s')}}</th>
                                         <th>{{__('words.name_ar')}}</th>
                                         <th>{{__('words.name_en')}}</th>
+                                        <th>{{__('words.created_at')}}</th>
+                                        <th>{{__('words.updated_at')}}</th>
                                         <th>{{__('words.actions')}}</th>
                                     </tr>
                                     </thead>
@@ -67,6 +69,8 @@
                                             </td>
                                             <td>{{$country->name_ar}}</td>
                                             <td>{{$country->name_en}}</td>
+                                            <td>{{createdAtFormat($country->created_at)}}</td>
+                                            <td>{{createdAtFormat($country->created_at) == updatedAtFormat($country->updated_at) ? '--' : updatedAtFormat($country->updated_at)}}</td>
                                             <td>
                                                 @if(auth('admin')->user()->hasPermission('read-countries'))
                                                     <a href="{{route('countries.show',$country->id)}}"

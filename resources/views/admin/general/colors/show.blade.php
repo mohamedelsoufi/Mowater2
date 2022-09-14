@@ -49,6 +49,15 @@
                                                 <div>{{$color->color_code}}</div>
                                             </td>
                                         </tr>
+                                        <tr>
+                                            <th class="show-details-table">{{__('words.created_at')}}</th>
+                                            <td>{{createdAtFormat($color->created_at)}}</td>
+                                        </tr>
+
+                                        <tr>
+                                            <th class="show-details-table">{{__('words.updated_at')}}</th>
+                                            <td>{{createdAtFormat($color->created_at) == updatedAtFormat($color->updated_at) ? '--' : updatedAtFormat($color->updated_at)}}</td>
+                                        </tr>
                                     </table>
                                 </div>
                             </div>

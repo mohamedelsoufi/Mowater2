@@ -5,6 +5,8 @@ return [
         //modules name
         'roles' => ['read', 'create', 'update', 'delete'],
         'admins' => ['read', 'create', 'update', 'delete'],
+        'app_users' => ['read', 'update', 'delete'],
+        'org_users' => ['read', 'update', 'delete'],
         'brands' => ['read', 'create', 'update', 'delete'],
         'car_models' => ['read', 'create', 'update', 'delete'],
         'car_classes' => ['read', 'create', 'update', 'delete'],
@@ -38,6 +40,7 @@ return [
         'accessories_stores' => ['read', 'create', 'update', 'delete'],
         'car_washes' => ['read', 'create', 'update', 'delete'],
         'mining_centers' => ['read', 'create', 'update', 'delete'],
+        'used_vehicles' => ['read', 'create', 'update', 'delete'],
 
     ],
 ];

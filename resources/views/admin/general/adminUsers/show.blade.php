@@ -14,7 +14,7 @@
                         <ol class="breadcrumb {{app()->getLocale() == 'ar' ? 'float-sm-left' :  'float-sm-right'}}">
                             <li class="breadcrumb-item"><a href="{{route('admin.home')}}">{{__('words.home')}}</a></li>
                             <li class="breadcrumb-item"><a
-                                    href="{{route('admin-users.index')}}">{{__('words.admin_users')}}</a></li>
+                                    href="{{route('admin-users.index')}}">{{__('words.show_admin_users')}}</a></li>
                             <li class="breadcrumb-item active">{{__('words.show_user')}}</li>
                         </ol>
                     </div>
@@ -53,6 +53,15 @@
                                         <tr>
                                             <th class="show-details-table">{{__('words.activity')}}</th>
                                             <td> {{$user->getActive()}}</td>
+                                        </tr>
+                                        <tr>
+                                            <th class="show-details-table">{{__('words.created_at')}}</th>
+                                            <td>{{createdAtFormat($user->created_at)}}</td>
+                                        </tr>
+
+                                        <tr>
+                                            <th class="show-details-table">{{__('words.updated_at')}}</th>
+                                            <td>{{createdAtFormat($user->created_at) == updatedAtFormat($user->updated_at) ? '--' : updatedAtFormat($user->updated_at)}}</td>
                                         </tr>
                                     </table>
                                 </div>

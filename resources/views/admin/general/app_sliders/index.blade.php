@@ -39,6 +39,8 @@
                                         <th>{{__('words.image')}}</th>
                                         <th>{{__('words.section')}}</th>
                                         <th>{{__('words.type')}}</th>
+                                        <th>{{__('words.created_at')}}</th>
+                                        <th>{{__('words.updated_at')}}</th>
                                         <th>{{__('words.actions')}}</th>
                                     </tr>
                                     </thead>
@@ -81,6 +83,8 @@
                                                     {{__('words.home_third_slider')}}
                                                 @endif
                                             </td>
+                                            <td>{{createdAtFormat($slider->created_at)}}</td>
+                                            <td>{{createdAtFormat($slider->created_at) == updatedAtFormat($slider->updated_at) ? '--' : updatedAtFormat($slider->updated_at)}}</td>
                                             <td>
                                                 @if(auth('admin')->user()->hasPermission('read-app_sliders'))
                                                     <a href="{{route('app-sliders.show',$slider->id)}}"

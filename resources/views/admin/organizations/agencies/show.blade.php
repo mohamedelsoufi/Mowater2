@@ -123,6 +123,16 @@
                                             <th class="show-details-table">{{__('words.activity')}}</th>
                                             <td>{{$agency->getActive()}}</td>
                                         </tr>
+
+                                        <tr>
+                                            <th class="show-details-table">{{__('words.created_at')}}</th>
+                                            <td>{{createdAtFormat($agency->created_at)}}</td>
+                                        </tr>
+
+                                        <tr>
+                                            <th class="show-details-table">{{__('words.updated_at')}}</th>
+                                            <td>{{createdAtFormat($agency->created_at) == updatedAtFormat($agency->updated_at) ? '--' : updatedAtFormat($agency->updated_at)}}</td>
+                                        </tr>
                                     </table>
                                 </div>
                             </div>

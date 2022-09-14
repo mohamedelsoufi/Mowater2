@@ -41,6 +41,8 @@
                                         <th>{{__('words.name_en')}}</th>
                                         <th>{{__('words.manufacture_country')}}</th>
                                         <th>{{__('words.activity')}}</th>
+                                        <th>{{__('words.created_at')}}</th>
+                                        <th>{{__('words.updated_at')}}</th>
                                         <th>{{__('words.actions')}}</th>
                                     </tr>
                                     </thead>
@@ -71,6 +73,8 @@
                                             <td>{{$brand->name_en}}</td>
                                             <td>{{$brand->manufacture_country->name}}</td>
                                             <td>{{$brand->getActive()}}</td>
+                                            <td>{{createdAtFormat($brand->created_at)}}</td>
+                                            <td>{{createdAtFormat($brand->created_at) == updatedAtFormat($brand->updated_at) ? '--' : updatedAtFormat($brand->updated_at)}}</td>
                                             <td>
                                                 @if(auth('admin')->user()->hasPermission('read-brands'))
                                                     <a href="{{route('brands.show',$brand->id)}}"

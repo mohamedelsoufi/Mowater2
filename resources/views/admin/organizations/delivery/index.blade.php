@@ -39,6 +39,8 @@
                                         <th>{{__('words.profile_picture')}}</th>
                                         <th>{{__('words.name')}}</th>
                                         <th>{{__('words.activity')}}</th>
+                                        <th>{{__('words.created_at')}}</th>
+                                        <th>{{__('words.updated_at')}}</th>
                                         <th>{{__('words.actions')}}</th>
                                     </tr>
                                     </thead>
@@ -66,8 +68,9 @@
                                                 @endif
                                             </td>
                                             <td>{{$delivery->name}}</td>
-
                                             <td>{{$delivery->getActive()}}</td>
+                                            <td>{{createdAtFormat($delivery->created_at)}}</td>
+                                            <td>{{createdAtFormat($delivery->created_at) == updatedAtFormat($delivery->updated_at) ? '--' : updatedAtFormat($delivery->updated_at)}}</td>
                                             <td>
                                                 @if(auth('admin')->user()->hasPermission('read-delivery'))
                                                     <a href="{{route('delivery.show',$delivery->id)}}"

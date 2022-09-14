@@ -40,6 +40,8 @@
                                         <th>{{__('words.name_ar')}}</th>
                                         <th>{{__('words.name_en')}}</th>
                                         <th>{{__('words.activity')}}</th>
+                                        <th>{{__('words.created_at')}}</th>
+                                        <th>{{__('words.updated_at')}}</th>
                                         <th>{{__('words.actions')}}</th>
                                     </tr>
                                     </thead>
@@ -69,6 +71,9 @@
                                             <td>{{$store->name_ar}}</td>
                                             <td>{{$store->name_en}}</td>
                                             <td>{{$store->getActive()}}</td>
+                                            <td>{{createdAtFormat($store->created_at)}}</td>
+                                            <td>{{createdAtFormat($store->created_at) == updatedAtFormat($store->updated_at) ? '--' : updatedAtFormat($store->updated_at)}}</td>
+
                                             <td>
                                                 @if(auth('admin')->user()->hasPermission('read-accessories_stores'))
                                                     <a href="{{route('accessories-stores.show',$store->id)}}"

@@ -103,6 +103,15 @@
                                             <th class="show-details-table">{{__('words.activity')}}</th>
                                             <td>{{$mining_center->getActive()}}</td>
                                         </tr>
+                                        <tr>
+                                            <th class="show-details-table">{{__('words.created_at')}}</th>
+                                            <td>{{createdAtFormat($mining_center->created_at)}}</td>
+                                        </tr>
+
+                                        <tr>
+                                            <th class="show-details-table">{{__('words.updated_at')}}</th>
+                                            <td>{{createdAtFormat($mining_center->created_at) == updatedAtFormat($mining_center->updated_at) ? '--' : updatedAtFormat($mining_center->updated_at)}}</td>
+                                        </tr>
                                     </table>
                                 </div>
                             </div>

@@ -40,6 +40,8 @@
                                         <th>{{__('words.name_ar')}}</th>
                                         <th>{{__('words.name_en')}}</th>
                                         <th>{{__('words.activity')}}</th>
+                                        <th>{{__('words.created_at')}}</th>
+                                        <th>{{__('words.updated_at')}}</th>
                                         <th>{{__('words.actions')}}</th>
                                     </tr>
                                     </thead>
@@ -68,8 +70,9 @@
                                             </td>
                                             <td>{{$insurance_company->name_ar}}</td>
                                             <td>{{$insurance_company->name_en}}</td>
-
                                             <td>{{$insurance_company->getActive()}}</td>
+                                            <td>{{createdAtFormat($insurance_company->created_at)}}</td>
+                                            <td>{{createdAtFormat($insurance_company->created_at) == updatedAtFormat($insurance_company->updated_at) ? '--' : updatedAtFormat($insurance_company->updated_at)}}</td>
                                             <td>
                                                 @if(auth('admin')->user()->hasPermission('read-insurance_companies'))
                                                     <a href="{{route('insurance_companies.show',$insurance_company->id)}}"

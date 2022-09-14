@@ -107,6 +107,15 @@
                                             <th class="show-details-table">{{__('words.activity')}}</th>
                                             <td>{{$car_wash->getActive()}}</td>
                                         </tr>
+                                        <tr>
+                                            <th class="show-details-table">{{__('words.created_at')}}</th>
+                                            <td>{{createdAtFormat($car_wash->created_at)}}</td>
+                                        </tr>
+
+                                        <tr>
+                                            <th class="show-details-table">{{__('words.updated_at')}}</th>
+                                            <td>{{createdAtFormat($car_wash->created_at) == updatedAtFormat($car_wash->updated_at) ? '--' : updatedAtFormat($car_wash->updated_at)}}</td>
+                                        </tr>
                                     </table>
                                 </div>
                             </div>

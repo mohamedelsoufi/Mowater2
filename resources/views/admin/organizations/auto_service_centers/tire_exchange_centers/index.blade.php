@@ -40,6 +40,8 @@
                                         <th>{{__('words.name_ar')}}</th>
                                         <th>{{__('words.name_en')}}</th>
                                         <th>{{__('words.activity')}}</th>
+                                        <th>{{__('words.created_at')}}</th>
+                                        <th>{{__('words.updated_at')}}</th>
                                         <th>{{__('words.actions')}}</th>
                                     </tr>
                                     </thead>
@@ -69,6 +71,8 @@
                                             <td>{{$center->name_ar}}</td>
                                             <td>{{$center->name_en}}</td>
                                             <td>{{$center->getActive()}}</td>
+                                            <td>{{createdAtFormat($center->created_at)}}</td>
+                                            <td>{{createdAtFormat($center->created_at) == updatedAtFormat($center->updated_at) ? '--' : updatedAtFormat($center->updated_at)}}</td>
                                             <td>
                                                 @if(auth('admin')->user()->hasPermission('read-tire_exchange_centers'))
                                                     <a href="{{route('tire-exchange-centers.show',$center->id)}}"

@@ -52,6 +52,15 @@
                                                 @endif
                                             </td>
                                         </tr>
+                                        <tr>
+                                            <th class="show-details-table">{{__('words.created_at')}}</th>
+                                            <td>{{createdAtFormat($app_slider->created_at)}}</td>
+                                        </tr>
+
+                                        <tr>
+                                            <th class="show-details-table">{{__('words.updated_at')}}</th>
+                                            <td>{{createdAtFormat($app_slider->created_at) == updatedAtFormat($app_slider->updated_at) ? '--' : updatedAtFormat($app_slider->updated_at)}}</td>
+                                        </tr>
                                     </table>
                                 </div>
                                 <hr>

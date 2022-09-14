@@ -44,6 +44,8 @@
                                         <th>{{__('words.ref_name')}}</th>
                                         <th>{{__('words.reservation_cost_type')}}</th>
                                         <th>{{__('words.reservation_cost')}}</th>
+                                        <th>{{__('words.created_at')}}</th>
+                                        <th>{{__('words.updated_at')}}</th>
                                         <th>{{__('words.actions')}}</th>
                                     </tr>
                                     </thead>
@@ -78,6 +80,8 @@
                                             <td>{{$section->ref_name}}</td>
                                             <td>{{$section->getReservationCostType()}}</td>
                                             <td>{{$section->reservation_cost}}</td>
+                                            <td>{{createdAtFormat($section->created_at)}}</td>
+                                            <td>{{createdAtFormat($section->created_at) == updatedAtFormat($section->updated_at) ? '--' : updatedAtFormat($section->updated_at)}}</td>
                                             <td>
                                                 @if(auth('admin')->user()->hasPermission('read-sections'))
                                                     <a href="{{route('sections.show',$section->id)}}"

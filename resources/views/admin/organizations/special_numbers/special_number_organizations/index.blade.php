@@ -40,6 +40,8 @@
                                         <th>{{__('words.name_ar')}}</th>
                                         <th>{{__('words.name_en')}}</th>
                                         <th>{{__('words.activity')}}</th>
+                                        <th>{{__('words.created_at')}}</th>
+                                        <th>{{__('words.updated_at')}}</th>
                                         <th>{{__('words.actions')}}</th>
                                     </tr>
                                     </thead>
@@ -69,6 +71,8 @@
                                             <td>{{$organization->name_ar}}</td>
                                             <td>{{$organization->name_en}}</td>
                                             <td>{{$organization->getActive()}}</td>
+                                            <td>{{createdAtFormat($organization->created_at)}}</td>
+                                            <td>{{createdAtFormat($organization->created_at) == updatedAtFormat($organization->updated_at) ? '--' : updatedAtFormat($organization->updated_at)}}</td>
                                             <td>
                                                 @if(auth('admin')->user()->hasPermission('read-special_numbers_organizations'))
                                                     <a href="{{route('special-number-organizations.show',$organization->id)}}"

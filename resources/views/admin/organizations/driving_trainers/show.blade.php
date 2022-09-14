@@ -172,6 +172,15 @@
                                             <th class="show-details-table">{{__('words.activity')}}</th>
                                             <td>{{$trainer->getActive()}}</td>
                                         </tr>
+                                        <tr>
+                                            <th class="show-details-table">{{__('words.created_at')}}</th>
+                                            <td>{{createdAtFormat($trainer->created_at)}}</td>
+                                        </tr>
+
+                                        <tr>
+                                            <th class="show-details-table">{{__('words.updated_at')}}</th>
+                                            <td>{{createdAtFormat($trainer->created_at) == updatedAtFormat($trainer->updated_at) ? '--' : updatedAtFormat($trainer->updated_at)}}</td>
+                                        </tr>
                                     </table>
                                 </div>
                             </div>
