@@ -59,7 +59,7 @@
                                                 <label>{{__('words.brand')}}</label>
                                                 <select name="brand_id"
                                                         class="form-control brand_id @error('brand_id') is-invalid @enderror">
-                                                    <option value="" selected>{{__('words.choose')}}</option>
+                                                    <option value="">{{__('words.choose')}}</option>
                                                     @foreach($brands as $brand)
                                                         @if (Input::old('brand_id') == $brand->id)
                                                             <option selected
@@ -105,7 +105,7 @@
                                                 <label>{{__('words.car_class')}}</label>
                                                 <select name="car_class_id"
                                                         class="form-control car_class_id @error('car_class_id') is-invalid @enderror">
-                                                    <option value="" selected>{{__('words.choose')}}</option>
+                                                    <option value="">{{__('words.choose')}}</option>
                                                     @foreach($car_classes as $car_class)
                                                         @if (Input::old('car_class_id') == $car_class->id)
                                                             <option selected
@@ -141,7 +141,7 @@
 
                                             <div class="form-group col-md-4">
                                                 <label>{{__('vehicle.manufacturing_year')}}</label>
-                                                <input type="text" name="manufacturing_year"
+                                                <input type="text" name="manufacturing_year" min="1900"
                                                        class="yearpicker form-control @error('manufacturing_year') is-invalid @enderror"
                                                        value="{{ old('manufacturing_year') }}"
                                                        placeholder="{{__('vehicle.manufacturing_year')}}">
@@ -156,10 +156,11 @@
                                             <div class="form-group col-md-4">
                                                 <label>{{__('vehicle.engine_size')}}</label>
                                                 <select name="engine_size"
-                                                        class="form-control @error('engine_size') is-invalid @enderror">
+                                                        class="form-control select2 select2-primary @error('engine_size') is-invalid @enderror">
+                                                    <option value="">{{__('words.choose')}}</option>
                                                     @foreach(engine_size_arr() as $key => $val)
                                                         <option
-                                                            value="{{$key}}">{{$val}}</option>
+                                                            value="{{$key}}" {{old('engine_size') == $key ? "selected" : ""}}>{{$val}}</option>
                                                     @endforeach
                                                 </select>
                                                 @error('engine_size')
@@ -177,9 +178,8 @@
                                                         class="form-control @error('outside_color_id') is-invalid @enderror">
                                                     <option value="">{{__('words.choose')}}</option>
                                                     @foreach($colors as $color)
-                                                        <option
-                                                            {{ old('outside_color_id') == $color->id ? "selected" : "" }}
-                                                            value="{{$color->id}}">{{$color->name}}</option>
+                                                        <option value="{{$color->id}}"
+                                                            {{ old('outside_color_id') == $color->id ? "selected" : "" }}>{{$color->name}}</option>
                                                     @endforeach
                                                 </select>
                                                 @error('outside_color_id')
@@ -195,9 +195,8 @@
                                                         class="form-control @error('inside_color_id') is-invalid @enderror">
                                                     <option value="">{{__('words.choose')}}</option>
                                                     @foreach($colors as $color)
-                                                        <option
-                                                            {{ old('inside_color_id') == $color->id ? "selected" : "" }}
-                                                            value="{{$color->id}}">{{$color->name}}</option>
+                                                        <option value="{{$color->id}}"
+                                                            {{ old('inside_color_id') == $color->id ? "selected" : "" }}>{{$color->name}}</option>
                                                     @endforeach
                                                 </select>
                                                 @error('inside_color_id')
@@ -213,8 +212,8 @@
                                                         class="form-control @error('transmission_type') is-invalid @enderror">
                                                     <option value="">{{__('words.choose')}}</option>
                                                     @foreach(transmission_type_arr() as $key=>$value)
-                                                        <option
-                                                            {{ old('transmission_type') == $key ? "selected" : "" }} value="{{$key}}">{{$value}}</option>
+                                                        <option value="{{$key}}"
+                                                            {{ old('transmission_type') == $key ? "selected" : "" }}>{{$value}}</option>
                                                     @endforeach
                                                 </select>
                                                 @error('transmission_type')
@@ -232,14 +231,14 @@
                                                         class="form-control @error('cylinder_number') is-invalid @enderror">
                                                     <option value="">{{__('words.choose')}}</option>
                                                     @foreach(cylinder_number_arr() as $key=>$value)
-                                                        <option
-                                                            {{ old('cylinder_number') == $key ? "selected" : "" }} value="{{$key}}">{{$value}}</option>
+                                                        <option value="{{$key}}"
+                                                            {{ old('cylinder_number') == $key ? "selected" : "" }}>{{$value}}</option>
                                                     @endforeach
                                                 </select>
                                                 @error('cylinder_number')
                                                 <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
                                                 @enderror
                                             </div>
 
@@ -249,14 +248,14 @@
                                                         class="form-control @error('fuel_type') is-invalid @enderror">
                                                     <option value="">{{__('words.choose')}}</option>
                                                     @foreach(fuel_type_arr() as $key=>$value)
-                                                        <option
-                                                            {{ old('fuel_type') == $key ? "selected" : "" }} value="{{$key}}">{{$value}}</option>
+                                                        <option value="{{$key}}"
+                                                            {{ old('fuel_type') == $key ? "selected" : "" }}>{{$value}}</option>
                                                     @endforeach
                                                 </select>
                                                 @error('fuel_type')
                                                 <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
                                                 @enderror
                                             </div>
 
@@ -266,14 +265,14 @@
                                                         class="form-control @error('wheel_drive_system') is-invalid @enderror">
                                                     <option value="">{{__('words.choose')}}</option>
                                                     @foreach(wheel_drive_system_arr() as $key=>$value)
-                                                        <option
-                                                            {{ old('wheel_drive_system') == $key ? "selected" : "" }} value="{{$key}}">{{$value}}</option>
+                                                        <option value="{{$key}}"
+                                                            {{ old('wheel_drive_system') == $key ? "selected" : "" }}>{{$value}}</option>
                                                     @endforeach
                                                 </select>
                                                 @error('wheel_drive_system')
                                                 <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
                                                 @enderror
                                             </div>
                                         </div>
@@ -285,14 +284,14 @@
                                                         class="form-control @error('specifications') is-invalid @enderror">
                                                     <option value="">{{__('words.choose')}}</option>
                                                     @foreach(specifications_arr() as $key=>$value)
-                                                        <option
-                                                            {{ old('specifications') == $key ? "selected" : "" }} value="{{$key}}">{{$value}}</option>
+                                                        <option value="{{$key}}"
+                                                            {{ old('specifications') == $key ? "selected" : "" }}>{{$value}}</option>
                                                     @endforeach
                                                 </select>
                                                 @error('specifications')
                                                 <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
                                                 @enderror
                                             </div>
 
@@ -301,15 +300,15 @@
                                                 <select name="start_with_fingerprint"
                                                         class="form-control @error('start_with_fingerprint') is-invalid @enderror">
                                                     <option value="">{{__('words.choose')}}</option>
-                                                    <option
-                                                        {{ old('start_with_fingerprint') == 0 ? "selected" : "" }} value="0">{{__('vehicle.no')}}</option>
-                                                    <option
-                                                        {{ old('start_with_fingerprint') == 1 ? "selected" : "" }} value="1">{{__('vehicle.yes')}}</option>
+                                                    <option value="0"
+                                                        {{ old('start_with_fingerprint') == "0" ? "selected" : "" }}>{{__('vehicle.no')}}</option>
+                                                    <option value="1"
+                                                        {{ old('start_with_fingerprint') == "1" ? "selected" : "" }}>{{__('vehicle.yes')}}</option>
                                                 </select>
                                                 @error('start_with_fingerprint')
                                                 <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
                                                 @enderror
                                             </div>
 
@@ -318,15 +317,15 @@
                                                 <select name="remote_start"
                                                         class="form-control @error('remote_start') is-invalid @enderror">
                                                     <option value="">{{__('words.choose')}}</option>
-                                                    <option
-                                                        {{ old('remote_start') == 0 ? "selected" : "" }} value="0">{{__('vehicle.no')}}</option>
-                                                    <option
-                                                        {{ old('remote_start') == 1 ? "selected" : "" }} value="1">{{__('vehicle.yes')}}</option>
+                                                    <option value="0"
+                                                        {{ old('remote_start') == "0" ? "selected" : "" }}>{{__('vehicle.no')}}</option>
+                                                    <option value="1"
+                                                        {{ old('remote_start') == "1" ? "selected" : "" }}>{{__('vehicle.yes')}}</option>
                                                 </select>
                                                 @error('remote_start')
                                                 <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
                                                 @enderror
                                             </div>
                                         </div>
@@ -337,10 +336,10 @@
                                                 <select name="screen"
                                                         class="form-control @error('screen') is-invalid @enderror">
                                                     <option value="">{{__('words.choose')}}</option>
-                                                    <option
-                                                        {{ old('screen') == 0 ? "selected" : "" }} value="0">{{__('vehicle.no')}}</option>
-                                                    <option
-                                                        {{ old('screen') == 1 ? "selected" : "" }} value="1">{{__('vehicle.yes')}}</option>
+                                                    <option value="0"
+                                                        {{ old('screen') == "0" ? "selected" : "" }}>{{__('vehicle.no')}}</option>
+                                                    <option value="1"
+                                                        {{ old('screen') == "1" ? "selected" : "" }}>{{__('vehicle.yes')}}</option>
                                                 </select>
                                                 @error('screen')
                                                 <span class="invalid-feedback" role="alert">
@@ -355,8 +354,8 @@
                                                         class="form-control @error('seat_upholstery') is-invalid @enderror">
                                                     <option value="">{{__('words.choose')}}</option>
                                                     @foreach(seat_upholstery_arr() as $key=>$value)
-                                                        <option
-                                                            {{ old('seat_upholstery') == $key ? "selected" : "" }} value="{{$key}}">{{$value}}</option>
+                                                        <option value="{{$key}}"
+                                                            {{ old('seat_upholstery') == $key ? "selected" : "" }}>{{$value}}</option>
                                                     @endforeach
                                                 </select>
                                                 @error('seat_upholstery')
@@ -372,8 +371,8 @@
                                                         class="form-control @error('windows_control') is-invalid @enderror">
                                                     <option value="">{{__('words.choose')}}</option>
                                                     @foreach(windows_control_arr() as $key=>$value)
-                                                        <option
-                                                            {{ old('windows_control') == $key ? "selected" : "" }} value="{{$key}}">{{$value}}</option>
+                                                        <option value="{{$key}}"
+                                                            {{ old('windows_control') == $key ? "selected" : "" }}>{{$value}}</option>
                                                     @endforeach
                                                 </select>
                                                 @error('windows_control')
@@ -402,19 +401,17 @@
                                             <div class="form-group col-md-4">
                                                 <label>{{__('vehicle.wheel_size')}}</label>
                                                 <select name="wheel_size" id="single-select"
-                                                        class="form-control @error('wheel_size') is-invalid @enderror">
+                                                        class="form-control select2 select2-primary @error('wheel_size') is-invalid @enderror">
                                                     <option value="">{{__('words.choose')}}</option>
                                                     @foreach(wheel_size_arr() as $key=>$value)
-                                                        <option
-                                                            {{ old('wheel_size') == $key ? "selected" : "" }} value="{{$key}}">{{$value}}</option>
+                                                        <option value="{{$key}}"
+                                                            {{ old('wheel_size') == $key ? "selected" : "" }}>{{$value}}</option>
                                                     @endforeach
                                                 </select>
-
-
                                                 @error('wheel_size')
                                                 <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
                                                 @enderror
                                             </div>
 
@@ -424,14 +421,14 @@
                                                         class="form-control @error('wheel_type') is-invalid @enderror">
                                                     <option value="">{{__('words.choose')}}</option>
                                                     @foreach(wheel_type_arr() as $key=>$value)
-                                                        <option
-                                                            {{ old('wheel_type') == $key ? "selected" : "" }} value="{{$key}}">{{$value}}</option>
+                                                        <option value="{{$key}}"
+                                                            {{ old('wheel_type') == $key ? "selected" : "" }}>{{$value}}</option>
                                                     @endforeach
                                                 </select>
                                                 @error('wheel_type')
                                                 <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
                                                 @enderror
                                             </div>
                                         </div>
@@ -443,14 +440,14 @@
                                                         class="form-control @error('sunroof') is-invalid @enderror">
                                                     <option value="">{{__('words.choose')}}</option>
                                                     @foreach(sunroof_arr() as $key=>$value)
-                                                        <option
-                                                            {{ old('sunroof') == $key ? "selected" : "" }} value="{{$key}}">{{$value}}</option>
+                                                        <option value="{{$key}}"
+                                                            {{ old('sunroof') == $key ? "selected" : "" }}>{{$value}}</option>
                                                     @endforeach
                                                 </select>
                                                 @error('sunroof')
                                                 <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
                                                 @enderror
                                             </div>
 
@@ -461,8 +458,8 @@
                                                        placeholder="4, 2, ...">
                                                 @error('doors_number')
                                                 <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
                                                 @enderror
                                             </div>
 
@@ -471,15 +468,15 @@
                                                 <select name="electric_back_door"
                                                         class="form-control @error('electric_back_door') is-invalid @enderror">
                                                     <option value="">{{__('words.choose')}}</option>
-                                                    <option
-                                                        {{ old('electric_back_door') == 0 ? "selected" : "" }} value="0">{{__('vehicle.no')}}</option>
-                                                    <option
-                                                        {{ old('electric_back_door') == 1 ? "selected" : "" }} value="1">{{__('vehicle.yes')}}</option>
+                                                    <option value="0"
+                                                        {{ old('electric_back_door') == "0" ? "selected" : "" }}>{{__('vehicle.no')}}</option>
+                                                    <option value="1"
+                                                        {{ old('electric_back_door') == "1" ? "selected" : "" }}>{{__('vehicle.yes')}}</option>
                                                 </select>
                                                 @error('electric_back_door')
                                                 <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
                                                 @enderror
                                             </div>
                                         </div>
@@ -490,15 +487,15 @@
                                                 <select name="start_engine_with_button"
                                                         class="form-control @error('start_engine_with_button') is-invalid @enderror">
                                                     <option value="">{{__('words.choose')}}</option>
-                                                    <option
-                                                        {{ old('start_engine_with_button') == 0 ? "selected" : "" }} value="0">{{__('vehicle.no')}}</option>
-                                                    <option
-                                                        {{ old('start_engine_with_button') == 1 ? "selected" : "" }} value="1">{{__('vehicle.yes')}}</option>
+                                                    <option value="0"
+                                                        {{ old('start_engine_with_button') == "0" ? "selected" : "" }}>{{__('vehicle.no')}}</option>
+                                                    <option value="1"
+                                                        {{ old('start_engine_with_button') == "1" ? "selected" : "" }}>{{__('vehicle.yes')}}</option>
                                                 </select>
                                                 @error('start_engine_with_button')
                                                 <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
                                                 @enderror
                                             </div>
 
@@ -507,10 +504,10 @@
                                                 <select name="seat_adjustment"
                                                         class="form-control @error('seat_adjustment') is-invalid @enderror">
                                                     <option value="">{{__('words.choose')}}</option>
-                                                    <option
-                                                        {{ old('seat_adjustment') == 0 ? "selected" : "" }} value="0">{{__('vehicle.no')}}</option>
-                                                    <option
-                                                        {{ old('seat_adjustment') == 1 ? "selected" : "" }} value="1">{{__('vehicle.yes')}}</option>
+                                                    <option value="0"
+                                                        {{ old('seat_adjustment') == "0" ? "selected" : "" }}>{{__('vehicle.no')}}</option>
+                                                    <option value="1"
+                                                        {{ old('seat_adjustment') == "1" ? "selected" : "" }}>{{__('vehicle.yes')}}</option>
                                                 </select>
                                                 @error('seat_adjustment')
                                                 <span class="invalid-feedback" role="alert">
@@ -524,15 +521,15 @@
                                                 <select name="seat_heating_cooling_function"
                                                         class="form-control @error('seat_heating_cooling_function') is-invalid @enderror">
                                                     <option value="">{{__('words.choose')}}</option>
-                                                    <option
-                                                        {{ old('seat_heating_cooling_function') == 0 ? "selected" : "" }} value="0">{{__('vehicle.no')}}</option>
-                                                    <option
-                                                        {{ old('seat_heating_cooling_function') == 1 ? "selected" : "" }} value="1">{{__('vehicle.yes')}}</option>
+                                                    <option value="0"
+                                                        {{ old('seat_heating_cooling_function') == "0" ? "selected" : "" }}>{{__('vehicle.no')}}</option>
+                                                    <option value="1"
+                                                        {{ old('seat_heating_cooling_function') == "1" ? "selected" : "" }}>{{__('vehicle.yes')}}</option>
                                                 </select>
                                                 @error('seat_heating_cooling_function')
                                                 <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
                                                 @enderror
                                             </div>
                                         </div>
@@ -543,15 +540,15 @@
                                                 <select name="seat_massage_feature"
                                                         class="form-control @error('seat_massage_feature') is-invalid @enderror">
                                                     <option value="">{{__('words.choose')}}</option>
-                                                    <option
-                                                        {{ old('seat_massage_feature') == 0 ? "selected" : "" }} value="0">{{__('vehicle.no')}}</option>
-                                                    <option
-                                                        {{ old('seat_massage_feature') == 1 ? "selected" : "" }} value="1">{{__('vehicle.yes')}}</option>
+                                                    <option value="0"
+                                                        {{ old('seat_massage_feature') == "0" ? "selected" : "" }}>{{__('vehicle.no')}}</option>
+                                                    <option value="1"
+                                                        {{ old('seat_massage_feature') == "1" ? "selected" : "" }}>{{__('vehicle.yes')}}</option>
                                                 </select>
                                                 @error('seat_massage_feature')
                                                 <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
                                                 @enderror
                                             </div>
 
@@ -560,15 +557,15 @@
                                                 <select name="seat_memory_feature"
                                                         class="form-control @error('seat_memory_feature') is-invalid @enderror">
                                                     <option value="">{{__('words.choose')}}</option>
-                                                    <option
-                                                        {{ old('seat_memory_feature') == 0 ? "selected" : "" }} value="0">{{__('vehicle.no')}}</option>
-                                                    <option
-                                                        {{ old('seat_memory_feature') == 1 ? "selected" : "" }} value="1">{{__('vehicle.yes')}}</option>
+                                                    <option value="0"
+                                                        {{ old('seat_memory_feature') == "0" ? "selected" : "" }}>{{__('vehicle.no')}}</option>
+                                                    <option value="1"
+                                                        {{ old('seat_memory_feature') == "1" ? "selected" : "" }}>{{__('vehicle.yes')}}</option>
                                                 </select>
                                                 @error('seat_memory_feature')
                                                 <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
                                                 @enderror
                                             </div>
 
@@ -577,15 +574,15 @@
                                                 <select name="fog_lights"
                                                         class="form-control @error('fog_lights') is-invalid @enderror">
                                                     <option value="">{{__('words.choose')}}</option>
-                                                    <option
-                                                        {{ old('fog_lights') == 0 ? "selected" : "" }} value="0">{{__('vehicle.no')}}</option>
-                                                    <option
-                                                        {{ old('fog_lights') == 1 ? "selected" : "" }} value="1">{{__('vehicle.yes')}}</option>
+                                                    <option value="0"
+                                                        {{ old('fog_lights') == "0" ? "selected" : "" }}>{{__('vehicle.no')}}</option>
+                                                    <option value="1"
+                                                        {{ old('fog_lights') == "1" ? "selected" : "" }}>{{__('vehicle.yes')}}</option>
                                                 </select>
                                                 @error('fog_lights')
                                                 <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
                                                 @enderror
                                             </div>
                                         </div>
@@ -597,14 +594,14 @@
                                                         class="form-control @error('front_lighting') is-invalid @enderror">
                                                     <option value="">{{__('words.choose')}}</option>
                                                     @foreach(front_lighting_arr() as $key=>$value)
-                                                        <option
-                                                            {{ old('front_lighting') == $key ? "selected" : "" }} value="{{$key}}">{{$value}}</option>
+                                                        <option value="{{$key}}"
+                                                            {{ old('front_lighting') == $key ? "selected" : "" }}>{{$value}}</option>
                                                     @endforeach
                                                 </select>
                                                 @error('front_lighting')
                                                 <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
                                                 @enderror
                                             </div>
 
@@ -612,15 +609,16 @@
                                                 <label>{{__('vehicle.air_conditioning_system')}}</label>
                                                 <select name="air_conditioning_system"
                                                         class="form-control @error('air_conditioning_system') is-invalid @enderror">
+                                                    <option value="">{{__('words.choose')}}</option>
                                                     @foreach(air_conditioning_system_arr() as $key=>$value)
-                                                        <option
-                                                            {{ old('air_conditioning_system') == $key ? "selected" : "" }} value="{{$key}}">{{$value}}</option>
+                                                        <option value="{{$key}}"
+                                                            {{ old('air_conditioning_system') == $key ? "selected" : "" }}>{{$value}}</option>
                                                     @endforeach
                                                 </select>
                                                 @error('air_conditioning_system')
                                                 <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
                                                 @enderror
                                             </div>
 
@@ -659,10 +657,10 @@
                                                 <select name="discount_type"
                                                         class="form-control @error('discount_type') is-invalid @enderror">
                                                     <option value="">{{__('words.none')}}</option>
-                                                    <option {{ old('discount_type') == 'percentage' ? "selected" : "" }}
-                                                            value="percentage">{{__('words.percentage')}}</option>
-                                                    <option {{ old('discount_type') == 'amount' ? "selected" : "" }}
-                                                            value="amount">{{__('words.amount')}}</option>
+                                                    <option
+                                                        value="percentage" {{ old('discount_type') == 'percentage' ? "selected" : "" }}>{{__('words.percentage')}}</option>
+                                                    <option
+                                                        value="amount" {{ old('discount_type') == 'amount' ? "selected" : "" }}>{{__('words.amount')}}</option>
 
                                                 </select>
                                                 @error('discount_type')
@@ -708,10 +706,11 @@
                                                 </label>
                                                 <select name="traveled_distance_type"
                                                         class="form-control @error('traveled_distance_type') is-invalid @enderror">
-                                                    <option
-                                                        {{ old('traveled_distance_type') == "km" ? "selected" : "" }} value="km">{{__('vehicle.km')}}</option>
-                                                    <option
-                                                        {{ old('traveled_distance_type') == "mile" ? "selected" : "" }} value="mile">{{__('vehicle.mile')}}</option>
+                                                    <option value="">{{__('words.choose')}}</option>
+                                                    <option value="km"
+                                                        {{ old('traveled_distance_type') == "km" ? "selected" : "" }}>{{__('vehicle.km')}}</option>
+                                                    <option value="mile"
+                                                        {{ old('traveled_distance_type') == "mile" ? "selected" : "" }}>{{__('vehicle.mile')}}</option>
                                                 </select>
                                                 @error('traveled_distance_type')
                                                 <span class="invalid-feedback" role="alert">
@@ -728,34 +727,35 @@
                                                         class="form-control @error('status') is-invalid @enderror">
                                                     <option value="">{{__('words.choose')}}</option>
                                                     @foreach(status_arr() as $key=>$value)
-                                                        <option
-                                                            {{ old('status') == $key ? "selected" : "" }} value="{{$key}}">{{$value}}</option>
+                                                        <option value="{{$key}}"
+                                                            {{ old('status') == $key ? "selected" : "" }}>{{$value}}</option>
                                                     @endforeach
                                                 </select>
                                                 @error('status')
                                                 <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
                                                 @enderror
                                             </div>
                                         </div>
 
-                                        <div class="form-row">
+                                        <div class="form-row mb-3">
                                             <div class="form-group col-md-4">
                                                 <label>
                                                     {{__('vehicle.guarantee')}}
                                                 </label>
                                                 <select name="guarantee" id="guarantee"
                                                         class="form-control @error('guarantee') is-invalid @enderror">
-                                                    <option
-                                                        {{ old('guarantee') == 0 ? "selected" : "" }} value="0">{{__('vehicle.no')}}</option>
-                                                    <option
-                                                        {{ old('guarantee') == 1 ? "selected" : "" }} value="1">{{__('vehicle.yes')}}</option>
+                                                    <option value="">{{__('words.choose')}}</option>
+                                                    <option value="0"
+                                                        {{ old('guarantee') == "0" ? "selected" : "" }}>{{__('vehicle.no')}}</option>
+                                                    <option value="1"
+                                                        {{ old('guarantee') == "1" ? "selected" : "" }}>{{__('vehicle.yes')}}</option>
                                                 </select>
                                                 @error('guarantee')
                                                 <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
                                                 @enderror
                                             </div>
 
@@ -763,7 +763,7 @@
                                                 <label>
                                                     {{__('vehicle.year')}}
                                                 </label>
-                                                <input type="number" name="guarantee_year"
+                                                <input type="number" name="guarantee_year" min="1900"
                                                        value="{{old('guarantee_year')}}"
                                                        class="yearpicker guarantee_year form-control @error('guarantee_year') is-invalid @enderror">
                                                 @error('guarantee_year')
@@ -779,6 +779,7 @@
                                                 </label>
                                                 <select type="number" name="guarantee_month"
                                                         class="form-control @error('guarantee_month') is-invalid @enderror">
+                                                    <option value="">{{__('words.choose')}}</option>
                                                     <option
                                                         {{ old('guarantee_month') == "01" ? "selected" : "" }} value="01">{{__('words.january')}}</option>
                                                     <option
@@ -812,22 +813,23 @@
                                             </div>
                                         </div>
 
-                                        <div class="form-row">
+                                        <div class="form-row mb-3">
                                             <div class="form-group col-md-4">
                                                 <label>
                                                     {{__('vehicle.insurance')}}
                                                 </label>
                                                 <select name="insurance" id="insurance"
                                                         class="form-control @error('insurance') is-invalid @enderror">
-                                                    <option
-                                                        {{ old('insurance') == 0 ? "selected" : "" }} value="0">{{__('vehicle.no')}}</option>
-                                                    <option
-                                                        {{ old('insurance') == 1 ? "selected" : "" }} value="1">{{__('vehicle.yes')}}</option>
+                                                    <option value="">{{__('words.choose')}}</option>
+                                                    <option value="0"
+                                                        {{ old('insurance') == "0" ? "selected" : "" }}>{{__('vehicle.no')}}</option>
+                                                    <option value="1"
+                                                        {{ old('insurance') == "1" ? "selected" : "" }}>{{__('vehicle.yes')}}</option>
                                                 </select>
                                                 @error('insurance')
                                                 <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
                                                 @enderror
                                             </div>
 
@@ -835,7 +837,7 @@
                                                 <label>
                                                     {{__('vehicle.year')}}
                                                 </label>
-                                                <input type="number" name="insurance_year"
+                                                <input type="number" name="insurance_year" min="1900"
                                                        value="{{old('insurance_year')}}"
                                                        class="yearpicker insurance_year form-control @error('insurance_year') is-invalid @enderror">
                                                 @error('insurance_year')
@@ -851,6 +853,7 @@
                                                 </label>
                                                 <select type="number" name="insurance_month"
                                                         class="form-control @error('insurance_month') is-invalid @enderror">
+                                                    <option value="">{{__('words.choose')}}</option>
                                                     <option
                                                         {{ old('insurance_month') == "01" ? "selected" : "" }} value="01">{{__('words.january')}}</option>
                                                     <option
@@ -884,7 +887,7 @@
                                             </div>
                                         </div>
 
-                                        <div class="form-row">
+                                        <div class="form-row mb-3">
                                             <div class="form-group col-md-3">
                                                 <label>
                                                     {{__('vehicle.coverage_type')}}
@@ -893,14 +896,14 @@
                                                         class="form-control @error('coverage_type') is-invalid @enderror">
                                                     <option value="">{{__('words.choose')}}</option>
                                                     @foreach(coverage_type_arr() as $key=>$value)
-                                                        <option
-                                                            {{ old('coverage_type') == $key ? "selected" : "" }} value="{{$key}}">{{$value}}</option>
+                                                        <option value="{{$key}}"
+                                                            {{ old('coverage_type') == $key ? "selected" : "" }}>{{$value}}</option>
                                                     @endforeach
                                                 </select>
                                                 @error('coverage_type')
                                                 <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
                                                 @enderror
                                             </div>
 
@@ -910,15 +913,16 @@
                                                 </label>
                                                 <select name="selling_by_plate" id="selling_by_plate"
                                                         class="form-control @error('selling_by_plate') is-invalid @enderror">
-                                                    <option
-                                                        {{ old('selling_by_plate') == 0 ? "selected" : "" }} value="0">{{__('vehicle.no')}}</option>
-                                                    <option
-                                                        {{ old('selling_by_plate') == 1 ? "selected" : "" }} value="1">{{__('vehicle.yes')}}</option>
+                                                    <option value="">{{__('words.choose')}}</option>
+                                                    <option value="0"
+                                                        {{ old('selling_by_plate') == "0" ? "selected" : "" }}>{{__('vehicle.no')}}</option>
+                                                    <option value="1"
+                                                        {{ old('selling_by_plate') == "1" ? "selected" : "" }}>{{__('vehicle.yes')}}</option>
                                                 </select>
                                                 @error('selling_by_plate')
                                                 <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
                                                 @enderror
                                             </div>
 
@@ -942,12 +946,13 @@
                                                 </label>
                                                 <select name="price_is_negotiable"
                                                         class="form-control @error('price_is_negotiable') is-invalid @enderror">
-                                                    <option
-                                                        {{ old('price_is_negotiable') == 0 ? "selected" : "" }} value="0">{{__('vehicle.no')}}</option>
-                                                    <option
-                                                        {{ old('price_is_negotiable') == 1 ? "selected" : "" }} value="1">{{__('vehicle.yes')}}</option>
+                                                    <option value="">{{__('words.choose')}}</option>
+                                                    <option value="0"
+                                                        {{ old('price_is_negotiable') == "0" ? "selected" : "" }}>{{__('vehicle.no')}}</option>
+                                                    <option value="1"
+                                                        {{ old('price_is_negotiable') == "1" ? "selected" : "" }}>{{__('vehicle.yes')}}</option>
                                                 </select>
-                                                @error('selling_by_plate')
+                                                @error('price_is_negotiable')
                                                 <span class="invalid-feedback" role="alert">
                                                     <strong>{{ $message }}</strong>
                                                 </span>
@@ -955,7 +960,7 @@
                                             </div>
                                         </div>
 
-                                        <div class="form-row">
+                                        <div class="form-row mb-3">
                                             <div class="form-group col-md-4">
                                                 <label>
                                                     {{__('vehicle.in_bahrain')}}
@@ -964,9 +969,9 @@
                                                         class="form-control @error('in_bahrain') is-invalid @enderror">
                                                     <option value="">{{__('words.choose')}}</option>
                                                     <option
-                                                        {{ old('in_bahrain') == 0 ? "selected" : "" }} value="0">{{__('vehicle.no')}}</option>
-                                                    <option {{ old('in_bahrain') == 1 ? "selected" : "" }} value="1"
-                                                            selected>{{__('vehicle.yes')}}</option>
+                                                        value="1" {{ old('in_bahrain') == "1" ? "selected" : "" }}>{{__('vehicle.yes')}}</option>
+                                                    <option value="0"
+                                                        {{ old('in_bahrain') == "0" ? "selected" : "" }}>{{__('vehicle.no')}}</option>
                                                 </select>
                                                 @error('in_bahrain')
                                                 <span class="invalid-feedback" role="alert">
@@ -979,11 +984,10 @@
                                                 <label>{{__('words.country')}}</label>
                                                 <select name="country_id"
                                                         class="form-control country_id @error('country_id') is-invalid @enderror">
-                                                    <option value="" selected>{{__('words.choose')}}</option>
+                                                    <option value="">{{__('words.choose')}}</option>
                                                     @foreach($countries as $country)
-                                                        <option
-                                                            {{ old('country_id') == $country->id ? "selected" : "" }}
-                                                            value="{{$country->id}}">{{$country->name}}</option>
+                                                        <option value="{{$country->id}}"
+                                                            {{ old('country_id') == $country->id ? "selected" : "" }}>{{$country->name}}</option>
                                                     @endforeach
                                                 </select>
                                                 @error('country_id')
@@ -1003,6 +1007,232 @@
                                             <strong>{{ $message }}</strong>
                                         </span>
                                                 @enderror
+                                            </div>
+                                        </div>
+
+                                        <div class="form-row">
+                                            <div class="form-group col-md-12">
+                                                <label>{{__('words.additional_notes')}}</label>
+                                                <textarea name="additional_notes"
+                                                          class="form-control @error('additional_notes') is-invalid @enderror">{{ old('additional_notes') }}</textarea>
+
+                                                @error('additional_notes')
+                                                <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                                @enderror
+                                            </div>
+                                        </div>
+
+                                        <hr>
+                                        <div class="form-row mb-3">
+                                            <div class="form-group col-md-6">
+                                                <label for="front_side_image">{{__('words.front_side_image')}}</label>
+                                                <div class="input-group">
+                                                    <div class="custom-file">
+                                                        <input type="file" class="custom-file-input front_side_image @error('front_side_image') is-invalid @enderror"
+                                                               name="front_side_image"
+                                                               id="front_side_image">
+                                                        <label class="custom-file-label"
+                                                               for="front_side_image">{{__('words.choose_image')}}</label>
+                                                    </div>
+                                                    @error('front_side_image')
+                                                    <span class="invalid-feedback d-block" role="alert">
+                                                            <strong>{{ $message }}</strong>
+                                                        </span>
+                                                    @enderror
+                                                </div>
+                                            </div>
+
+                                            <div class="col-6 text-center pt-3">
+                                                <img src="{{ asset('uploads/default_image.png') }}"
+                                                     class="index_image front_side_image-preview" alt="logo">
+                                            </div>
+                                        </div>
+
+                                        <hr>
+
+                                        <div class="form-row mb-3">
+                                            <div class="form-group col-md-6">
+                                                <label for="back_side_image">{{__('words.back_side_image')}}</label>
+                                                <div class="input-group">
+                                                    <div class="custom-file">
+                                                        <input type="file" class="custom-file-input back_side_image @error('back_side_image') is-invalid @enderror"
+                                                               name="back_side_image"
+                                                               id="back_side_image">
+                                                        <label class="custom-file-label"
+                                                               for="back_side_image">{{__('words.choose_image')}}</label>
+                                                    </div>
+                                                    @error('back_side_image')
+                                                    <span class="invalid-feedback d-block" role="alert">
+                                                            <strong>{{ $message }}</strong>
+                                                        </span>
+                                                    @enderror
+                                                </div>
+                                            </div>
+
+                                            <div class="col-6 text-center pt-3">
+                                                <img src="{{ asset('uploads/default_image.png') }}"
+                                                     class="index_image back_side_image-preview" alt="logo">
+                                            </div>
+                                        </div>
+
+                                        <hr>
+
+                                        <div class="form-row mb-3">
+                                            <div class="form-group col-md-6">
+                                                <label for="right_side_image">{{__('words.right_side_image')}}</label>
+                                                <div class="input-group">
+                                                    <div class="custom-file">
+                                                        <input type="file" class="custom-file-input right_side_image @error('right_side_image') is-invalid @enderror"
+                                                               name="right_side_image"
+                                                               id="right_side_image">
+                                                        <label class="custom-file-label"
+                                                               for="right_side_image">{{__('words.choose_image')}}</label>
+                                                    </div>
+                                                    @error('right_side_image')
+                                                    <span class="invalid-feedback d-block" role="alert">
+                                                            <strong>{{ $message }}</strong>
+                                                        </span>
+                                                    @enderror
+                                                </div>
+                                            </div>
+
+                                            <div class="col-6 text-center pt-3">
+                                                <img src="{{ asset('uploads/default_image.png') }}"
+                                                     class="index_image right_side_image-preview" alt="logo">
+                                            </div>
+                                        </div>
+
+                                        <hr>
+
+                                        <div class="form-row mb-3">
+                                            <div class="form-group col-md-6">
+                                                <label for="left_side_image">{{__('words.left_side_image')}}</label>
+                                                <div class="input-group">
+                                                    <div class="custom-file">
+                                                        <input type="file" class="custom-file-input left_side_image @error('left_side_image') is-invalid @enderror"
+                                                               name="left_side_image"
+                                                               id="left_side_image">
+                                                        <label class="custom-file-label"
+                                                               for="left_side_image">{{__('words.choose_image')}}</label>
+                                                    </div>
+                                                    @error('left_side_image')
+                                                    <span class="invalid-feedback d-block" role="alert">
+                                                            <strong>{{ $message }}</strong>
+                                                        </span>
+                                                    @enderror
+                                                </div>
+                                            </div>
+                                            <div class="col-6 text-center pt-3">
+                                                <img src="{{ asset('uploads/default_image.png') }}"
+                                                     class="index_image left_side_image-preview" alt="logo">
+                                            </div>
+                                        </div>
+
+                                        <hr>
+
+                                        <div class="form-row mb-3">
+                                            <div class="form-group col-md-6">
+                                                <label
+                                                    for="inside_vehicle_image">{{__('words.inside_vehicle_image')}}</label>
+                                                <div class="input-group">
+                                                    <div class="custom-file">
+                                                        <input type="file"
+                                                               class="custom-file-input inside_vehicle_image @error('inside_vehicle_image') is-invalid @enderror"
+                                                               name="inside_vehicle_image"
+                                                               id="inside_vehicle_image">
+                                                        <label class="custom-file-label"
+                                                               for="inside_vehicle_image">{{__('words.choose_image')}}</label>
+                                                    </div>
+                                                    @error('inside_vehicle_image')
+                                                    <span class="invalid-feedback d-block" role="alert">
+                                                            <strong>{{ $message }}</strong>
+                                                        </span>
+                                                    @enderror
+                                                </div>
+                                            </div>
+                                            <div class="col-6 text-center pt-3">
+                                                <img src="{{ asset('uploads/default_image.png') }}"
+                                                     class="index_image inside_vehicle_image-preview" alt="logo">
+                                            </div>
+                                        </div>
+
+                                        <hr>
+
+                                        <div class="form-row mb-3">
+                                            <div class="form-group col-md-6">
+                                                <label
+                                                    for="vehicle_dashboard_image">{{__('words.vehicle_dashboard_image')}}</label>
+                                                <div class="input-group">
+                                                    <div class="custom-file">
+                                                        <input type="file"
+                                                               class="custom-file-input vehicle_dashboard_image @error('vehicle_dashboard_image') is-invalid @enderror"
+                                                               name="vehicle_dashboard_image"
+                                                               id="vehicle_dashboard_image">
+                                                        <label class="custom-file-label"
+                                                               for="vehicle_dashboard_image">{{__('words.choose_image')}}</label>
+                                                    </div>
+                                                    @error('vehicle_dashboard_image')
+                                                    <span class="invalid-feedback d-block" role="alert">
+                                                            <strong>{{ $message }}</strong>
+                                                        </span>
+                                                    @enderror
+                                                </div>
+                                            </div>
+                                            <div class="col-6 text-center pt-3">
+                                                <img src="{{ asset('uploads/default_image.png') }}"
+                                                     class="index_image vehicle_dashboard_image-preview" alt="logo">
+                                            </div>
+                                        </div>
+
+                                        <hr>
+
+                                        <div class="form-row mb-3">
+                                            <div class="form-group col-md-6">
+                                                <label for="traffic_pdf">{{__('words.traffic_pdf')}}</label>
+                                                <div class="input-group">
+                                                    <div class="custom-file">
+                                                        <input type="file" class="custom-file-input traffic_pdf @error('traffic_pdf') is-invalid @enderror"
+                                                               name="traffic_pdf"
+                                                               accept="application/pdf,application/msword, application/vnd.ms-excel"
+                                                               id="traffic_pdf">
+                                                        <label class="custom-file-label"
+                                                               for="traffic_pdf">{{__('words.choose_image')}}</label>
+                                                    </div>
+                                                    @error('traffic_pdf')
+                                                    <span class="invalid-feedback d-block" role="alert">
+                                                            <strong>{{ $message }}</strong>
+                                                        </span>
+                                                    @enderror
+                                                </div>
+                                            </div>
+                                            <div class="col-6 text-center pt-3">
+                                                <img src="{{ asset('uploads/pdf.png') }}"
+                                                     class="index_image traffic_pdf-preview" alt="logo">
+                                            </div>
+                                        </div>
+
+                                        <hr>
+
+                                        <div class="form-row">
+                                            <div class="form-group col-md-6">
+                                                <div class="form-check">
+                                                    <input class="form-check-input" name="active" value="0"
+                                                           type="checkbox">
+                                                    <label class="form-check-label">
+                                                        {{__('words.activity')}}
+                                                    </label>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group col-md-6">
+                                                <div class="form-check">
+                                                    <input class="form-check-input" name="active_number_of_views" value="0" type="checkbox">
+                                                    <label class="form-check-label">
+                                                        {{__('words.active_number_of_views')}}
+                                                    </label>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>

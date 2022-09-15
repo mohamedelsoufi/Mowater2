@@ -188,15 +188,15 @@ class Vehicle extends Model
         }
         $features[] = [
             'key' => __('vehicle.transmission_type'),
-            'value' => __('vehicle.' . $vehicle->transmission_type)
+            'value' => $vehicle->transmission_type ? __('vehicle.' . $vehicle->transmission_type) : '--'
         ];
         $features[] = [
             'key' => __('vehicle.engine_size'),
-            'value' => __('vehicle.' . $vehicle->engine_size)
+            'value' => $vehicle->engine_size != null ? __('vehicle.' . $vehicle->engine_size) : '--'
         ];
         $features[] = [
             'key' => __('vehicle.cylinder_number'),
-            'value' => $vehicle->cylinder_number
+            'value' => $vehicle->cylinder_number ? $vehicle->cylinder_number : '--'
         ];
         $features[] = [
             'key' => __('vehicle.fuel_type'),
@@ -208,7 +208,7 @@ class Vehicle extends Model
         ];
         $features[] = [
             'key' => __('vehicle.specifications'),
-            'value' => __('vehicle.' . $vehicle->specifications)
+            'value' => $vehicle->specifications ? __('vehicle.' . $vehicle->specifications) : '--'
         ];
         if ($vehicle->is_new == false) {
             $features[] = [
@@ -233,7 +233,7 @@ class Vehicle extends Model
 
             $features[] = [
                 'key' => __('vehicle.coverage_type'),
-                'value' => __('vehicle.' . $vehicle->coverage_type)
+                'value' => $vehicle->coverage_type ? __('vehicle.' . $vehicle->coverage_type) :'--'
             ];
         }
         $features[] = [
@@ -250,11 +250,11 @@ class Vehicle extends Model
         ];
         $features[] = [
             'key' => __('vehicle.seat_upholstery'),
-            'value' => __('vehicle.' . $vehicle->seat_upholstery)
+            'value' => $vehicle->seat_upholstery ? __('vehicle.' . $vehicle->seat_upholstery) : '--'
         ];
         $features[] = [
             'key' => __('vehicle.air_conditioning_system'),
-            'value' => __('vehicle.' . $vehicle->air_conditioning_system)
+            'value' =>$vehicle->air_conditioning_system ? __('vehicle.' . $vehicle->air_conditioning_system) : '--'
         ];
         $features[] = [
             'key' => __('vehicle.windows_control'),
@@ -262,15 +262,15 @@ class Vehicle extends Model
         ];
         $features[] = [
             'key' => __('vehicle.wheel_size'),
-            'value' => __('vehicle.' . $vehicle->wheel_size)
+            'value' => $vehicle->wheel_size ? __('vehicle.' . $vehicle->wheel_size) : '--'
         ];
         $features[] = [
             'key' => __('vehicle.wheel_type'),
-            'value' => __('vehicle.' . $vehicle->wheel_type)
+            'value' => $vehicle->wheel_type ? __('vehicle.' . $vehicle->wheel_type) : '--'
         ];
         $features[] = [
             'key' => __('vehicle.sunroof'),
-            'value' => __('vehicle.' . $vehicle->sunroof)
+            'value' => $vehicle->sunroof ? __('vehicle.' . $vehicle->sunroof) : '--'
         ];
         if ($vehicle->is_new == false) {
             $features[] = [
@@ -327,12 +327,12 @@ class Vehicle extends Model
             ];
             $features[] = [
                 'key' => __('vehicle.location'),
-                'value' => $vehicle->location == null ? '' : $vehicle->location
+                'value' => $vehicle->location == null ? '--' : $vehicle->location
             ];
         }
         $features[] = [
             'key' => __('vehicle.additional_notes'),
-            'value' => $vehicle->additional_notes == null ? '' : $vehicle->additional_notes
+            'value' => $vehicle->additional_notes == null ? '--' : $vehicle->additional_notes
         ];
 
         return $features;

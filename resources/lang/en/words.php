@@ -83,6 +83,7 @@ return [
     'close' => 'Close',
     'choose' => 'Choose...',
     'choose_image' => 'Choose Image',
+    'choose_file' => 'Choose File',
     'save' => 'Save',
 
     // attributes

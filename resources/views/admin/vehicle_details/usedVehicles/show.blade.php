@@ -224,11 +224,6 @@
                                             <td>{{$vehicle->manufacturing_year}}</td>
                                         </tr>
                                         <tr>
-                                            <th class="show-details-table">{{__('words.engine_size')}}</th>
-                                            <td>{{__('vehicle.'.$vehicle->engine_size)}}</td>
-                                        </tr>
-
-                                        <tr>
                                             <th class="show-details-table">{{__('vehicle.battery_size')}}</th>
                                             <td>{{$vehicle->battery_size ? $vehicle->battery_size : '--'}}</td>
                                         </tr>
@@ -238,7 +233,7 @@
                                         </tr>
                                         <tr>
                                             <th class="show-details-table">{{__('words.country')}}</th>
-                                            <td>{{$vehicle->country->name}}</td>
+                                            <td>{{$vehicle->country ? $vehicle->country->name : "--"}}</td>
                                         </tr>
 
                                         <tr>
@@ -263,6 +258,18 @@
                                             <td>{{$vehicle->price}}</td>
                                         </tr>
                                         <tr>
+                                            <th class="show-details-table">{{__('words.discount_type')}}</th>
+                                            <td>{{$vehicle->discount_type ? $vehicle->discount_type : "--"}}</td>
+                                        </tr>
+                                        <tr>
+                                            <th class="show-details-table">{{__('words.discount_value')}}</th>
+                                            <td>{{$vehicle->discount ? $vehicle->discount : "--"}}</td>
+                                        </tr>
+                                        <tr>
+                                            <th class="show-details-table">{{__('words.price_after_discount')}}</th>
+                                            <td>{{$vehicle->discount ? $vehicle->price_after_discount : "--"}}</td>
+                                        </tr>
+                                        <tr>
                                             <th class="show-details-table">{{__('words.number_of_views')}}</th>
                                             <td>{{$vehicle->number_of_views}}</td>
                                         </tr>
@@ -270,10 +277,7 @@
                                             <th class="show-details-table">{{__('words.active_number_of_views')}}</th>
                                             <td>{{$vehicle->getActiveNumberOfViews()}}</td>
                                         </tr>
-                                        <tr>
-                                            <th class="show-details-table">{{__('words.availability')}}</th>
-                                            <td>{{$vehicle->getAvailability()}}</td>
-                                        </tr>
+
                                         <tr>
                                             <th class="show-details-table">{{__('words.activity')}}</th>
                                             <td>{{$vehicle->getActive()}}</td>

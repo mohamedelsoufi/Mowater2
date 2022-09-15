@@ -14,12 +14,6 @@ trait HasFiles
 
     public function upload_car_for_sale_Images()
     {
-        if (request()->has('inside_vehicle_image')) {
-            $file = request()->inside_vehicle_image->store('vehicles/for_sale');
-
-            $this->files()->create(['path' => $file, 'type' => 'inside_vehicle_image']);
-        }
-
         if (request()->has('front_side_image')) {
             $file = request()->front_side_image->store('vehicles/for_sale');
 
@@ -42,6 +36,12 @@ trait HasFiles
             $file = request()->left_side_image->store('vehicles/for_sale');
 
             $this->files()->create(['path' => $file, 'type' => 'left_side_image']);
+        }
+
+        if (request()->has('inside_vehicle_image')) {
+            $file = request()->inside_vehicle_image->store('vehicles/for_sale');
+
+            $this->files()->create(['path' => $file, 'type' => 'inside_vehicle_image']);
         }
 
         if (request()->has('vehicle_dashboard_image')) {
@@ -138,6 +138,58 @@ trait HasFiles
             }
         }
 
+    }
+
+    public function updateAdminUsedVehicle(){
+        if (request()->hasFile('front_side_image')) {
+            $img = $this->files()->where('type', 'front_side_image')->first();
+            Storage::delete($img->getRawOriginal('path'));
+            $img->delete();
+            $image = request()->front_side_image->store('vehicles/for_sale');
+            $this->files()->create(['path' => $image,'type' => 'front_side_image']);
+        }
+        if (request()->hasFile('back_side_image')) {
+            $img = $this->files()->where('type', 'back_side_image')->first();
+            Storage::delete($img->getRawOriginal('path'));
+            $img->delete();
+            $image = request()->back_side_image->store('vehicles/for_sale');
+            $this->files()->create(['path' => $image,'type' => 'back_side_image']);
+        }
+        if (request()->hasFile('right_side_image')) {
+            $img = $this->files()->where('type', 'right_side_image')->first();
+            Storage::delete($img->getRawOriginal('path'));
+            $img->delete();
+            $image = request()->right_side_image->store('vehicles/for_sale');
+            $this->files()->create(['path' => $image,'type' => 'right_side_image']);
+        }
+        if (request()->hasFile('left_side_image')) {
+            $img = $this->files()->where('type', 'left_side_image')->first();
+            Storage::delete($img->getRawOriginal('path'));
+            $img->delete();
+            $image = request()->left_side_image->store('vehicles/for_sale');
+            $this->files()->create(['path' => $image,'type' => 'left_side_image']);
+        }
+        if (request()->hasFile('vehicle_dashboard_image')) {
+            $img = $this->files()->where('type', 'vehicle_dashboard_image')->first();
+            Storage::delete($img->getRawOriginal('path'));
+            $img->delete();
+            $image = request()->vehicle_dashboard_image->store('vehicles/for_sale');
+            $this->files()->create(['path' => $image,'type' => 'vehicle_dashboard_image']);
+        }
+        if (request()->hasFile('inside_vehicle_image')) {
+            $img = $this->files()->where('type', 'inside_vehicle_image')->first();
+            Storage::delete($img->getRawOriginal('path'));
+            $img->delete();
+            $image = request()->inside_vehicle_image->store('vehicles/for_sale');
+            $this->files()->create(['path' => $image,'type' => 'inside_vehicle_image']);
+        }
+        if (request()->hasFile('traffic_pdf')) {
+            $img = $this->files()->where('type', 'traffic_pdf')->first();
+            Storage::delete($img->getRawOriginal('path'));
+            $img->delete();
+            $image = request()->traffic_pdf->store('vehicles/for_sale');
+            $this->files()->create(['path' => $image,'type' => 'traffic_pdf']);
+        }
     }
 
     public function upload_reserve_vehicle_images()

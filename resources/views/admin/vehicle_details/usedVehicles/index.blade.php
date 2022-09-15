@@ -40,7 +40,6 @@
                                         <th>{{__('words.name')}}</th>
                                         <th>{{__('words.manufacturing_year')}}</th>
                                         <th>{{__('words.price')}}</th>
-                                        <th>{{__('words.availability')}}</th>
                                         <th>{{__('words.activity')}}</th>
                                         <th>{{__('words.created_by')}}</th>
                                         <th>{{__('words.created_at')}}</th>
@@ -53,7 +52,7 @@
                                         <tr>
                                             <td>{{$key+1}}</td>
                                             <td>
-                                                @if(!$vehicle->one_image)
+                                                @if(!$vehicle->files()->where('type','front_side_image')->first())
                                                     <a href="{{asset('uploads/default_image.png')}}"
                                                        data-toggle="lightbox" data-title="{{$vehicle->name}}"
                                                        data-gallery="gallery">
@@ -61,11 +60,11 @@
                                                              src="{{asset('uploads/default_image.png')}}" alt="logo">
                                                     </a>
                                                 @else
-                                                    <a href="{{$vehicle->one_image}}"
+                                                    <a href="{{$vehicle->files()->where('type','front_side_image')->first()->path}}"
                                                        data-toggle="lightbox" data-title="{{$vehicle->name}}"
                                                        data-gallery="gallery">
                                                         <img class="index_image"
-                                                             src="{{$vehicle->one_image}}"
+                                                             src="{{$vehicle->files()->where('type','front_side_image')->first()->path}}"
                                                              onerror="this.src='{{asset('uploads/default_image.png')}}'"
                                                              alt="logo">
                                                     </a>
@@ -74,7 +73,6 @@
                                             <td>{{$vehicle->name}}</td>
                                             <td>{{$vehicle->manufacturing_year}}</td>
                                             <td>{{$vehicle->price}}</td>
-                                            <td>{{$vehicle->getAvailability()}}</td>
                                             <td>{{$vehicle->getActive()}}</td>
                                             <td>{{$vehicle->vehicable->email}}</td>
                                             <td>{{createdAtFormat($vehicle->created_at)}}</td>

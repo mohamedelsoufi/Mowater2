@@ -315,6 +315,7 @@
       <workItem from="1662988711131" duration="6418000" />
       <workItem from="1663065979242" duration="23178000" />
       <workItem from="1663144504785" duration="23662000" />
+      <workItem from="1663230569032" duration="18494000" />
     </task>
     <servers />
   </component>
@@ -334,11 +335,11 @@
     </state>
     <state x="426" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/0.0.1536.816/-1920.5.1920.1032@0.0.1536.816" timestamp="1660734382931" />
     <state x="391" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/0.0.1536.816@0.0.1536.816" timestamp="1661692387552" />
-    <state x="499" y="164" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog" timestamp="1663163910486">
+    <state x="499" y="164" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog" timestamp="1663246870757">
       <screen x="0" y="0" width="1536" height="816" />
     </state>
     <state x="-1296" y="212" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.0.1536.816/-1920.5.1920.1032@-1920.5.1920.1032" timestamp="1662370135082" />
-    <state x="499" y="164" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.0.1536.816/-1920.5.1920.1032@0.0.1536.816" timestamp="1663145224681" />
+    <state x="499" y="164" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.0.1536.816/-1920.5.1920.1032@0.0.1536.816" timestamp="1663246870757" />
     <state x="499" y="164" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.0.1536.816@0.0.1536.816" timestamp="1663163910486" />
     <state x="516" y="97" key="#com.jetbrains.php.refactoring.extract.interface.PhpExtractInterfaceDialog#" timestamp="1660734466163">
       <screen x="0" y="0" width="1536" height="816" />
@@ -391,24 +392,24 @@
       <screen x="0" y="0" width="1536" height="816" />
     </state>
     <state x="578" y="326" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1536.816@0.0.1536.816" timestamp="1661695387921" />
-    <state x="-1125" y="12" width="1129" height="801" maximized="true" key="dock-window-1" timestamp="1663166144112">
-      <screen x="0" y="0" width="1536" height="816" />
+    <state x="-1259" y="84" width="1181" height="801" key="dock-window-1" timestamp="1663234495367">
+      <screen x="-1920" y="5" width="1920" height="1032" />
     </state>
-    <state x="-1125" y="12" width="1129" height="801" maximized="true" key="dock-window-1/0.0.1536.816/-1920.5.1920.1032@0.0.1536.816" timestamp="1663145175536" />
+    <state x="-1259" y="84" width="1181" height="801" key="dock-window-1/0.0.1536.816/-1920.5.1920.1032@0.0.1536.816" timestamp="1663234495367" />
     <state x="-1125" y="12" width="1129" height="801" maximized="true" key="dock-window-1/0.0.1536.816@0.0.1536.816" timestamp="1663166144112" />
-    <state x="-1239" y="5" width="1134" height="801" key="dock-window-2" timestamp="1663089360096">
+    <state x="-1495" y="57" width="1181" height="801" key="dock-window-2" timestamp="1663240502075">
       <screen x="-1920" y="5" width="1920" height="1032" />
     </state>
     <state x="-1784" y="52" width="1153" height="801" maximized="true" key="dock-window-2/0.0.1536.816/-1920.5.1920.1032@-1920.5.1920.1032" timestamp="1657110800605" />
-    <state x="-1239" y="5" width="1134" height="801" key="dock-window-2/0.0.1536.816/-1920.5.1920.1032@0.0.1536.816" timestamp="1663089360096" />
-    <state x="-1320" y="5" width="1169" height="801" maximized="true" key="dock-window-3" timestamp="1662379069018">
+    <state x="-1495" y="57" width="1181" height="801" key="dock-window-2/0.0.1536.816/-1920.5.1920.1032@0.0.1536.816" timestamp="1663240502075" />
+    <state x="-1521" y="70" width="1181" height="801" maximized="true" key="dock-window-3" timestamp="1663243396232">
       <screen x="-1920" y="5" width="1920" height="1032" />
     </state>
-    <state x="-1320" y="5" width="1169" height="801" maximized="true" key="dock-window-3/0.0.1536.816/-1920.5.1920.1032@0.0.1536.816" timestamp="1662379069018" />
-    <state x="-1519" y="5" width="1169" height="801" key="dock-window-4" timestamp="1662388039479">
+    <state x="-1521" y="70" width="1181" height="801" maximized="true" key="dock-window-3/0.0.1536.816/-1920.5.1920.1032@0.0.1536.816" timestamp="1663243396232" />
+    <state x="-1404" y="98" width="1181" height="801" maximized="true" key="dock-window-4" timestamp="1663246992018">
       <screen x="-1920" y="5" width="1920" height="1032" />
     </state>
-    <state x="-1519" y="5" width="1169" height="801" key="dock-window-4/0.0.1536.816/-1920.5.1920.1032@0.0.1536.816" timestamp="1662388039479" />
+    <state x="-1404" y="98" width="1181" height="801" maximized="true" key="dock-window-4/0.0.1536.816/-1920.5.1920.1032@0.0.1536.816" timestamp="1663246992018" />
     <state x="-1551" y="85" width="1169" height="801" key="dock-window-5" timestamp="1662390353978">
       <screen x="-1920" y="5" width="1920" height="1032" />
     </state>
@@ -440,34 +441,9 @@
           <option name="timeStamp" value="3" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="php">
-          <url>file://$PROJECT_DIR$/app/Traits/Files/HasFiles.php</url>
-          <line>25</line>
-          <option name="timeStamp" value="4" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="php">
-          <url>file://$PROJECT_DIR$/app/Traits/Files/HasFiles.php</url>
-          <line>31</line>
-          <option name="timeStamp" value="5" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="php">
-          <url>file://$PROJECT_DIR$/app/Traits/Files/HasFiles.php</url>
-          <line>34</line>
-          <option name="timeStamp" value="6" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="php">
-          <url>file://$PROJECT_DIR$/app/Traits/Files/HasFiles.php</url>
-          <line>40</line>
-          <option name="timeStamp" value="7" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="php">
-          <url>file://$PROJECT_DIR$/app/Traits/Files/HasFiles.php</url>
-          <line>16</line>
-          <option name="timeStamp" value="8" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="php">
-          <url>file://$PROJECT_DIR$/app/Traits/Files/HasFiles.php</url>
-          <line>46</line>
-          <option name="timeStamp" value="9" />
+          <url>file://$PROJECT_DIR$/resources/views/admin/vehicle_details/usedVehicles/create.blade.php</url>
+          <line>1027</line>
+          <option name="timeStamp" value="11" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

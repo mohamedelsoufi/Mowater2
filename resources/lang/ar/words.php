@@ -81,6 +81,7 @@ return [
     'close' => 'إغلاق',
     'choose' => 'إختر...',
     'choose_image' => 'إختر صورة',
+    'choose_file' => 'إختر ملف',
     'save' => 'حفظ',
 
     // attributes
