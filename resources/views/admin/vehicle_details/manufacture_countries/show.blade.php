@@ -48,6 +48,10 @@
                                             <td>{{$manufacture_country->getActive()}}</td>
                                         </tr>
                                         <tr>
+                                            <th class="show-details-table">{{__('words.created_by')}}</th>
+                                            <td>{{$manufacture_country->created_by}}</td>
+                                        </tr>
+                                        <tr>
                                             <th class="show-details-table">{{__('words.created_at')}}</th>
                                             <td>{{createdAtFormat($manufacture_country->created_at)}}</td>
                                         </tr>

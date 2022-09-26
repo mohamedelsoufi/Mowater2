@@ -111,6 +111,10 @@
                                             <td>{{$insurance_company->getActive()}}</td>
                                         </tr>
                                         <tr>
+                                            <th class="show-details-table">{{__('words.created_by')}}</th>
+                                            <td>{{$insurance_company->created_by}}</td>
+                                        </tr>
+                                        <tr>
                                             <th class="show-details-table">{{__('words.created_at')}}</th>
                                             <td>{{createdAtFormat($insurance_company->created_at)}}</td>
                                         </tr>

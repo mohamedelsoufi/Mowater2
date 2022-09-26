@@ -104,6 +104,10 @@
                                             <td>{{$center->getActive()}}</td>
                                         </tr>
                                         <tr>
+                                            <th class="show-details-table">{{__('words.created_by')}}</th>
+                                            <td>{{$center->created_by}}</td>
+                                        </tr>
+                                        <tr>
                                             <th class="show-details-table">{{__('words.created_at')}}</th>
                                             <td>{{createdAtFormat($center->created_at)}}</td>
                                         </tr>

@@ -110,7 +110,7 @@ return [
     'required_unless' => 'The :attribute field is required unless :other is in :values.',
     'required_with' => 'The :attribute field is required when :values is present.',
     'required_with_all' => 'The :attribute field is required when :values are present.',
-    'required_without' => 'The :attribute field is required when :values is not present.',
+    'required_without' => 'The :attribute field is required.',
     'required_without_all' => 'The :attribute field is required when none of :values are present.',
     'same' => 'The :attribute and :other must match.',
     'size' => [
@@ -124,7 +124,7 @@ return [
     'timezone' => 'The :attribute must be a valid timezone.',
     'unique' => 'The :attribute has already been taken.',
     'uploaded' => 'The :attribute failed to upload.',
-    'url' => 'The :attribute must be a valid URL.',
+    'url' => 'The :attribute must be a valid URL must be like https://www.domain.com.',
     'uuid' => 'The :attribute must be a valid UUID.',
 
     /*
@@ -244,6 +244,13 @@ return [
         'id' => 'ID',
         'reservation_cost' => 'Reservation Cost',
         'role_id' => 'Role',
+        'ad_type_id' => 'Ad Type',
+        'ref_name' => 'Section',
+        'negotiable' => 'Negotiable',
+        'start_date' => 'Start Date',
+        'end_date' => 'End Date',
+        'discount' => 'Discount',
+        'discount_type' => 'Discount Type',
     ],
     'insurance_amount' => 'Insurance amount',
 

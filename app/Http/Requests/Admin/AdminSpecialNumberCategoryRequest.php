@@ -14,8 +14,8 @@ class AdminSpecialNumberCategoryRequest extends FormRequest
     public function rules()
     {
         return [
-            'name_en' => 'unique:special_number_categories,name_en,'.$this->id,
-            'name_ar' => 'unique:special_number_categories,name_ar,'.$this->id,
+            'name_en' => 'required|unique:special_number_categories,name_en,'.$this->id,
+            'name_ar' => 'required|unique:special_number_categories,name_ar,'.$this->id,
             'main_category' => 'in:' . special_number_main_category(),
         ];
     }

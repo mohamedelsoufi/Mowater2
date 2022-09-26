@@ -14,8 +14,8 @@ class AdminTrafficClearingOfficeRequest extends FormRequest
     public function rules()
     {
         return [
-            'name_en' => 'unique:traffic_clearing_offices,name_en,'.$this->id,
-            'name_ar' => 'unique:traffic_clearing_offices,name_ar,'.$this->id,
+            'name_en' => 'required|unique:traffic_clearing_offices,name_en,'.$this->id,
+            'name_ar' => 'required|unique:traffic_clearing_offices,name_ar,'.$this->id,
             'description_en' => 'nullable',
             'description_ar' => 'nullable',
             'tax_number' => 'unique:traffic_clearing_offices,tax_number,'.$this->id,

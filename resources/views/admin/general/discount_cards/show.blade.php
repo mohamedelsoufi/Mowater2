@@ -101,9 +101,8 @@
                                             <td>{{$discount_card->getActive()}}</td>
                                         </tr>
                                         <tr>
-                                            <th class="show-details-table">{{__('words.created_at')}}</th>
-                                            <td>
-                                                {{\Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $discount_card->created_at)->format('d-m-Y H:i A')}}</td>
+                                            <th class="show-details-table">{{__('words.created_by')}}</th>
+                                            <td>{{$discount_card->created_by}}</td>
                                         </tr>
                                         <tr>
                                             <th class="show-details-table">{{__('words.created_at')}}</th>
@@ -119,7 +118,7 @@
 
                             </div>
 
-                            @if(auth('admin')->user()->hasPermission('update-payment_methods'))
+                            @if(auth('admin')->user()->hasPermission('update-discount_cards'))
                                 <div class="card-footer">
                                     <div class="row">
                                         <div class="col-4">

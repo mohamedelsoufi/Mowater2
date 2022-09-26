@@ -11,7 +11,7 @@ class ManufactureCountry extends Model
     use HasFactory;
     protected $table = 'manufacture_countries';
     public $timestamps = true;
-    protected $fillable = array('id', 'name_en', 'name_ar', 'active');
+    protected $fillable = array('id', 'name_en', 'name_ar', 'active','created_by');
     protected $hidden = ['name_en', 'name_ar', 'created_at', 'updated_at'];
     protected $appends = ['name'];
 

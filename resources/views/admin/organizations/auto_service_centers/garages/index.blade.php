@@ -40,6 +40,7 @@
                                         <th>{{__('words.name_ar')}}</th>
                                         <th>{{__('words.name_en')}}</th>
                                         <th>{{__('words.activity')}}</th>
+                                        <th>{{__('words.created_by')}}</th>
                                         <th>{{__('words.created_at')}}</th>
                                         <th>{{__('words.updated_at')}}</th>
                                         <th>{{__('words.actions')}}</th>
@@ -71,9 +72,10 @@
                                             <td>{{$garage->name_ar}}</td>
                                             <td>{{$garage->name_en}}</td>
                                             <td>{{$garage->getActive()}}</td>
+                                            <td>{{$garage->created_by}}</td>
                                             <td>{{createdAtFormat($garage->created_at)}}</td>
                                             <td>{{createdAtFormat($garage->created_at) == updatedAtFormat($garage->updated_at) ? '--' : updatedAtFormat($garage->updated_at)}}</td>
-                                            <td>
+                                            <td class="action">
                                                 @if(auth('admin')->user()->hasPermission('read-garages'))
                                                     <a href="{{route('garages.show',$garage->id)}}"
                                                        class="btn btn-outline-info" data-toggle="tooltip"

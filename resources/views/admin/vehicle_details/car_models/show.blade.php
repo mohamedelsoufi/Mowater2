@@ -51,10 +51,13 @@
                                             <td>{{$car_model->getActive()}}</td>
                                         </tr>
                                         <tr>
-                                            <th class="show-details-table">{{__('words.created_at')}}</th>
-                                            <td>{{createdAtFormat($car_model->created_at)}}</td>
+                                            <th class="show-details-table">{{__('words.created_by')}}</th>
+                                            <td>{{createdAtFormat($car_model->created_by)}}</td>
                                         </tr>
-
+                                        <tr>
+                                            <th class="show-details-table">{{__('words.created_at')}}</th>
+                                            <td>{{$car_model->created_by}}</td>
+                                        </tr>
                                         <tr>
                                             <th class="show-details-table">{{__('words.updated_at')}}</th>
                                             <td>{{createdAtFormat($car_model->created_at) == updatedAtFormat($car_model->updated_at) ? '--' : updatedAtFormat($car_model->updated_at)}}</td>

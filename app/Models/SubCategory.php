@@ -10,7 +10,7 @@ class SubCategory extends Model
 {
     use HasFactory;
     protected $table = 'sub_categories';
-    protected $fillable = ['id', 'name_en', 'name_ar', 'category_id'];
+    protected $fillable = ['id', 'name_en', 'name_ar', 'category_id', 'created_by'];
     protected $hidden = ['name_en', 'name_ar', 'created_at', 'updated_at'];
     protected $appends = ['name'];
     public $timestamps = true;

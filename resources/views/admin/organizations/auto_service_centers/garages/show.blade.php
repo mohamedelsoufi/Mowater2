@@ -120,6 +120,10 @@
                                             <td>{{$garage->getActive()}}</td>
                                         </tr>
                                         <tr>
+                                            <th class="show-details-table">{{__('words.created_by')}}</th>
+                                            <td>{{$garage->created_by}}</td>
+                                        </tr>
+                                        <tr>
                                             <th class="show-details-table">{{__('words.created_at')}}</th>
                                             <td>{{createdAtFormat($garage->created_at)}}</td>
                                         </tr>

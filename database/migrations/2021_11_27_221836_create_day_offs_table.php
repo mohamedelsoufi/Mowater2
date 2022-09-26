@@ -15,6 +15,7 @@ class CreateDayOffsTable extends Migration {
             $table->date('date');
             $table->time('from')->nullable();
             $table->time('to')->nullable();
+            $table->string('created_by')->nullable()->default('system@app.com');
             $table->timestamps();
         });
 	}

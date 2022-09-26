@@ -39,6 +39,7 @@
                                         <th>{{__('words.name_ar')}}</th>
                                         <th>{{__('words.name_en')}}</th>
                                         <th>{{__('words.activity')}}</th>
+                                        <th>{{__('words.created_by')}}</th>
                                         <th>{{__('words.created_at')}}</th>
                                         <th>{{__('words.updated_at')}}</th>
                                         <th>{{__('words.actions')}}</th>
@@ -51,11 +52,12 @@
                                             <td>{{$manufacture_country->name_ar}}</td>
                                             <td>{{$manufacture_country->name_en}}</td>
                                             <td>{{$manufacture_country->getActive()}}</td>
+                                            <td>{{$manufacture_country->created_by}}</td>
                                             <td>{{createdAtFormat($manufacture_country->created_at)}}</td>
                                             <td>{{createdAtFormat($manufacture_country->created_at) == updatedAtFormat($manufacture_country->updated_at) ? '--' : updatedAtFormat($manufacture_country->updated_at)}}</td>
-                                            <td>
+                                            <td class="action">
                                                 @if(auth('admin')->user()->hasPermission('read-manufacture_countries'))
-                                                    <a href="{{route('car-models.show',$manufacture_country->id)}}"
+                                                    <a href="{{route('manufacture-countries.show',$manufacture_country->id)}}"
                                                        class="btn btn-outline-info" data-toggle="tooltip"
                                                        title="{{__('words.show')}}">
                                                         <i class="fas fa-eye"></i>

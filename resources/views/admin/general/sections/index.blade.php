@@ -92,7 +92,7 @@
                                             <td>{{$section->reservation_cost}}</td>
                                             <td>{{createdAtFormat($section->created_at)}}</td>
                                             <td>{{createdAtFormat($section->created_at) == updatedAtFormat($section->updated_at) ? '--' : updatedAtFormat($section->updated_at)}}</td>
-                                            <td>
+                                            <td class="action">
                                                 @if(auth('admin')->user()->hasPermission('read-sections'))
                                                     <a href="{{route('sections.show',$section->id)}}"
                                                        class="btn btn-outline-info" data-toggle="tooltip"

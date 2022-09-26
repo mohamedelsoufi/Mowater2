@@ -107,7 +107,7 @@ return [
     'required_unless' => 'حقل :attribute مطلوب في حال ما لم يكن :other يساوي :values.',
     'required_with' => 'حقل :attribute مطلوب إذا توفّر :values.',
     'required_with_all' => 'حقل :attribute مطلوب إذا توفّر :values.',
-    'required_without' => 'حقل :attribute مطلوب إذا لم يتوفّر :values.',
+    'required_without' => 'حقل :attribute مطلوب',
     'required_without_all' => 'حقل :attribute مطلوب إذا لم يتوفّر :values.',
     'same' => 'يجب أن يتطابق حقل :attribute مع :other.',
     'size' => [
@@ -121,7 +121,7 @@ return [
     'timezone' => 'يجب أن يكون حقل :attribute نطاقًا زمنيًا صحيحًا.',
     'unique' => 'قيمة حقل :attribute مُستخدمة من قبل.',
     'uploaded' => 'فشل في تحميل الـ :attribute.',
-    'url' => 'صيغة رابط حقل :attribute غير صحيحة.',
+    'url' => 'صيغة رابط حقل :attribute غير صحيحة يجب أن اكون مثل https://www.domain.com',
     'uuid' => 'حقل :attribute يجب أن يكون بصيغة UUID سليمة.',
     'custom' => [
         'attribute-name' => [
@@ -275,6 +275,10 @@ return [
         'reservation_cost' => 'تكلفة الحجز',
         'role_id' => 'الدور',
         'traveled_distance' => 'المسافة المقطوعة',
+        'car_status' => 'حالة السيارة',
+        'certified_maintenance' => 'حقل صيانة الوكيل المعتمد مطلوب',
+        'number_plate' => 'حقل رقم اللوحة مطلوب',
+        'area_s' => 'حقل المنطقة مطلوب',
         'traveled_distance_type' => 'نوع المسافة المقطوعة',
         'guarantee' => 'الضمان',
         'insurance' => 'التأمين',
@@ -289,6 +293,14 @@ return [
         "vehicle_dashboard_image" => "صورة الداشبورد للمركبة",
         "traffic_pdf" => "ملف تقرير المرور",
         "chassis_number" => "رقم الشاسيه",
+        'ad_type_id' => 'نوع الإعلان',
+        'ref_name' => 'القسم',
+        'negotiable' => 'التفاوض على السعر',
+        'start_date' => 'تاريخ البدأ',
+        'end_date' => 'تاريخ الإنتهاء',
+        'link' => 'رابط',
+        'discount' => 'قيمة الخصم',
+        'discount_type' => 'نوع الخصم',
     ],
     'insurance_amount' => 'الحد التأميني',
 ];

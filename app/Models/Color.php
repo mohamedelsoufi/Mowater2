@@ -11,7 +11,7 @@ class Color extends Model
     use HasFactory;
 
     protected $table = 'colors';
-    protected $fillable = ['id','color_name','color_name_ar','color_code'];
+    protected $fillable = ['id','color_name','color_name_ar','color_code','created_by'];
     protected $hidden = ['created_at','updated_at','color_name','color_name_ar'];
     protected $appends = ['name'];
 

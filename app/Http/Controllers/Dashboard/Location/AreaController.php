@@ -52,7 +52,9 @@ class AreaController extends Controller
     public function store(AreaRequest $request)
     {
         try {
-            $area = Area::create($request->except(['_token']));
+            $request_data = $request->except(['_token']);
+            $request_data['created_by'] = auth('admin')->user()->email;
+            Area::create($request_data);
             return redirect()->route('areas.index')->with(['success' => __('message.created_successfully')]);
         } catch (\Exception $e) {
             return redirect()->back()->with(['error', __('message.something_wrong')]);
@@ -74,7 +76,9 @@ class AreaController extends Controller
     {
         try {
             $area = Area::find($id);
-            $update_area = $area->update($request->except(['_token']));
+            $request_data = $request->except(['_token']);
+            $request_data['created_by'] = auth('admin')->user()->email;
+            $area->update($request_data);
             return redirect()->route('areas.index')->with(['success' => __('message.updated_successfully')]);
         } catch (\Exception $e) {
             return redirect()->back()->with(['error', __('message.something_wrong')]);

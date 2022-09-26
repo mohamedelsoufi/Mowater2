@@ -39,6 +39,7 @@
                                         <th>{{__('words.name_ar')}}</th>
                                         <th>{{__('words.name_en')}}</th>
                                         <th>{{__('words.country')}}</th>
+                                        <th>{{__('words.created_by')}}</th>
                                         <th>{{__('words.created_at')}}</th>
                                         <th>{{__('words.updated_at')}}</th>
                                         <th>{{__('words.actions')}}</th>
@@ -51,9 +52,10 @@
                                             <td>{{$city->name_ar}}</td>
                                             <td>{{$city->name_en}}</td>
                                             <td>{{$city->country->name}}</td>
+                                            <td>{{$city->created_by}}</td>
                                             <td>{{createdAtFormat($city->created_at)}}</td>
                                             <td>{{createdAtFormat($city->created_at) == updatedAtFormat($city->updated_at) ? '--' : updatedAtFormat($city->updated_at)}}</td>
-                                            <td>
+                                            <td class="action">
                                                 @if(auth('admin')->user()->hasPermission('read-cities'))
                                                     <a href="{{route('cities.show',$city->id)}}"
                                                        class="btn btn-outline-info" data-toggle="tooltip"

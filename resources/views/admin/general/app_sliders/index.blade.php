@@ -85,7 +85,7 @@
                                             </td>
                                             <td>{{createdAtFormat($slider->created_at)}}</td>
                                             <td>{{createdAtFormat($slider->created_at) == updatedAtFormat($slider->updated_at) ? '--' : updatedAtFormat($slider->updated_at)}}</td>
-                                            <td>
+                                            <td class="action">
                                                 @if(auth('admin')->user()->hasPermission('read-app_sliders'))
                                                     <a href="{{route('app-sliders.show',$slider->id)}}"
                                                        class="btn btn-outline-info" data-toggle="tooltip"

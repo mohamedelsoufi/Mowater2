@@ -81,7 +81,7 @@ class OrganizationUserController extends Controller
                 $request->request->add(['active' => 1]);
 
             $request_data = $request->except(['_token','password_confirmation']);
-
+            $request_data['created_by'] = auth()->user()->email;
             $user->update($request_data);
             return redirect()->route('org-users.index')->with(['success' => __('message.updated_successfully')]);
         } catch (\Exception $e) {

@@ -121,6 +121,10 @@
                                             <td>{{$fuel_station->getActive()}}</td>
                                         </tr>
                                         <tr>
+                                            <th class="show-details-table">{{__('words.created_by')}}</th>
+                                            <td>{{$fuel_station->created_by}}</td>
+                                        </tr>
+                                        <tr>
                                             <th class="show-details-table">{{__('words.created_at')}}</th>
                                             <td>{{createdAtFormat($fuel_station->created_at)}}</td>
                                         </tr>

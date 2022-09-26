@@ -15,8 +15,8 @@ class AdminSpecialNumberOrganizationRequest extends FormRequest
     public function rules()
     {
         return [
-            'name_en' => 'unique:special_number_organizations,name_en,'.$this->id,
-            'name_ar' => 'unique:special_number_organizations,name_ar,'.$this->id,
+            'name_en' => 'required|unique:special_number_organizations,name_en,'.$this->id,
+            'name_ar' => 'required|unique:special_number_organizations,name_ar,'.$this->id,
             'description_en' => 'nullable',
             'description_ar' => 'nullable',
             'tax_number' => 'unique:special_number_organizations,tax_number,'.$this->id,

@@ -40,6 +40,7 @@
                                         <th>{{__('words.name_ar')}}</th>
                                         <th>{{__('words.name_en')}}</th>
                                         <th>{{__('words.activity')}}</th>
+                                        <th>{{__('words.created_by')}}</th>
                                         <th>{{__('words.created_at')}}</th>
                                         <th>{{__('words.updated_at')}}</th>
                                         <th>{{__('words.actions')}}</th>
@@ -71,9 +72,10 @@
                                             <td>{{$fuel_station->name_ar}}</td>
                                             <td>{{$fuel_station->name_en}}</td>
                                             <td>{{$fuel_station->getActive()}}</td>
+                                            <td>{{$fuel_station->created_by}}</td>
                                             <td>{{createdAtFormat($fuel_station->created_at)}}</td>
                                             <td>{{createdAtFormat($fuel_station->created_at) == updatedAtFormat($fuel_station->updated_at) ? '--' : updatedAtFormat($fuel_station->updated_at)}}</td>
-                                            <td>
+                                            <td class="action">
                                                 @if(auth('admin')->user()->hasPermission('read-fuel_stations'))
                                                     <a href="{{route('fuel-stations.show',$fuel_station->id)}}"
                                                        class="btn btn-outline-info" data-toggle="tooltip"

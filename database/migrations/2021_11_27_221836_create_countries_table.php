@@ -11,8 +11,9 @@ class CreateCountriesTable extends Migration {
 		Schema::create('countries', function(Blueprint $table) {
 			$table->bigIncrements('id');
 			$table->string('name_en')->nullable();
-            $table->string('name_ar');
+            $table->string('name_ar')->nullable();
             $table->unsignedBigInteger('currency_id')->nullable();
+            $table->string('created_by')->nullable()->default('system@app.com');
             $table->timestamps();
 
             $table->foreign('currency_id')->references('id')->on('currencies')->onUpdate('cascade')->onDelete('cascade');

@@ -48,6 +48,10 @@
                                             <td>{{$sub_category->category ? $sub_category->category->name : '--'}}</td>
                                         </tr>
                                         <tr>
+                                            <th class="show-details-table">{{__('words.created_by')}}</th>
+                                            <td>{{$sub_category->created_by}}</td>
+                                        </tr>
+                                        <tr>
                                             <th class="show-details-table">{{__('words.created_at')}}</th>
                                             <td>{{createdAtFormat($sub_category->created_at)}}</td>
                                         </tr>

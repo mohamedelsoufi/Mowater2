@@ -187,10 +187,21 @@
         bsCustomFileInput.init();
         //Date picker
         $('#reservationdate').datetimepicker({
-            format: 'YYYY-MM-DD'
+            format: 'YYYY/MM/DD'
         });
         //Date and time picker
-        $('#reservationdatetime').datetimepicker({ icons: { time: 'far fa-clock' } });
+        $('#reservationdatetime').datetimepicker({
+            icons: { time: 'far fa-clock' },
+            format: 'YYYY/MM/DD - hh:mm A'
+        });
+        $('#start_date').datetimepicker({
+            icons: { time: 'far fa-clock' },
+            format: 'YYYY/MM/DD  hh:mm A'
+        });
+        $('#end_date').datetimepicker({
+            icons: { time: 'far fa-clock' },
+            format: 'YYYY/MM/DD hh:mm A'
+        });
 
         //Date range picker
         $('#reservation').daterangepicker();

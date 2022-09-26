@@ -39,6 +39,7 @@
                                         <th>{{__('words.image_s')}}</th>
                                         <th>{{__('words.name_ar')}}</th>
                                         <th>{{__('words.name_en')}}</th>
+                                        <th>{{__('words.created_by')}}</th>
                                         <th>{{__('words.created_at')}}</th>
                                         <th>{{__('words.updated_at')}}</th>
                                         <th>{{__('words.actions')}}</th>
@@ -69,9 +70,10 @@
                                             </td>
                                             <td>{{$payment_method->name_ar}}</td>
                                             <td>{{$payment_method->name_en}}</td>
+                                            <td>{{$payment_method->created_by}}</td>
                                             <td>{{createdAtFormat($payment_method->created_at)}}</td>
                                             <td>{{createdAtFormat($payment_method->created_at) == updatedAtFormat($payment_method->updated_at) ? '--' : updatedAtFormat($payment_method->updated_at)}}</td>
-                                            <td>
+                                            <td class="action">
                                                 @if(auth('admin')->user()->hasPermission('read-payment_methods'))
                                                     <a href="{{route('payment-methods.show',$payment_method->id)}}"
                                                        class="btn btn-outline-info" data-toggle="tooltip"

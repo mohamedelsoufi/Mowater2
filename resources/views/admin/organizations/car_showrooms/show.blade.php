@@ -120,6 +120,10 @@
                                             <td>{{$car_showroom->getActive()}}</td>
                                         </tr>
                                         <tr>
+                                            <th class="show-details-table">{{__('words.created_by')}}</th>
+                                            <td>{{$car_showroom->created_by}}</td>
+                                        </tr>
+                                        <tr>
                                             <th class="show-details-table">{{__('words.created_at')}}</th>
                                             <td>{{createdAtFormat($car_showroom->created_at)}}</td>
                                         </tr>

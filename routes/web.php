@@ -20,10 +20,13 @@ Route::group(['prefix' => LaravelLocalization::setLocale(),
             Route::get('logout', 'Auth\AuthController@logout')->name('logout');
 
             // organization route
-            Route::resource('organizations', 'OrgDataController');
+            Route::resource('organizations', 'OrgDataController')->except(['create','store','destroy']);
 
             //users
             Route::resource('users', 'OrgUsersController');
+
+            //Roles
+            Route::resource('org-roles', 'OrgRolesController');
 
             //brokers requirements
 //            Route::get('/show-requirements', 'OrgDataController@show_requirements')->name('brokers.requirements');
@@ -33,27 +36,36 @@ Route::group(['prefix' => LaravelLocalization::setLocale(),
 
             // vehicle routes
             Route::resource('vehicles', 'OrgVehicleController');
+
             // work time routes
-            Route::get('work_time', 'OrgWorkTimeController@edit')->name('work_time.edit');
-            Route::put('work_time', 'OrgWorkTimeController@update')->name('work_time.update');
+            Route::get('work-times', 'OrgWorkTimeController@index')->name('work-times.index');
+            Route::get('edit-work-time', 'OrgWorkTimeController@edit')->name('work-times.edit');
+            Route::put('update-work-time', 'OrgWorkTimeController@update')->name('work-times.update');
+
             //contact
             Route::get('contact', 'OrgContactController@edit')->name('contact.edit');
             Route::put('contact', 'OrgContactController@update')->name('contact.update');
+
             //day offs
-            Route::resource('day_off', 'OrgDayOffController');
+            Route::resource('days-off', 'OrgDayOffController');
+
             //reserve
             Route::resource('reserve_vehicle', 'OrgVehicleReservationController');
+
             //test drive
             Route::resource('test', 'OrgVehicleTestController');
+
             //review
             Route::resource('review', 'OrgReviewController');
+
             //available vehicles
             Route::resource('available_vehicle', 'OrgAvailableVehicleController');
+
             //available products
             Route::resource('available_product', 'OrgAvailableProductController');
+
             //available services
             Route::resource('available_service', 'OrgAvailableServiceController');
-
 
             // products routes
             Route::resource('products', 'OrgProductController');
@@ -61,24 +73,33 @@ Route::group(['prefix' => LaravelLocalization::setLocale(),
 
             //services
             Route::resource('services', 'OrgServiceController');
+
             //branches
             Route::resource('branch', 'OrgBranchController');
+
             //phones
-
+            Route::resource('phone', 'OrgPhoneController');
+            Route::resource('phone', 'OrgPhoneController');
             Route::resource('phone', 'OrgPhoneController');
 
-            Route::resource('phone', 'OrgPhoneController');
-            Route::resource('phone', 'OrgPhoneController');
             //rental office cars
             Route::resource('rental_office_car', 'OrgRentalOfficeCarController');
+
             //rental laws
             Route::resource('rental_law', 'OrgRentalLawController');
+
             //Available Payment Methods
-            Route::resource('available_payment_method', 'OrgAvailablePaymentMethodController');
+            Route::get('available-payment-methods', 'OrgAvailablePaymentMethodController@index')->name('available-payment-methods.index');
+            Route::get('available-payment-methods/show/{id}', 'OrgAvailablePaymentMethodController@show')->name('available-payment-methods.show');
+            Route::post('available-payment-methods/update', 'OrgAvailablePaymentMethodController@update')->name('available-payment-methods.update');
+            Route::get('edit-available-payment-methods', 'OrgAvailablePaymentMethodController@edit')->name('available-payment-methods.edit');
+
             //Rental Reservations
             Route::resource('rental_reservation', 'OrgRentalReservationController');
+
             //Coverage Types
             Route::resource('coverage_type', 'OrgCoverageTypeController');
+
             //laws
             Route::resource('law', 'OrgInsuranceCompanyLawController');
 
@@ -138,6 +159,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale(),
         Route::get('cities-of-country/{id}', 'Location\CityController@get_cities_of_country')->name('cities-of-country');
         Route::get('areas-of-city/{id}', 'Location\AreaController@get_areas_of_city')->name('areas-of-city');
         Route::get('car-models-of-brand/{id}', 'VehicleDetails\CarModelController@get_models_of_brand')->name('car-models-of-brand');
+        Route::get('get-ads-orgs/{orgName}', 'General\AdminAdController@getOrgs')->name('ads.orgs');
 
     });
 });

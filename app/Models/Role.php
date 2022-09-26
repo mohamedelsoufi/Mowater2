@@ -36,4 +36,10 @@ class Role extends LaratrustRole
         return $this->display_name_en;
     }
     // appends attributes End
+
+    // relations start
+    public function rolable(){
+        return $this->morphTo();
+    }
+    // relations end
 }

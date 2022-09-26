@@ -29,7 +29,7 @@ class TechnicalInspectionCenter extends Model
     public $timestamps = true;
     protected $fillable = ['id', 'logo', 'name_en', 'name_ar', 'description_en', 'description_ar',
         'tax_number', 'address', 'city_id', 'number_of_views','active_number_of_views', 'reservation_availability',
-        'reservation_active', 'available', 'active'];
+        'reservation_active', 'available', 'active', 'created_by'];
     protected $hidden = ['name_en', 'name_ar', 'description_en', 'description_ar', 'created_at', 'updated_at'];
     protected $appends = ['name', 'description', 'rating', 'rating_count', 'is_reviewed', 'is_favorite', 'favorites_count'];
 

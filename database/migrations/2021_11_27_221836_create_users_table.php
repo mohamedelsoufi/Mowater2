@@ -28,6 +28,7 @@ class CreateUsersTable extends Migration {
             $table->unsignedBigInteger('city_id')->nullable();
             $table->unsignedBigInteger('area_id')->nullable();
             $table->string('profile_image')->nullable();
+            $table->string('created_by')->nullable()->default('system@app.com');
             $table->timestamps();
 		});
 	}

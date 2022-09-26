@@ -31,7 +31,9 @@ class Agency extends Model
     protected $table = 'agencies';
     public $timestamps = true;
     protected $fillable = ['id', 'name_en', 'name_ar', 'description_en', 'description_ar', 'brand_id',
-        'tax_number', 'logo', 'country_id', 'city_id', 'area_id', 'year_founded', 'active_number_of_views', 'number_of_views', 'reservation_availability', 'delivery_availability', 'reservation_active', 'delivery_active', 'active', 'available',];
+        'tax_number', 'logo', 'country_id', 'city_id', 'area_id', 'year_founded', 'active_number_of_views',
+        'number_of_views', 'reservation_availability', 'delivery_availability', 'reservation_active',
+        'delivery_active', 'active', 'available','created_by'];
     protected $hidden = ['name_en', 'name_ar', 'description_en', 'description_ar', 'created_at', 'updated_at'];
     protected $appends = ['name', 'description', 'rating', 'rating_count', 'is_reviewed', 'is_favorite', 'favorites_count', 'car_models'];
 
@@ -59,6 +61,10 @@ class Agency extends Model
     // appends attributes End
 
     // relationship start
+    public function roles(){
+        return $this->morphMany(Role::class,'rolable');
+    }
+
     public function brand()
     {
         return $this->belongsTo('App\Models\Brand');
@@ -163,12 +169,12 @@ class Agency extends Model
 
     public function getReservationActive()
     {
-        return $this->reservation_active == 1 ? __('words.available_prop') : __('words.not_available_prop');
+        return $this->reservation_active == 1 ? __('words.active') : __('words.inactive');
     }
 
     public function getDeliveryActive()
     {
-        return $this->delivery_active == 1 ? __('words.available_prop') : __('words.not_available_prop');
+        return $this->delivery_active == 1 ? __('words.active') : __('words.inactive');
     }
 
     public function getActiveNumberOfViews()

@@ -14,19 +14,21 @@ use App\Models\Area;
 use App\Models\Category;
 use App\Models\Section;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Database\Eloquent\Builder;
 
 class OrgDataController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware(['HasGeneralData:read'])->only(['index', 'show']);
+        $this->middleware(['HasGeneralData:update'])->only('edit');
+    }
 
     public function index()
     {
-        $user = auth()->guard('web')->user();
-        $organization = $user->organizable;
-        $countries = Country::all();
-
         try {
             $user = auth()->guard('web')->user();
             $organization = $user->organizable;
@@ -54,166 +56,143 @@ class OrgDataController extends Controller
 
                 $areas = Area::where('city_id', $branch->city_id)->get();
 
-                return view('organization.general_org.branch_index', compact('branch', 'countries', 'categories', 'cities', 'areas', 'brands', 'car_classes'));
+                return view('organization.generalOrg.branch_index', compact('branch', 'countries', 'categories', 'cities', 'areas', 'brands', 'car_classes'));
             } else {
 
                 $record = $organization;
                 if ($class == 'App\Models\DrivingTrainer') {
                     $hour_price = Section::where('ref_name', 'DrivingTrainer')->first()->reservation_cost;
-                    return view('organization.general_org.index', compact('record', 'countries', 'brands', 'car_classes', 'hour_price'));
+                    return view('organization.generalOrg.index', compact('record', 'countries', 'brands', 'car_classes', 'hour_price'));
 
                 }
                 if ($class == 'App\Models\DeliveryMan') {
                     $section = Section::where('ref_name', 'DeliveryMan')->first();
                     $categories = $section->categories;
-                    return view('organization.general_org.index', compact('record', 'countries', 'brands', 'car_classes', 'categories'));
+                    return view('organization.generalOrg.index', compact('record', 'countries', 'brands', 'car_classes', 'categories'));
 
                 }
-                return view('organization.general_org.index', compact('record', 'countries', 'brands', 'car_classes'));
+                return view('organization.generalOrg.index', compact('record', 'countries', 'brands', 'car_classes'));
             }
-
-
         } catch (\Exception $e) {
             return redirect()->back()->with(['error' => __('message.something_wrong')]);
-
         }
     }
-
 
     public function create()
     {
         //
     }
 
-
     public function store(Request $request)
-    {
-
-    }
-
-
-    public function show($id)
-    {
-        $user = auth()->guard('web')->user();
-
-        $model_type = $user->organizable_type;
-        $model_id = $user->organizable_id;
-        $id = $model_id;
-        $model = new $model_type;
-        $show_organization = $model->find($id);
-        if ($show_organization->getAttribute('brand_id')) {
-            $show_organization->brand;
-        }
-        if ($show_organization->getAttribute('address_en','address_ar')) {
-            $show_organization->makeVisible('address_en','address_ar');
-        }
-
-        $show_organization->makeVisible('name_en', 'name_ar', 'description_en', 'description_ar');
-        if ($show_organization->files) {
-            $show_organization->files;
-        }
-        if ($show_organization->file) {
-            $show_organization->file;
-        }
-        if (isset($show_organization->car_model_id)) {
-            $show_organization->car_model;
-        }
-
-        $data = compact('show_organization', 'model_type');
-        return response()->json(['status' => true, 'data' => $data]);
-    }
-
-
-    public function edit($id)
     {
         //
     }
 
+    public function show($id)
+    {
+        try {
+            $orgData = getModelData();
+
+            if ($orgData->files) {
+                $orgData->files;
+            }
+            if ($orgData->file) {
+                $orgData->file;
+            }
+            if (isset($orgData->car_model_id)) {
+                $orgData->car_model;
+            }
+            return view('organization.generalOrg.show', compact('orgData'));
+        } catch (\Exception $e) {
+            return redirect()->back()->with(['error' => __('message.something_wrong')]);
+        }
+    }
+
+    public function edit($id)
+    {
+        try {
+            $orgData = getModelData();
+
+            if ($orgData->files) {
+                $orgData->files;
+            }
+            if ($orgData->file) {
+                $orgData->file;
+            }
+            if (isset($orgData->car_model_id)) {
+                $orgData->car_model;
+            }
+            $countries = Country::latest('id')->get();
+            $brands = Brand::get();
+
+            return view('organization.generalOrg.edit', compact('orgData', 'countries', 'brands'));
+        } catch (\Exception $e) {
+            return redirect()->back()->with(['error' => __('message.something_wrong')]);
+        }
+    }
 
     public function update(OrganizationRequest $request, $id)
     {
-        $user = auth()->guard('web')->user();
+        try {
+            $record = getModelData();
 
-        $model_type = $user->organizable_type;
-        $model = new $model_type;
+            if (!$request->has('available'))
+                $request->request->add(['available' => 0]);
+            else
+                $request->request->add(['available' => 1]);
 
+            if (!$request->has('reservation_availability'))
+                $request->request->add(['reservation_availability' => 0]);
+            else
+                $request->request->add(['reservation_availability' => 1]);
 
-        $record = $model->find($id);
-//        if (!$request->has('active'))
-//            $request->request->add(['active' => 0]);
-//        else
-//            $request->request->add(['active' => 1]);
+            if (!$request->has('delivery_availability'))
+                $request->request->add(['delivery_availability' => 0]);
+            else
+                $request->request->add(['delivery_availability' => 1]);
 
-        if (!$request->has('reservation_active'))
-            $request->request->add(['reservation_active' => 0]);
-        else
-            $request->request->add(['reservation_active' => 1]);
+            if (!$request->has('active_number_of_views'))
+                $request->request->add(['active_number_of_views' => 0]);
+            else
+                $request->request->add(['active_number_of_views' => 1]);
 
-        if (!$request->has('delivery_active'))
-            $request->request->add(['delivery_active' => 0]);
-        else
-            $request->request->add(['delivery_active' => 1]);
-
-        if (!$request->has('available'))
-            $request->request->add(['available' => 0]);
-        else
-            $request->request->add(['available' => 1]);
-
-        if (!$request->has('reservation_availability'))
-            $request->request->add(['reservation_availability' => 0]);
-        else
-            $request->request->add(['reservation_availability' => 1]);
-
-        if (!$request->has('delivery_availability'))
-            $request->request->add(['delivery_availability' => 0]);
-        else
-            $request->request->add(['delivery_availability' => 1]);
-
-        $request_data = $request->except(['_token', 'logo','fuel_types']);
-        if ($request->has('fuel_types')) {
-            $request_data['fuel_types'] = implode(",", $request->fuel_types);;
-        }
-        if ($request->has('logo')) {
-            $image_path = public_path('uploads/');
-
-            if (File::exists($image_path . $record->getRawOriginal('logo'))) {
-                File::delete($image_path . $record->getRawOriginal('logo'));
+            $request_data = $request->except(['_token', 'logo', 'fuel_types']);
+            if ($request->has('fuel_types')) {
+                $request_data['fuel_types'] = implode(",", $request->fuel_types);;
             }
+            if ($request->has('logo')) {
+                $image_path = public_path('uploads/');
 
-            $image = $request->logo->store('logos');
-            $request_data['logo'] = $image;
-        }
-        if ($request->has('birth_date')) {
-            $request_data['birth_date'] = date('Y-m-d', strtotime($request->birth_date));
+                if (File::exists($image_path . $record->getRawOriginal('logo'))) {
+                    File::delete($image_path . $record->getRawOriginal('logo'));
+                }
 
-        }
-        if ($request->has('profile_picture')) {
-            $image_path = public_path('uploads/');
-
-            if (File::exists($image_path . $record->getRawOriginal('profile_picture'))) {
-                File::delete($image_path . $record->getRawOriginal('profile_picture'));
+                $image = $request->logo->store('logos');
+                $request_data['logo'] = $image;
             }
+            if ($request->has('birth_date')) {
+                $request_data['birth_date'] = date('Y-m-d', strtotime($request->birth_date));
 
-            $image = $request->profile_picture->store('profile_pictures');
-            $request_data['profile_picture'] = $image;
-        }
-        if ($request->has('image')) {
-//            $image_path = public_path('uploads/');
-            $request_data['license_certificate'] = 1;
-            $record->updateImage();
-        }
+            }
+            if ($request->has('profile_picture')) {
+                $image_path = public_path('uploads/');
 
-        $record->update($request_data);
-//      return $request_data;
+                if (File::exists($image_path . $record->getRawOriginal('profile_picture'))) {
+                    File::delete($image_path . $record->getRawOriginal('profile_picture'));
+                }
 
-        if ($record) {
+                $image = $request->profile_picture->store('profile_pictures');
+                $request_data['profile_picture'] = $image;
+            }
+            if ($request->has('image')) {
+                $request_data['license_certificate'] = 1;
+                $record->updateImage();
+            }
+            $record->update($request_data);
             return redirect()->route('organization.organizations.index')->with(['success' => __('message.updated_successfully')]);
-        } else {
-
+        } catch (\Exception $e) {
             return redirect()->back()->with(['error' => __('message.something_wrong')]);
         }
-
-
     }
 
     public function update_branch_data(Request $request)
@@ -258,9 +237,8 @@ class OrgDataController extends Controller
         $branch->update($request->all());
 
 
-        return back()->with('success', __('message.updated_successfully'));
+        return redirect()->back()->with(['error' => __('message.something_wrong')]);
     }
-
 
     public function destroy($id)
     {

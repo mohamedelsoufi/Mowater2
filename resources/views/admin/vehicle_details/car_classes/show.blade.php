@@ -47,9 +47,14 @@
                                             <td>{{$car_class->getActive()}}</td>
                                         </tr>
                                         <tr>
+                                            <th class="show-details-table">{{__('words.created_by')}}</th>
+                                            <td>{{$car_class->created_by}}</td>
+                                        </tr>
+                                        <tr>
                                             <th class="show-details-table">{{__('words.created_at')}}</th>
                                             <td>{{createdAtFormat($car_class->created_at)}}</td>
                                         </tr>
+
 
                                         <tr>
                                             <th class="show-details-table">{{__('words.updated_at')}}</th>

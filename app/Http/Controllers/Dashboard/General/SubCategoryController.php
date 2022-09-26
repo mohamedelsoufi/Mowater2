@@ -42,7 +42,9 @@ class SubCategoryController extends Controller
     public function store(SubCategoryRequest $request)
     {
         try {
-            SubCategory::create($request->except(['_token']));
+            $request_data = $request->except(['_token']);
+            $request_data['created_by'] = auth('admin')->user()->email;
+            SubCategory::create($request_data);
             return redirect()->route('sub-categories.index')->with(['success' => __('message.created_successfully')]);
         } catch (\Exception $e) {
             return redirect()->back()->with(['error' => __('message.something_wrong')]);
@@ -76,7 +78,9 @@ class SubCategoryController extends Controller
     {
         try {
             $sub_category = SubCategory::find($id);
-            $sub_category->update($request->except(['_token']));
+            $request_data = $request->except(['_token']);
+            $request_data['created_by'] = auth('admin')->user()->email;
+            $sub_category->update($request_data);
             return redirect()->route('sub-categories.index')->with(['success' => __('message.updated_successfully')]);
         } catch (\Exception $e) {
             return redirect()->back()->with(['error' => __('message.something_wrong')]);

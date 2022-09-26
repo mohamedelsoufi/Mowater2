@@ -36,7 +36,9 @@ class CurrencyController extends Controller
     public function store(CurrencyRequest $request)
     {
         try {
-            Currency::create($request->except(['_token']));
+            $request_data = $request->except(['_token']);
+            $request_data['created_by'] = auth('admin')->user()->email;
+            Currency::create($request_data);
             return redirect()->route('currencies.index')->with(['success' => __('message.created_successfully')]);
 
         } catch (\Exception $e) {
@@ -70,7 +72,9 @@ class CurrencyController extends Controller
     {
         try {
             $currency = Currency::find($id);
-            $currency->update($request->except(['_token']));
+            $request_data = $request->except(['_token']);
+            $request_data['created_by'] = auth('admin')->user()->email;
+            $currency->update($request_data);
             return redirect()->route('currencies.index')->with(['success' => __('message.updated_successfully')]);
         } catch (\Exception $e) {
             return redirect()->back()->with(['error' => __('message.something_wrong')]);

@@ -14,6 +14,7 @@ class CreateCategoriesTable extends Migration {
 			$table->string('name_ar');
             $table->string('ref_name')->nullable();
             $table->bigInteger('section_id')->unsigned()->nullable();
+            $table->string('created_by')->nullable()->default('system@app.com');
             $table->timestamps();
 		});
 	}

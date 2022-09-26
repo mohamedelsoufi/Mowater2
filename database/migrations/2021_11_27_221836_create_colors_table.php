@@ -18,6 +18,7 @@ class CreateColorsTable extends Migration
             $table->string('color_code');
             $table->string('color_name');
             $table->string('color_name_ar')->nullable();
+            $table->string('created_by')->nullable()->default('system@app.com');
             $table->timestamps();
         });
     }

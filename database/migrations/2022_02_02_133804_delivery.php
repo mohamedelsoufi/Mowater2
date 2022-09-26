@@ -40,6 +40,7 @@ class Delivery extends Migration
             $table->enum('status',['available', 'busy', 'not_available'])->nullable();
             $table->integer('number_of_views')->default(0)->nullable();
             $table->boolean('active_number_of_views')->default(1)->nullable();
+            $table->string('created_by')->nullable()->default('system@app.com');
             $table->timestamps();
 
             $table->foreign('brand_id')->on('brands')->references('id')->onUpdate('set null')->onDelete('set null');

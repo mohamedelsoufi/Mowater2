@@ -43,7 +43,7 @@ class DiscountCardController extends Controller
                 $request->request->add(['active' => 1]);
 
             $request_data = $request->except(['_token', 'image']);
-
+            $request_data['created_by'] = auth('admin')->user()->email;
             if ($request->has('image')) {
                 $image = $request->image->store('discount_cards');
                 $request_data['image'] = $image;
@@ -86,7 +86,7 @@ class DiscountCardController extends Controller
                 $request->request->add(['active' => 1]);
 
             $request_data = $request->except(['_token', 'image']);
-
+            $request_data['created_by'] = auth('admin')->user()->email;
             if ($request->has('image')) {
                 $image_path = public_path('uploads/');
 

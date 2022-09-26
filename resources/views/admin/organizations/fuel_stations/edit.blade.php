@@ -57,7 +57,7 @@
 
                                             <div class="form-group col-md-6">
                                                 <label>{{__('words.name_en')}}</label>
-                                                <input type="text" name="name_en"
+                                                <input type="text" name="name_en" dir="ltr"
                                                        class="form-control @error('name_en') is-invalid @enderror"
                                                        value="{{ old('name_en',$fuel_station->name_en) }}"
                                                        placeholder="{{__('words.name_en')}}">
@@ -87,7 +87,7 @@
                                         <div class="form-row">
                                             <div class="form-group col-md-12">
                                                 <label>{{__('words.address_en')}}</label>
-                                                <textarea name="address_en"
+                                                <textarea name="address_en" dir="ltr"
                                                           class="form-control @error('address_en') is-invalid @enderror">{{ old('address_en',$fuel_station->address_en) }}</textarea>
 
                                                 @error('address_en')

@@ -499,10 +499,10 @@
                 {{-- Location toggle end --}}
 
                 {{-- General toggle start --}}
-                @if(auth('admin')->user()->hasPermission(['read-sections','read-categories','read-sub_categories','read-currencies','payment_methods','app_sliders','discount_cards','colors']))
-                    <li class="nav-item {{ request()->routeIs('sections.*','categories.*','sub-categories.*','currencies.*','payment-methods.*','app-sliders.*','discount-cards.*','colors.*') ? 'menu-open' : '' }}">
+                @if(auth('admin')->user()->hasPermission(['read-sections','read-categories','read-sub_categories','read-currencies','read-payment_methods','read-app_sliders','read-discount_cards','read-colors','read-ads','read-ad-types']))
+                    <li class="nav-item {{ request()->routeIs('sections.*','categories.*','sub-categories.*','currencies.*','payment-methods.*','app-sliders.*','discount-cards.*','colors.*','ads.*','ad-types.*') ? 'menu-open' : '' }}">
                         <a href="#"
-                           class="nav-link {{ request()->routeIs('sections.*','categories.*','sub-categories.*','currencies.*','payment-methods.*','app-sliders.*','discount-cards.*','colors.*') ? 'active' : '' }}">
+                           class="nav-link {{ request()->routeIs('sections.*','categories.*','sub-categories.*','currencies.*','payment-methods.*','app-sliders.*','discount-cards.*','colors.*','ads.*') ? 'active' : '' }}">
                             <i class="fas fa-sliders-h"></i>
                             <p>
                                 {{__('words.general')}}
@@ -546,6 +546,77 @@
                                 </li>
                             @endif
                             {{-- Discount Card routes end --}}
+
+                            {{-- Ad routes start --}}
+                            @if(auth('admin')->user()->hasPermission('read-ads'))
+                                <li class="nav-item {{ request()->routeIs('ads.*') ? 'menu-open' : '' }}">
+                                    <a href="#"
+                                       class="nav-link {{ request()->routeIs('ads.*') ? 'sub-menu active' : '' }}">
+                                        <i class="fas fa-ad"></i>
+                                        <p>
+                                            {{__('words.ads')}}
+                                            <i class="{{app()->getLocale() == 'ar' ? 'left fas fa-angle-right' :  'right fas fa-angle-left'}}"></i>
+                                        </p>
+                                    </a>
+                                    <ul class="nav nav-treeview">
+                                        @if(auth('admin')->user()->hasPermission('read-ads'))
+                                            <li class="nav-item">
+                                                <a href="{{route('ads.index')}}"
+                                                   class="nav-link {{ request()->routeIs('ads.index') ? 'active' : '' }}">
+                                                    <i class="far fa-eye nav-icon"></i>
+                                                    <p>{{__('words.show_all')}}</p>
+                                                </a>
+                                            </li>
+                                        @endif
+
+                                        @if(auth('admin')->user()->hasPermission('create-ads'))
+                                            <li class="nav-item">
+                                                <a href="{{route('ads.create')}}"
+                                                   class="nav-link {{ request()->routeIs('ads.create') ? 'active' : '' }}">
+                                                    <i class="fas fa-folder-plus"></i>
+                                                    <p>{{__('words.create')}}</p>
+                                                </a>
+                                            </li>
+                                        @endif
+
+                                            {{-- Ad Types routes start --}}
+                                            @if(auth('admin')->user()->hasPermission('read-ad_types'))
+                                                <li class="nav-item {{ request()->routeIs('ad-types.*') ? 'menu-open' : '' }}">
+                                                    <a href="#"
+                                                       class="nav-link {{ request()->routeIs('ad-types.*') ? 'sub-menu active' : '' }}">
+                                                        <i class="fas fa-award"></i>
+                                                        <p>
+                                                            {{__('words.ad_types')}}
+                                                            <i class="{{app()->getLocale() == 'ar' ? 'left fas fa-angle-right' :  'right fas fa-angle-left'}}"></i>
+                                                        </p>
+                                                    </a>
+                                                    <ul class="nav nav-treeview">
+                                                        @if(auth('admin')->user()->hasPermission('read-ad_types'))
+                                                            <li class="nav-item">
+                                                                <a href="{{route('ad-types.index')}}"
+                                                                   class="nav-link {{ request()->routeIs('ad-types.index') ? 'active' : '' }}">
+                                                                    <i class="far fa-eye nav-icon"></i>
+                                                                    <p>{{__('words.show_all')}}</p>
+                                                                </a>
+                                                            </li>
+                                                        @endif
+                                                        @if(auth('admin')->user()->hasPermission('create-ad_types'))
+                                                            <li class="nav-item">
+                                                                <a href="{{route('ad-types.create')}}"
+                                                                   class="nav-link {{ request()->routeIs('ad-types.create') ? 'active' : '' }}">
+                                                                    <i class="fas fa-folder-plus"></i>
+                                                                    <p>{{__('words.create')}}</p>
+                                                                </a>
+                                                            </li>
+                                                        @endif
+                                                    </ul>
+                                                </li>
+                                            @endif
+                                            {{-- Ad Types routes end --}}
+                                    </ul>
+                                </li>
+                            @endif
+                            {{-- Ad routes end --}}
 
                             {{-- Section routes start --}}
                             @if(auth('admin')->user()->hasPermission('read-sections'))

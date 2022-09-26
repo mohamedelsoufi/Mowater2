@@ -14,8 +14,8 @@ class AdminRentalOfficeRequest extends FormRequest
     public function rules()
     {
         return [
-            'name_en' => 'unique:rental_offices,name_en,'.$this->id,
-            'name_ar' => 'unique:rental_offices,name_ar,'.$this->id,
+            'name_en' => 'required|unique:rental_offices,name_en,'.$this->id,
+            'name_ar' => 'required|unique:rental_offices,name_ar,'.$this->id,
             'description_en' => 'nullable',
             'description_ar' => 'nullable',
             'tax_number' => 'unique:rental_offices,tax_number,'.$this->id,

@@ -82,7 +82,7 @@ class DeliveryController extends Controller
                 $request->request->add(['active_number_of_views' => 1]);
 
             $request_data = $request->except(['_token', 'profile_picture', 'file_url', 'category_id', 'user_name', 'email', 'password', 'password_confirmation', 'license']);
-
+            $request_data['created_by'] = auth('admin')->user()->email;
             $request_data['birth_date'] = date('Y-m-d', strtotime($request->birth_date));
 
             if ($request->has('profile_picture')) {
@@ -161,7 +161,7 @@ class DeliveryController extends Controller
                 $request->request->add(['active_number_of_views' => 1]);
 
             $request_data = $request->except(['_token', 'profile_picture', 'file_url', 'category_id', 'user_name', 'email', 'password', 'password_confirmation', 'organization_user_id', 'license']);
-
+            $request_data['created_by'] = auth('admin')->user()->email;
             $request_data['birth_date'] = date('Y-m-d', strtotime($request->birth_date));
 
             if ($request->has('category_id')) {

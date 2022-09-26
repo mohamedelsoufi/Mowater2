@@ -57,7 +57,7 @@
 
                                             <div class="form-group col-md-6">
                                                 <label>{{__('words.currency_name_en')}}</label>
-                                                <input type="text" name="name_en"
+                                                <input type="text" name="name_en" dir="ltr"
                                                        class="form-control @error('name_en') is-invalid @enderror"
                                                        value="{{ $currency->name_en }}"
                                                        placeholder="Currency name">

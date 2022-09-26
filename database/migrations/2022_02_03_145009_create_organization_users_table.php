@@ -21,6 +21,7 @@ class CreateOrganizationUsersTable extends Migration
             $table->string('password')->nullable();
             $table->string('remember_token')->nullable();
             $table->boolean('active')->nullable()->default(1);
+            $table->string('created_by')->nullable()->default('system@app.com');
             $table->timestamps();
         });
     }

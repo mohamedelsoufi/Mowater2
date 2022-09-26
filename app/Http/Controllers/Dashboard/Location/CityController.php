@@ -52,13 +52,10 @@ class CityController extends Controller
     public function store(CityRequest $request)
     {
         try {
-            $city = City::create($request->except(['_token']));
-            if ($city) {
-                return redirect()->route('cities.index')->with(['success' => __('message.created_successfully')]);
-            } else {
-
-                return redirect()->back()->with(['error' => __('message.something_wrong')]);
-            }
+            $request_data = $request->except(['_token']);
+            $request_data['created_by'] = auth('admin')->user()->email;
+            City::create($request_data);
+            return redirect()->route('cities.index')->with(['success' => __('message.created_successfully')]);
         } catch (\Exception $e) {
             return redirect()->back()->with(['error' => __('message.something_wrong')]);
         }
@@ -79,12 +76,10 @@ class CityController extends Controller
     {
         try {
             $city = City::find($id);
-            $update_city = $city->update($request->except(['_token']));
-            if ($update_city) {
-                return redirect()->route('cities.index')->with(['success' => __('message.updated_successfully')]);
-            } else {
-                return redirect()->route('cities.index')->with(['error' => __('message.something_wrong')]);
-            }
+            $request_data = $request->except(['_token']);
+            $request_data['created_by'] = auth('admin')->user()->email;
+            $city->update($request_data);
+            return redirect()->route('cities.index')->with(['success' => __('message.updated_successfully')]);
         } catch (\Exception $e) {
             return redirect()->back()->with(['error' => __('message.something_wrong')]);
         }

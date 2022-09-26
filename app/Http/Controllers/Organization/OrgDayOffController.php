@@ -3,107 +3,103 @@
 namespace App\Http\Controllers\Organization;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\DayOffRequest;
+use App\Models\DayOff;
 use Illuminate\Http\Request;
 
 class OrgDayOffController extends Controller
 {
+
+    private $dayOff;
+
+    public function __construct(DayOff $dayOff)
+
+    {
+        $this->middleware(['HasOrgDayOff:read'])->only(['index', 'show']);
+        $this->middleware(['HasOrgDayOff:update'])->only('edit');
+        $this->middleware(['HasOrgDayOff:create'])->only('create');
+        $this->middleware(['HasOrgDayOff:delete'])->only('destroy');
+        $this->dayOff = $dayOff;
+
+    }
+
     public function index()
     {
-        $user         = auth()->guard('web')->user();
-        $organization = $user->organizable;
-        $day_offs    = $organization->day_offs;
+        try {
+            $record = getModelData();
+            $days_off = $record->day_offs;
 
-        return view('organization.day_offs.index' , compact('organization' , 'day_offs'));
+            return view('organization.daysOff.index', compact('record', 'days_off'));
+        } catch (\Exception $e) {
+            return redirect()->back()->with(['error' => __('message.something_wrong')]);
+        }
     }
 
     public function create()
     {
-        return view('organization.day_offs.create');
+        try {
+            $record = getModelData();
+            return view('organization.daysOff.create', compact('record'));
+        } catch (\Exception $e) {
+            return redirect()->back()->with(['error' => __('message.something_wrong')]);
+        }
     }
 
-    public function store(Request $request)
+    public function store(DayOffRequest $request)
     {
-        $rules = [
-            'date' => 'required'
-        ];
+        try {
+            $organization = getModelData();
 
-        $request->validate($rules);
+            $organization->day_offs()->create($request->all());
 
-        $user         = auth()->guard('web')->user();
-        $organization = $user->organizable;
-
-        $organization->day_offs()->create($request->all());
-
-        return redirect()->route('organization.day_off.index')->with('success' , __('message.created_successfully'));
+            return redirect()->route('organization.days-off.index')->with('success', __('message.created_successfully'));
+        } catch (\Exception $e) {
+            return redirect()->back()->with(['error' => __('message.something_wrong')]);
+        }
     }
 
     public function show($id)
     {
-
+        try {
+            $day_off = $this->dayOff->find($id);
+            $record = getModelData();
+            return view('organization.daysOff.show', compact('day_off', 'record'));
+        } catch (\Exception $e) {
+            return redirect()->back()->with(['error' => __('message.something_wrong')]);
+        }
     }
 
     public function edit($id)
     {
-        $user         = auth()->guard('web')->user();
-        $organization = $user->organizable;
-
-        $day_off = $organization->day_offs()->where('day_offs.id' , $id)->firstOrFail();
-
-        return view('organization.day_offs.edit' , compact('organization' , 'day_off'));
+        try {
+            $day_off = $this->dayOff->find($id);
+            $record = getModelData();
+            return view('organization.daysOff.edit', compact('day_off', 'record'));
+        } catch (\Exception $e) {
+            return redirect()->back()->with(['error' => __('message.something_wrong')]);
+        }
     }
 
-
-    public function update(Request $request , $id)
+    public function update(DayOffRequest $request, $id)
     {
-        $rules = [
-            'facebook_link'    => 'nullable|url',
-            'whatsapp_number'  => 'nullable|max:255',
-            'country_code'            => 'required',
-            'phone'            => 'nullable|numeric',
-            'website'          => 'nullable|url',
-            'instagram_link'   => 'nullable|url',
-        ];
+        try {
+            $day_off = $this->dayOff->find($id);
 
-
-        $request->validate($rules);
-
-        $user         = auth()->guard('web')->user();
-        $organization = $user->organizable;
-
-        $day_off = $organization->day_offs()->where('day_offs.id' , $id)->firstOrFail();
-
-
-        if($day_off)
-        {
-            $day_off->update($request->all());
-            return redirect()->route('organization.day_off.index')->with('success' , __('message.updated_successfully'));
+            $day_off->update($request->except('token'));
+            return redirect()->route('organization.days-off.index')->with('success', __('message.updated_successfully'));
+        } catch (\Exception $e) {
+            return redirect()->back()->with(['error' => __('message.something_wrong')]);
         }
-        else
-        {
-            return back()->with(['error'=> __('message.something_wrong')]);
-        }
-
-
     }
 
     public function destroy($id)
     {
-        $user         = auth()->guard('web')->user();
-        $organization = $user->organizable;
-
-        $day_off = $organization->day_offs()->where('day_offs.id' , $id)->firstOrFail();
-
-
-        if($day_off)
-        {
+        try {
+            $day_off = $this->dayOff->find($id);
             $day_off->delete();
-            return redirect()->route('organization.day_off.index')->with('success' , __('message.deleted_successfully'));
-        }
-        else
-        {
-            return back()->with(['error'=> __('message.something_wrong')]);
+            return redirect()->route('organization.days-off.index')->with('success', __('message.deleted_successfully'));
+        } catch (\Exception $e) {
+            return redirect()->back()->with(['error' => __('message.something_wrong')]);
         }
     }
-
-
 }

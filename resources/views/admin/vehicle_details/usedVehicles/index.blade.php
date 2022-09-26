@@ -77,7 +77,7 @@
                                             <td>{{$vehicle->vehicable->email}}</td>
                                             <td>{{createdAtFormat($vehicle->created_at)}}</td>
                                             <td>{{createdAtFormat($vehicle->created_at) == updatedAtFormat($vehicle->updated_at) ? '--' : updatedAtFormat($vehicle->updated_at)}}</td>
-                                            <td>
+                                            <td class="action">
                                                 @if(auth('admin')->user()->hasPermission('read-used_vehicles'))
                                                     <a href="{{route('used-vehicles.show',$vehicle->id)}}"
                                                        class="btn btn-outline-info" data-toggle="tooltip"

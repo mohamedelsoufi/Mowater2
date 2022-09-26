@@ -14,8 +14,8 @@ class AdminFuelStationRequest extends FormRequest
     public function rules()
     {
         return [
-            'name_en' => 'unique:fuel_stations,name_en,'.$this->id,
-            'name_ar' => 'unique:fuel_stations,name_ar,'.$this->id,
+            'name_en' => 'required|unique:fuel_stations,name_en,'.$this->id,
+            'name_ar' => 'required|unique:fuel_stations,name_ar,'.$this->id,
             'address_en' => 'nullable',
             'address_ar' => 'nullable',
             'tax_number' => 'unique:fuel_stations,tax_number,'.$this->id,

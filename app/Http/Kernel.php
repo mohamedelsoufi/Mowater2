@@ -72,5 +72,11 @@ class Kernel extends HttpKernel
         'localeViewPath' => \Mcamara\LaravelLocalization\Middleware\LaravelLocalizationViewPath::class,
         'APILocalization' => \App\Http\Middleware\APILocalization::class,
         'IsVerified'=> \App\Http\Middleware\IsVerifiedMiddleware::class,
+        'HasGeneralData'=> \App\Http\Middleware\Organization\HasGeneralDataMiddleware::class,
+        'HasOrgRoles'=> \App\Http\Middleware\Organization\HasOrgRolesMiddleware::class,
+        'HasVehicles'=> \App\Http\Middleware\Organization\HasVehicleMiddleware::class,
+        'HasOrgPaymentMethod'=> \App\Http\Middleware\Organization\HasPaymentMethodMiddleware::class,
+        'HasOrgWorkTime'=> \App\Http\Middleware\Organization\HasWorkTimeMiddleware::class,
+        'HasOrgDayOff'=> \App\Http\Middleware\Organization\HadDayOffMiddleware::class,
     ];
 }

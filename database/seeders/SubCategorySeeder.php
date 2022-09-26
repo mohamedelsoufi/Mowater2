@@ -22,6 +22,7 @@ class SubCategorySeeder extends Seeder
                     'name_en' => $category->name_en . $i,
                     'name_ar' => $category->name_ar . $i,
                     'category_id' => $category->id,
+                    'created_by' => 'system@app.com',
                 ]);
             }
         }
@@ -49,6 +50,7 @@ class SubCategorySeeder extends Seeder
                 'name_en' => $vehicle_transportation_en[$w],
                 'name_ar' => $vehicle_transportation_ar[$w],
                 'category_id' => $vehicle_transportation_cat->id,
+                'created_by' => 'system@app.com',
             ]);
         }
 
@@ -57,6 +59,7 @@ class SubCategorySeeder extends Seeder
                 'name_en' => $troubleshooting_en[$e],
                 'name_ar' => $troubleshooting_ar[$e],
                 'category_id' => $troubleshooting_cat->id,
+                'created_by' => 'system@app.com',
             ]);
         }
 
@@ -65,6 +68,7 @@ class SubCategorySeeder extends Seeder
                 'name_en' => $fuel_supply_en[$n],
                 'name_ar' => $fuel_supply_ar[$n],
                 'category_id' => $fuel_supply_cat->id,
+                'created_by' => 'system@app.com',
             ]);
         }
 

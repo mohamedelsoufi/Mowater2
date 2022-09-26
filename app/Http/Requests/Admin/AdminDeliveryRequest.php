@@ -14,7 +14,7 @@ class AdminDeliveryRequest extends FormRequest
     public function rules()
     {
         return [
-//            'name_en' => 'required',
+            'name_en' => 'required',
             'name_ar' => 'required',
 //            'manufacturing_year' => 'required',
             'gender' => 'required|in:male,female',

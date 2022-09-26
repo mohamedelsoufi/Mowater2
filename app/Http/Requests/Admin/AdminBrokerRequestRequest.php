@@ -14,8 +14,8 @@ class AdminBrokerRequestRequest extends FormRequest
     public function rules()
     {
         return [
-            'name_en' => 'unique:agencies,name_en',
-            'name_ar' => 'unique:agencies,name_ar',
+            'name_en' => 'required|unique:agencies,name_en',
+            'name_ar' => 'required|unique:agencies,name_ar',
             'description_en' => 'nullable',
             'description_ar' => 'nullable',
             'tax_number' => 'unique:brokers,tax_number',

@@ -22,8 +22,10 @@ class LaratrustSetupTables extends Migration
             $table->string('display_name_en')->nullable();
             $table->string('description_ar')->nullable();
             $table->string('description_en')->nullable();
-            $table->boolean('is_admin_user')->nullable()->default(0);
-            $table->boolean('is_org_user')->nullable()->default(0);
+            $table->boolean('is_super')->nullable()->default(0);
+            $table->string('rolable_type')->nullable();
+            $table->unsignedBigInteger('rolable_id')->nullable();
+            $table->string('created_by')->nullable()->default('system@app.com');
             $table->timestamps();
         });
 

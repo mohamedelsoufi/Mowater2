@@ -29,6 +29,7 @@ class CreateCarShowroomsTable extends Migration
             $table->boolean('delivery_active')->nullable();
             $table->boolean('active')->default(1);
             $table->boolean('available')->default(1);
+            $table->string('created_by')->nullable()->default('system@app.com');
             $table->timestamps();
         });
     }

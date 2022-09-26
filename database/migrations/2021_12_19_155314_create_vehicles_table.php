@@ -94,6 +94,7 @@ class CreateVehiclesTable extends Migration
             $table->boolean('active_number_of_views')->default(1)->nullable();
             $table->boolean('availability')->nullable();
             $table->boolean('active')->nullable();
+            $table->string('created_by')->default('system@app.com')->nullable();
             $table->timestamps();
 
             $table->foreign('brand_id')->on('brands')->references('id')->onUpdate('cascade')->onDelete('cascade');

@@ -77,7 +77,7 @@ class SpecialNumberOrganizationController extends Controller
                 $request->request->add(['delivery_active' => 1]);
 
             $request_data = $request->except(['_token', 'logo', 'email', 'user_name', 'password', 'password_confirmation']);
-
+            $request_data['created_by'] = auth('admin')->user()->email;
             if ($request->has('logo')) {
                 $image = $request->logo->store('logos');
                 $request_data['logo'] = $image;
@@ -154,7 +154,7 @@ class SpecialNumberOrganizationController extends Controller
                 $request->request->add(['delivery_active' => 1]);
 
             $request_data = $request->except(['_token', 'logo', 'organization_user_id', 'user_name', 'password', 'password_confirmation']);
-
+            $request_data['created_by'] = auth('admin')->user()->email;
             if ($request->has('logo')) {
                 $image_path = public_path('uploads/');
 

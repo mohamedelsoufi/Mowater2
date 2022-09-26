@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -26,7 +27,8 @@ class Section extends Model
     }
     public function getAdsAttribute()
     {
-       $ads = Ad::where('organizationable_type', 'App\\Models\\'.$this->ref_name)->orderBy(
+       $ads = Ad::where('organizationable_type', 'App\\Models\\'.$this->ref_name)->where('status','approved')
+           ->where('end_date', '>', Carbon::now()->format('Y-m-d H:i:s'))->orderBy(
            AdType::select('priority')->whereColumn('ad_types.id', 'ads.ad_type_id'), 'desc')->get();
        return $ads;
     }

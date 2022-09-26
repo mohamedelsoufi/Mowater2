@@ -26,6 +26,7 @@ class CreateDiscountCardsTable extends Migration
             $table->boolean('active_number_of_views')->default(1)->nullable();
             $table->string('status')->nullable();
             $table->boolean('active')->nullable();
+            $table->string('created_by')->nullable()->default('system@app.com');
             $table->timestamps();
         });
     }

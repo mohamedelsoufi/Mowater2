@@ -39,6 +39,7 @@
                                         <th>{{__('words.name_ar')}}</th>
                                         <th>{{__('words.name_en')}}</th>
                                         <th>{{__('words.activity')}}</th>
+                                        <th>{{__('words.created_by')}}</th>
                                         <th>{{__('words.created_at')}}</th>
                                         <th>{{__('words.updated_at')}}</th>
                                         <th>{{__('words.actions')}}</th>
@@ -51,9 +52,10 @@
                                             <td>{{$car_class->name_ar}}</td>
                                             <td>{{$car_class->name_en}}</td>
                                             <td>{{$car_class->getActive()}}</td>
+                                            <td>{{$car_class->created_by}}</td>
                                             <td>{{createdAtFormat($car_class->created_at)}}</td>
                                             <td>{{createdAtFormat($car_class->created_at) == updatedAtFormat($car_class->updated_at) ? '--' : updatedAtFormat($car_class->updated_at)}}</td>
-                                            <td>
+                                            <td class="action">
                                                 @if(auth('admin')->user()->hasPermission('read-car_classes'))
                                                     <a href="{{route('car-classes.show',$car_class->id)}}"
                                                        class="btn btn-outline-info" data-toggle="tooltip"

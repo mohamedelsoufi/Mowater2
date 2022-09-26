@@ -14,7 +14,7 @@ class AdminSparepartRequest extends FormRequest
     public function rules()
     {
         return [
-//            'name_en' => 'unique:spare_parts,name_en,' . $this->id,
+            'name_en' => 'required|unique:spare_parts,name_en,' . $this->id,
             'name_ar' => 'required',
 //            'description_en' => 'unique:spare_parts,description_en,' . $this->id,
 //            'description_ar' => 'required',

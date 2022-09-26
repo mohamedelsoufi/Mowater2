@@ -42,6 +42,7 @@
                                         <th>{{__('words.year')}}</th>
                                         <th>{{__('words.price')}}</th>
                                         <th>{{__('words.activity')}}</th>
+                                        <th>{{__('words.created_by')}}</th>
                                         <th>{{__('words.created_at')}}</th>
                                         <th>{{__('words.updated_at')}}</th>
                                         <th>{{__('words.actions')}}</th>
@@ -75,9 +76,10 @@
                                             <td>{{$discount_card->year}}</td>
                                             <td>{{$discount_card->price}}</td>
                                             <td>{{$discount_card->getActive()}}</td>
+                                            <td>{{$discount_card->created_by}}</td>
                                             <td>{{createdAtFormat($discount_card->created_at)}}</td>
                                             <td>{{createdAtFormat($discount_card->created_at) == updatedAtFormat($discount_card->updated_at) ? '--' : updatedAtFormat($discount_card->updated_at)}}</td>
-                                            <td>
+                                            <td class="action">
                                                 @if(auth('admin')->user()->hasPermission('read-discount_cards'))
                                                     <a href="{{route('discount-cards.show',$discount_card->id)}}"
                                                        class="btn btn-outline-info" data-toggle="tooltip"

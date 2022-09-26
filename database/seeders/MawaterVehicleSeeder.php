@@ -33,14 +33,14 @@ class MawaterVehicleSeeder extends Seeder
         $price = [1598753, 3578951, 258963, 147852, 147986325];
         $latitude = [26.272000796341498, 26.270216847142375, 26.253229632066255, 26.251697684229384, 26.272000796341498, 26.270216847142375, 26.253229632066255];
         $longitude = [50.608592796488196, 50.660938764298095, 50.639560239345236, 50.612485490810705, 50.608592796488196, 50.660938764298095, 50.639560239345236];
-        $image_types = ["front_side_image", "back_side_image", "right_side_image", "left_side_image", "inside_vehicle_image", "vehicle_dashboard_image", "traffic_pdf"];
+        $image_types = ["front_side_image", "back_side_image", "right_side_image", "left_side_image", "inside_vehicle_image", "vehicle_dashboard_image"];
 
 
         $car_classes = CarClass::pluck('id')->toArray();
 
         $vehicle_type = ['cars', 'trucks', 'pickups'];
 
-        for ($i = 0; $i < 7; $i++) {
+        for ($i = 0; $i < 6; $i++) {
             $vehicle = $user->vehicles()->create([
 
                 'vehicle_type' => $vehicle_type[array_rand($vehicle_type)],
@@ -91,10 +91,11 @@ class MawaterVehicleSeeder extends Seeder
 
             for ($s = 0; $s < 6; $s++) {
                 $vehicle->files()->create([
-                    'path' => "seeder/sale". $s + 1 .".jpg",
+                    'path' => "seeder/sale". ($s + 1) .".jpg",
                     'type' => $image_types[$s],
-                    'color_id' => $i <= 1 ? Color::first()->id : Color::skip(1)->first()->id,
+                    'color_id' => 1,
                 ]);
+
             }
             $vehicle->files()->create([
                 'path' => "seeder/traffic.pdf",

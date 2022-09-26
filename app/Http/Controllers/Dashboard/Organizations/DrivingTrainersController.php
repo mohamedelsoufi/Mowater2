@@ -82,6 +82,7 @@ class DrivingTrainersController extends Controller
                 $request->request->add(['active_number_of_views' => 1]);
 
             $request_data = $request->except(['_token', 'profile_picture', 'trainer_vehicle', 'user_name', 'email', 'password', 'password_confirmation']);
+            $request_data['created_by'] = auth('admin')->user()->email;
             $hour_price = $hour_price = Section::where('ref_name', 'DrivingTrainer')->first()->reservation_cost;
             $request_data['hour_price'] = $hour_price;
 
@@ -156,7 +157,7 @@ class DrivingTrainersController extends Controller
                 $request->request->add(['active_number_of_views' => 1]);
 
             $request_data = $request->except(['_token', 'profile_picture', 'trainer_vehicle', 'user_name', 'email', 'password', 'password_confirmation', 'organization_user_id']);
-
+            $request_data['created_by'] = auth('admin')->user()->email;
             $request_data['birth_date'] = date('Y-m-d', strtotime($request->birth_date));
 
             if ($request->has('profile_picture')) {

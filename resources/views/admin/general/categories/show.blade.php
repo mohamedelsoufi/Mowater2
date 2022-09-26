@@ -51,6 +51,10 @@
                                             <td>{{$category->ref_name ? __('words.' . $category->ref_name) : '--'}}</td>
                                         </tr>
                                         <tr>
+                                            <th class="show-details-table">{{__('words.created_by')}}</th>
+                                            <td>{{$category->created_by}}</td>
+                                        </tr>
+                                        <tr>
                                             <th class="show-details-table">{{__('words.created_at')}}</th>
                                             <td>{{createdAtFormat($category->created_at)}}</td>
                                         </tr>

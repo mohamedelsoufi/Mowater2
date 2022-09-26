@@ -47,7 +47,6 @@ class GetAdsResource extends JsonResource
         $data["end_date"] = Carbon::createFromFormat('Y-m-d H:i:s', $this->end_date)->format('d-m-Y H:i A');
         $data["active_number_of_views"] = $this->active_number_of_views;
         $data["number_of_views"] = $this->number_of_views;
-        $data["available"] = $this->available;
         $data["active"] = $this->active;
         return $data;
     }

@@ -12,9 +12,10 @@ class CreateCarModelsTable extends Migration
         Schema::create('car_models', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name_en')->nullable();
-            $table->string('name_ar');
+            $table->string('name_ar')->nullable();
             $table->boolean('active')->default(1);
             $table->bigInteger('brand_id')->unsigned()->nullable();
+            $table->string('created_by')->nullable();
             $table->timestamps();
         });
     }

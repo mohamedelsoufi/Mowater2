@@ -13,7 +13,8 @@ class OrganizationUser extends Authenticatable
 
     protected $table = 'organization_users';
     public $timestamps = true;
-    protected $fillable = ['id', 'organizable_type', 'organizable_id', 'user_name', 'email', 'password', 'remember_me', 'active'];
+    protected $fillable = ['id', 'organizable_type', 'organizable_id', 'user_name', 'email', 'password',
+        'remember_me', 'active', 'created_by'];
     protected $hidden = ['created_at', 'updated_at'];
 
     // relations start

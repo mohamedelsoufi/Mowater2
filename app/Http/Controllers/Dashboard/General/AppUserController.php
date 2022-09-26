@@ -96,6 +96,7 @@ class AppUserController extends Controller
                 $request->request->add(['is_verified' => 1]);
 
             $request_data = $request->except(['_token', 'profile_image', 'password_confirmation']);
+            $request_data['created_by'] = auth()->user()->email;
             if ($request->has('profile_image')) {
                 $image_path = public_path('uploads/');
 

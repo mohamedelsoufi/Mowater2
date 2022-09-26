@@ -11,7 +11,7 @@ class Category extends Model
     use HasFactory;
     protected $table = 'categories';
     public $timestamps = true;
-    protected $fillable = array('id', 'name_en', 'name_ar', 'section_id','ref_name');
+    protected $fillable = array('id', 'name_en', 'name_ar', 'section_id','ref_name','created_by');
     protected $hidden = ['name_en', 'name_ar', 'created_at', 'updated_at'];
     protected $appends = ['name'];
 

@@ -18,7 +18,7 @@ class AuthController extends Controller
 
     public function login()
     {
-        return view('organization.login');
+        return view('organization.auth.login');
     }
 
     public function home()
@@ -36,7 +36,7 @@ class AuthController extends Controller
 
             return redirect()->route('organization.home');
         }
-        return redirect()->back()->with(['error'=>__('message.something_wrong')]);
+        return redirect()->back()->with(['error'=>__('message.invalid_login')]);
     }
 
     public function logout(Request $request)

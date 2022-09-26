@@ -68,8 +68,14 @@ Route::group(['prefix' => LaravelLocalization::setLocale(),
             //payment method routes
             Route::resource('payment-methods', 'General\PaymentMethodController');
 
-            //Discount card
+            //Discount card routes
             Route::resource('discount-cards', 'General\DiscountCardController');
+
+            //Ad routes
+            Route::resource('ads', 'General\AdminAdController');
+
+            //Ad type routes
+            Route::resource('ad-types', 'General\AdminAdTypeController')->except(['create','store','destroy']);
 
             //color routes
             Route::resource('colors', 'General\ColorController');

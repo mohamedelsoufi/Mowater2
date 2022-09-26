@@ -42,6 +42,7 @@
                                         <th>{{__('words.transfer_type')}}</th>
                                         <th>{{__('words.availability')}}</th>
                                         <th>{{__('words.activity')}}</th>
+                                        <th>{{__('words.created_by')}}</th>
                                         <th>{{__('words.created_at')}}</th>
                                         <th>{{__('words.updated_at')}}</th>
                                         <th>{{__('words.actions')}}</th>
@@ -57,9 +58,10 @@
                                             <td>{{$special_number->transfer_type}}</td>
                                             <td>{{$special_number->getAvailable()}}</td>
                                             <td>{{$special_number->getActive()}}</td>
+                                            <td>{{$special_number->created_by}}</td>
                                             <td>{{createdAtFormat($special_number->created_at)}}</td>
                                             <td>{{createdAtFormat($special_number->created_at) == updatedAtFormat($special_number->updated_at) ? '--' : updatedAtFormat($special_number->updated_at)}}</td>
-                                            <td>
+                                            <td class="action">
                                                 @if(auth('admin')->user()->hasPermission('read-special_numbers'))
                                                     <a href="{{route('special-numbers.show',$special_number->id)}}"
                                                        class="btn btn-outline-info" data-toggle="tooltip"

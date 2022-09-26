@@ -57,7 +57,7 @@
 
                                             <div class="form-group col-md-6">
                                                 <label>{{__('words.title_en')}}</label>
-                                                <input type="text" name="title_en" id="title_en"
+                                                <input type="text" name="title_en" dir="ltr" id="title_en"
                                                        value="{{$discount_card->title_en}}"
                                                        class="form-control @error('title_en') is-invalid @enderror"
                                                        placeholder="Card name">
@@ -90,7 +90,7 @@
                                         <div class="form-row mb-3">
                                             <div class="form-group col-md-12">
                                                 <label>{{__('words.description_en')}}</label>
-                                                <textarea name="description_en" id="description_en"
+                                                <textarea name="description_en" dir="ltr" id="description_en"
                                                           placeholder="Card description"
                                                           class="form-control @error('description_en') is-invalid @enderror">
                                                     {{$discount_card->description_en}}

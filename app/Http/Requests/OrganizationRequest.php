@@ -18,8 +18,8 @@ class OrganizationRequest extends FormRequest
         $model_type = $user->organizable_type;
         $model = new $model_type;
         return [
-//            'name_en' => 'required|unique:' . $model->getTable() . ',name_en,' . $this->id,
-            'name_ar' => 'required',
+            'name_en' => 'required|unique:' . $model->getTable() . ',name_en,' . $this->id,
+            'name_ar' => 'required|unique:' . $model->getTable() . ',name_ar,' . $this->id,
 //            'description_en' => 'required|unique:' . $model->getTable() . ',description_en,' . $this->id,
 //            'description_ar' => 'required|unique:' . $model->getTable() . ',description_ar,' . $this->id,
             //'tax_number' => 'required|unique:'.$model->getTable().',tax_number,'.$this->id,

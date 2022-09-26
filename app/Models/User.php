@@ -18,7 +18,8 @@ class User extends Authenticatable implements JWTSubject
     public $timestamps = true;
     protected $fillable = array('id', 'first_name', 'last_name', 'nickname', 'email', 'phone_code', 'phone', 'password',
         'active', 'date_of_birth', 'is_verified',
-        'gender', 'nationality', 'country_id', 'city_id', 'area_id', 'fcm_token', 'device_token', 'platform', 'profile_image');
+        'gender', 'nationality', 'country_id', 'city_id', 'area_id', 'fcm_token', 'device_token',
+        'platform', 'profile_image', 'created_by');
     protected $hidden = array('password', 'created_at', 'updated_at');
 
     // JWT auth start

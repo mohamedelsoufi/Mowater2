@@ -39,6 +39,7 @@
                                         <th>{{__('words.user_name')}}</th>
                                         <th>{{__('words.email')}}</th>
                                         <th>{{__('words.activity')}}</th>
+                                        <th>{{__('words.created_by')}}</th>
                                         <th>{{__('words.created_at')}}</th>
                                         <th>{{__('words.updated_at')}}</th>
                                         <th>{{__('words.actions')}}</th>
@@ -52,9 +53,10 @@
                                             <td>{{$user->user_name}}</td>
                                             <td>{{$user->email}}</td>
                                             <td>{{$user->getActive()}}</td>
+                                            <td>{{$user->created_by}}</td>
                                             <td>{{createdAtFormat($user->created_at)}}</td>
                                             <td>{{createdAtFormat($user->created_at) == updatedAtFormat($user->updated_at) ? '--' : updatedAtFormat($user->updated_at)}}</td>
-                                            <td>
+                                            <td class="action">
                                                 @if(auth('admin')->user()->hasPermission('read-org_users'))
                                                     <a href="{{route('org-users.show',$user->id)}}"
                                                        class="btn btn-outline-info" data-toggle="tooltip"

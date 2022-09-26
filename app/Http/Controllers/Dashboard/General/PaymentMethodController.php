@@ -51,6 +51,7 @@ class PaymentMethodController extends Controller
                 $image = $request->symbol->store('payment_methods/symbol');
                 $request_data['symbol'] = $image;
             }
+            $request_data['created_by'] = auth('admin')->user()->email;
             PaymentMethod::create($request_data);
             return redirect()->route('payment-methods.index')->with(['success' => __('message.created_successfully')]);
         } catch (\Exception $e) {
@@ -83,6 +84,7 @@ class PaymentMethodController extends Controller
                 $image = $request->symbol->store('payment_methods/symbol');
                 $request_data['symbol'] = $image;
             }
+            $request_data['created_by'] = auth('admin')->user()->email;
             $payment_method->update($request_data);
             return redirect()->route('payment-methods.index')->with(['success' => __('message.updated_successfully')]);
 

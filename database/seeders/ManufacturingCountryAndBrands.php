@@ -18,22 +18,25 @@ class ManufacturingCountryAndBrands extends Seeder
     public function run()
     {
         $almania = ManufactureCountry::create([
-                    'name_en' => 'Germany',
-                    'name_ar' => 'ألمانيا',
-                    'active' => 1,
-                ]);
+            'name_en' => 'Germany',
+            'name_ar' => 'ألمانيا',
+            'active' => 1,
+            'created_by' => 'system@app.com',
+        ]);
 
-        $yaban =  ManufactureCountry::create([
-                    'name_en' => 'Japan (JAMA)',
-                    'name_ar' => 'اليابان',
-                    'active' => 1,
-                ]);
+        $yaban = ManufactureCountry::create([
+            'name_en' => 'Japan (JAMA)',
+            'name_ar' => 'اليابان',
+            'active' => 1,
+            'created_by' => 'system@app.com',
+        ]);
 
         $koria = ManufactureCountry::create([
-                    'name_en' => 'Korea (KAMA)',
-                    'name_ar' => 'كوريا',
-                    'active' => 1,
-                ]);
+            'name_en' => 'Korea (KAMA)',
+            'name_ar' => 'كوريا',
+            'active' => 1,
+            'created_by' => 'system@app.com',
+        ]);
 
         $Toyota = Brand::create([
             'name_en' => 'Toyota',
@@ -41,6 +44,7 @@ class ManufacturingCountryAndBrands extends Seeder
             'logo' => 'seeder/toyota-Logo.jpg',
             'active' => true,
             'manufacture_country_id' => $yaban->id, //yaban
+            'created_by' => 'system@app.com',
         ]);
         $models = [
             'Corolla' => 'كورولا',
@@ -48,12 +52,12 @@ class ManufacturingCountryAndBrands extends Seeder
             'Camry' => 'كامري',
             'Yaris' => 'ياريس',
         ];
-        foreach($models as $name_en => $name_ar)
-        {
+        foreach ($models as $name_en => $name_ar) {
             CarModel::create([
                 'name_en' => $name_en,
                 'name_ar' => $name_ar,
                 'brand_id' => $Toyota->id,
+                'created_by' => 'system@app.com',
             ]);
         }
         /******** */
@@ -62,22 +66,23 @@ class ManufacturingCountryAndBrands extends Seeder
             'name_ar' => 'فورد',
             'logo' => 'seeder/ford-logo.png',
             'active' => true,
-            'manufacture_country_id' =>  $almania->id , //المانيا
+            'manufacture_country_id' => $almania->id, //المانيا
+            'created_by' => 'system@app.com',
         ]);
         $models = [
             'Escort' => 'إسكورت',
             'Edge' => 'ايدج',
             'Escape' => 'إسكيب',
         ];
-        foreach($models as $name_en => $name_ar)
-        {
+        foreach ($models as $name_en => $name_ar) {
             CarModel::create([
                 'name_en' => $name_en,
                 'name_ar' => $name_ar,
                 'brand_id' => $Ford->id,
+                'created_by' => 'system@app.com',
             ]);
         }
-         /*********************** */
+        /*********************** */
 
         $Honda = Brand::create([
             'name_en' => 'Honda',
@@ -85,6 +90,7 @@ class ManufacturingCountryAndBrands extends Seeder
             'logo' => 'seeder/honda-logo.jpg',
             'active' => true,
             'manufacture_country_id' => $yaban->id, //yaban
+            'created_by' => 'system@app.com',
         ]);
         $models = [
             'Civic' => 'سيفيك',
@@ -92,12 +98,12 @@ class ManufacturingCountryAndBrands extends Seeder
             'Odyssey' => 'أوديسي',
         ];
 
-        foreach($models as $name_en => $name_ar)
-        {
+        foreach ($models as $name_en => $name_ar) {
             CarModel::create([
                 'name_en' => $name_en,
                 'name_ar' => $name_ar,
                 'brand_id' => $Honda->id,
+                'created_by' => 'system@app.com',
             ]);
         }
         /*********************** */
@@ -108,6 +114,7 @@ class ManufacturingCountryAndBrands extends Seeder
             'logo' => 'seeder/kia-logo.png',
             'active' => true,
             'manufacture_country_id' => $koria->id, //كوريا الجنوبية
+            'created_by' => 'system@app.com',
         ]);
 
         $models = [
@@ -116,12 +123,12 @@ class ManufacturingCountryAndBrands extends Seeder
             'Niro' => 'نيرو',
         ];
 
-        foreach($models as $name_en => $name_ar)
-        {
+        foreach ($models as $name_en => $name_ar) {
             CarModel::create([
                 'name_en' => $name_en,
                 'name_ar' => $name_ar,
                 'brand_id' => $Kia->id,
+                'created_by' => 'system@app.com',
             ]);
         }
         /*********************** */
@@ -132,6 +139,7 @@ class ManufacturingCountryAndBrands extends Seeder
             'logo' => 'seeder/merceedes-logo.jpg',
             'active' => true,
             'manufacture_country_id' => $almania->id, //ألمانيا
+            'created_by' => 'system@app.com',
         ]);
 
         $models = [
@@ -140,12 +148,12 @@ class ManufacturingCountryAndBrands extends Seeder
             'E-Class Cabriolet' => 'إي-كلاس كابريوليه',
         ];
 
-        foreach($models as $name_en => $name_ar)
-        {
+        foreach ($models as $name_en => $name_ar) {
             CarModel::create([
                 'name_en' => $name_en,
                 'name_ar' => $name_ar,
                 'brand_id' => $Mercedes->id,
+                'created_by' => 'system@app.com',
             ]);
         }
 
@@ -171,6 +179,7 @@ class ManufacturingCountryAndBrands extends Seeder
             'logo' => 'seeder/bmw-logo.png',
             'active' => true,
             'manufacture_country_id' => $almania->id, // المانيا
+            'created_by' => 'system@app.com',
         ]);
 
         $models = [
@@ -179,12 +188,12 @@ class ManufacturingCountryAndBrands extends Seeder
             'Series 3' => '3 سيريز',
         ];
 
-        foreach($models as $name_en => $name_ar)
-        {
+        foreach ($models as $name_en => $name_ar) {
             CarModel::create([
                 'name_en' => $name_en,
                 'name_ar' => $name_ar,
                 'brand_id' => $BMW->id,
+                'created_by' => 'system@app.com',
             ]);
         }
 
@@ -192,16 +201,19 @@ class ManufacturingCountryAndBrands extends Seeder
         CarClass::create([
             'name_en' => 'GLI',
             'name_ar' => 'GLI',
+            'created_by' => 'system@app.com',
         ]);
 
         CarClass::create([
             'name_en' => 'XLI',
             'name_ar' => 'XLI',
+            'created_by' => 'system@app.com',
         ]);
 
         CarClass::create([
             'name_en' => 'HYBIRD',
             'name_ar' => 'HYBIRD',
+            'created_by' => 'system@app.com',
         ]);
     }
 }

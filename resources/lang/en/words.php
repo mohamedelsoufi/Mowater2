@@ -259,6 +259,7 @@ return [
 
 
     'show_org_data' => 'Show data for ',
+    'edit_org_data' => 'Edit data for ',
     'vehicle_status' => 'Vehicle Status',
     'availability' => 'Availability',
     'bhd' => 'BHD',
@@ -277,6 +278,11 @@ return [
     'show_service' => 'show service',
     //ads
     'show_ad' => 'show ad',
+    'show_ads' => 'show ads',
+    'edit_ad' => 'Edit ad',
+    'create_ad' => 'Create ad',
+    'external_ad_link' => 'External Ad Link',
+    'ad_in_app' => 'Ad In App',
     'ads' => 'Ads',
     'negotiable' => 'Negotiable ',
     'accepted' => 'accepted',
@@ -689,8 +695,11 @@ return [
     'first_once' => 'First once',
 
     //dashboard
+    'dashboard' => 'Dashboard',
     'admin_dashboard' => 'Admin Dashboard',
+    'organization_dashboard' => 'Organization Dashboard',
     'admin_sig_in' => 'Admin Sign in',
+    'org_sig_in' => 'Organization Sign in',
     'app_users' => 'App Users',
     'admin_users' => 'Admin Users',
     'org_users' => 'Organizations Users',
@@ -1022,6 +1031,34 @@ return [
     "inside_vehicle_image" => "Inside Vehicle Image",
     "vehicle_dashboard_image" => "Vehicle Dashboard Image",
     "traffic_pdf" => "Traffic Report File",
+    "link" => "Link",
+    "ad_for" => "Ad for",
+    'pending' => 'Pending',
+    'approved' => 'Approved',
+    'rejected' => 'Rejected',
+    'replied' => 'Replied',
+    'start_date' => 'Start Date',
+    'end_date' => 'End Date',
+    "ad_types" => "Ad Types",
+    "show_ad_types" => "Show Ad Types",
+    "show_ad_type" => "Show Ad Type",
+    "edit_ad_type" => "Edit Ad Type",
+    "org_roles" => "Organization Roles",
+    "general_data" => "Organization Data",
+
+    "edit_vehicle" => "Edit Vehicle",
+    "3d_message" => "3D file extension must be '.glb'",
+
+    "show_available_payment_methods" => "Show Available Payment Methods",
+    'work_times' => "Show Work Times",
+    'show_work_times' => "Work Times",
+    'edit_work_times' => "Edit Work Time",
+
+    'days_off' => "Days Off",
+    'show_days_off' => "Show Days Off",
+    'show_day_off' => "Show Day Off",
+    'edit_day_off' => "Edit Day Off",
+    'new_day_off' => "Create Day Off",
 ];
 
 

@@ -14,8 +14,8 @@ class AdminGarageRequest extends FormRequest
     public function rules()
     {
         return [
-            'name_en' => 'unique:garages,name_en,'.$this->id,
-            'name_ar' => 'unique:garages,name_ar,'.$this->id,
+            'name_en' => 'required|unique:garages,name_en,'.$this->id,
+            'name_ar' => 'required|unique:garages,name_ar,'.$this->id,
             'description_en' => 'nullable',
             'description_ar' => 'nullable',
             'tax_number' => 'unique:garages,tax_number,'.$this->id,

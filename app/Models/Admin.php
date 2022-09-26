@@ -13,7 +13,7 @@ class Admin extends Authenticatable
 
     protected $table = 'admins';
     public $timestamps = true;
-    protected $fillable = ['first_name','last_name', 'email', 'password','active'];
+    protected $fillable = ['first_name','last_name', 'email', 'password','active','created_by'];
     protected $hidden = ['password', 'remember_token'];
 
     // accessors & Mutator start

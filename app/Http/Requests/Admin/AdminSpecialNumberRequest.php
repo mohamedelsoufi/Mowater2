@@ -16,7 +16,7 @@ class AdminSpecialNumberRequest extends FormRequest
         return [
             'category_id' => 'exists:categories,id',
             'sub_category_id' => 'exists:categories,id',
-            'number' => 'unique:special_numbers,number,'.$this->id,
+            'number' => 'required|unique:special_numbers,number,'.$this->id,
             'size' => 'in:normal_plate,special_plate',
             'transfer_type' => 'in:waiver,own',
             'price' => 'required|numeric|between:0,999999999999999.99',

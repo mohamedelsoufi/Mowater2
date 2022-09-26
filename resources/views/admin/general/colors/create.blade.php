@@ -51,7 +51,7 @@
                                             </div>
                                             <div class="form-group col-md-6">
                                                 <label>{{__('words.color_name')}}</label>
-                                                <input type="text" name="color_name"
+                                                <input type="text" name="color_name"dir="ltr"
                                                        class="form-control @error('color_name') is-invalid @enderror"
                                                        value="{{ old('color_name') }}" placeholder="Color name">
 

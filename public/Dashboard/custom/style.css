@@ -63,3 +63,17 @@ a:active, a:focus {
 .sidebar-divider{
     background-color: #6d7279;
 }
+
+.action{
+    width: 15%;
+}
+.image-galley{
+    height: 200px;
+}
+.dot {
+    height: 25px;
+    width: 25px !important;
+    border-radius: 50%;
+    display: inline-block;
+    margin: 0px 15px;
+}

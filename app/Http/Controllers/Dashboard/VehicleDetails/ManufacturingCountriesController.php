@@ -49,7 +49,9 @@ class ManufacturingCountriesController extends Controller
                 $request->request->add(['active' => 0]);
             else
                 $request->request->add(['active' => 1]);
-            $manufacture_country = ManufactureCountry::create($request->except(['_token']));
+            $request_data =$request->except(['_token']);
+            $request_data['created_by'] = auth('admin')->user()->email;
+            $manufacture_country = ManufactureCountry::create($request_data);
             if ($manufacture_country) {
                 return redirect()->route('manufacture-countries.index')->with(['success' => __('message.created_successfully')]);
             } else {
@@ -79,7 +81,9 @@ class ManufacturingCountriesController extends Controller
                 $request->request->add(['active' => 0]);
             else
                 $request->request->add(['active' => 1]);
-            $update_manufacture_country = $manufacture_country->update($request->except(['_token']));
+            $request_data =$request->except(['_token']);
+            $request_data['created_by'] = auth('admin')->user()->email;
+            $update_manufacture_country = $manufacture_country->update($request_data);
             if ($update_manufacture_country) {
                 return redirect()->route('manufacture-countries.index')->with(['success' => __('message.updated_successfully')]);
             } else {

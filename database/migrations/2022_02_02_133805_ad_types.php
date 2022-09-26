@@ -19,6 +19,8 @@ class AdTypes extends Migration
             $table->string('name_en')->nullable();
             $table->integer('priority')->nullable();
             $table->double('price')->nullable();
+            $table->string('created_by')->nullable()->default('system@app.com');
+            $table->timestamps();
         });
     }
 

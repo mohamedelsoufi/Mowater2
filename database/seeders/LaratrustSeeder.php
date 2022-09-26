@@ -25,7 +25,7 @@ class LaratrustSeeder extends Seeder
           'display_name_en' => 'super admin',
           'description_ar' => 'له جميع الصلاحيات',
           'description_en' => 'has all permissions',
-          'is_admin_user' => 1,
+          'is_super' => 1,
       ]);
 
       foreach (\config('laratrust_seeder.roles') as $key => $values){

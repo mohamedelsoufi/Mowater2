@@ -39,6 +39,7 @@
                                         <th>{{__('words.profile_picture')}}</th>
                                         <th>{{__('words.name')}}</th>
                                         <th>{{__('words.activity')}}</th>
+                                        <th>{{__('words.created_by')}}</th>
                                         <th>{{__('words.created_at')}}</th>
                                         <th>{{__('words.updated_at')}}</th>
                                         <th>{{__('words.actions')}}</th>
@@ -69,9 +70,10 @@
                                             </td>
                                             <td>{{$trainer->name}}</td>
                                             <td>{{$trainer->getActive()}}</td>
+                                            <td>{{$trainer->created_by}}</td>
                                             <td>{{createdAtFormat($trainer->created_at)}}</td>
                                             <td>{{createdAtFormat($trainer->created_at) == updatedAtFormat($trainer->updated_at) ? '--' : updatedAtFormat($trainer->updated_at)}}</td>
-                                            <td>
+                                            <td class="action">
                                                 @if(auth('admin')->user()->hasPermission('read-driving_trainers'))
                                                     <a href="{{route('trainers.show',$trainer->id)}}"
                                                        class="btn btn-outline-info" data-toggle="tooltip"

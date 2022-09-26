@@ -62,6 +62,7 @@ class SpecialNumberController extends Controller
                 $request->request->add(['active_number_of_views' => 1]);
 
             $request_data = $request->except(['_token']);
+            $request_data['created_by'] = auth('admin')->user()->email;
             SpecialNumber::create($request_data);
             return redirect()->route('special-numbers.index')->with(['success' => __('message.created_successfully')]);
         } catch (\Exception $e) {
@@ -114,6 +115,7 @@ class SpecialNumberController extends Controller
                 $request->request->add(['active_number_of_views' => 1]);
 
             $request_data = $request->except(['_token']);
+            $request_data['created_by'] = auth('admin')->user()->email;
             $special_number->update($request_data);
             return redirect()->route('special-numbers.index')->with(['success' => __('message.updated_successfully')]);
         } catch (\Exception $e) {

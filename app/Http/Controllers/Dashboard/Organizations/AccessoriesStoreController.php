@@ -69,7 +69,7 @@ class AccessoriesStoreController extends Controller
                 $request->request->add(['delivery_active' => 1]);
 
             $request_data = $request->except(['_token', 'logo', 'user_name', 'email', 'password', 'password_confirmation']);
-
+            $request_data['created_by'] = auth('admin')->user()->email;
             if ($request->has('logo')) {
                 $image = $request->logo->store('logos');
                 $request_data['logo'] = $image;
@@ -143,7 +143,7 @@ class AccessoriesStoreController extends Controller
                 $request->request->add(['delivery_active' => 1]);
 
             $request_data = $request->except(['_token', 'logo', 'user_name', 'password', 'password_confirmation', 'organization_user_id']);
-
+            $request_data['created_by'] = auth('admin')->user()->email;
             if ($request->has('logo')) {
                 $image_path = public_path('uploads/');
 

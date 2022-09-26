@@ -440,7 +440,7 @@ class Vehicle extends Model
     public function getOneImageAttribute()
     {
         $default_image = $this->files()->first();
-        return $default_image ? $default_image->path : '';
+        return $default_image ? $default_image->path : asset('uploads/default_image.png');
     }
 
     public function getTrafficPdf()

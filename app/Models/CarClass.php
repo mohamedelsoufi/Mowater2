@@ -12,7 +12,7 @@ class CarClass extends Model
     use HasFactory;
     protected $table = 'car_classes';
     public $timestamps = true;
-    protected $fillable = array('id','name_en', 'name_ar', 'active');
+    protected $fillable = array('id','name_en', 'name_ar', 'active','created_by');
     protected $hidden = ['created_at', 'updated_at','name_en', 'name_ar'];
     protected $appends = ['name'];
 

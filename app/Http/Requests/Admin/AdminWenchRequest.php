@@ -14,8 +14,8 @@ class AdminWenchRequest extends FormRequest
     public function rules()
     {
         return [
-            'name_en' => 'unique:wenches,name_en,'.$this->id,
-            'name_ar' => 'unique:wenches,name_ar,'.$this->id,
+            'name_en' => 'required|unique:wenches,name_en,'.$this->id,
+            'name_ar' => 'required|unique:wenches,name_ar,'.$this->id,
             'description_en' => 'nullable',
             'description_ar' => 'nullable',
             'tax_number' => 'unique:wenches,tax_number,'.$this->id,

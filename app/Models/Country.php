@@ -12,7 +12,7 @@ class Country extends Model
     use HasFactory, HasFile;
     protected $table = 'countries';
     public $timestamps = true;
-    protected $fillable = array('id','name_en', 'name_ar','currency_id');
+    protected $fillable = array('id','name_en', 'name_ar','currency_id', 'created_by');
     protected $hidden = ['created_at', 'updated_at','name_en', 'name_ar'];
 
     protected $appends = ['name','image'];

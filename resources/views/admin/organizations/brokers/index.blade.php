@@ -40,6 +40,7 @@
                                         <th>{{__('words.name_ar')}}</th>
                                         <th>{{__('words.name_en')}}</th>
                                         <th>{{__('words.activity')}}</th>
+                                        <th>{{__('words.created_by')}}</th>
                                         <th>{{__('words.created_at')}}</th>
                                         <th>{{__('words.updated_at')}}</th>
                                         <th>{{__('words.actions')}}</th>
@@ -71,9 +72,10 @@
                                             <td>{{$broker->name_ar}}</td>
                                             <td>{{$broker->name_en}}</td>
                                             <td>{{$broker->getActive()}}</td>
+                                            <td>{{$broker->created_by}}</td>
                                             <td>{{createdAtFormat($broker->created_at)}}</td>
                                             <td>{{createdAtFormat($broker->created_at) == updatedAtFormat($broker->updated_at) ? '--' : updatedAtFormat($broker->updated_at)}}</td>
-                                            <td>
+                                            <td class="action">
                                                 @if(auth('admin')->user()->hasPermission('read-brokers'))
                                                     <a href="{{route('brokers.show',$broker->id)}}"
                                                        class="btn btn-outline-info" data-toggle="tooltip"

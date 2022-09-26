@@ -36,7 +36,8 @@ class Ads extends Migration
             $table->integer('number_of_views')->default(0)->nullable();
             $table->boolean('active_number_of_views')->default(1)->nullable();
             $table->boolean('active')->default(1)->nullable();
-            $table->boolean('available')->default(1)->nullable();
+            $table->enum('status',['pending','approved','rejected'])->default('approved')->nullable();
+            $table->string('created_by')->nullable()->default('system@app.com');
             $table->timestamps();
 
             $table->foreign('country_id')

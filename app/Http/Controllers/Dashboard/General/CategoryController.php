@@ -40,7 +40,9 @@ class CategoryController extends Controller
     public function store(CategoryRequest $request)
     {
         try {
-            Category::create($request->except(['_token']));
+            $request_data = $request->except(['_token']);
+            $request_data['created_by'] = auth('admin')->user()->email;
+            Category::create($request_data);
             return redirect()->route('categories.index')->with(['success' => __('message.created_successfully')]);
         } catch (\Exception $e) {
             return redirect()->back()->with(['error' => __('message.something_wrong') . $e->getMessage()]);
@@ -73,7 +75,9 @@ class CategoryController extends Controller
     {
         try {
             $category = Category::find($id);
-            $category->update($request->except(['_token']));
+            $request_data = $request->except(['_token']);
+            $request_data['created_by'] = auth('admin')->user()->email;
+            $category->update($request_data);
             return redirect()->route('categories.index')->with(['success' => __('message.updated_successfully')]);
         } catch (\Exception $e) {
             return redirect()->back()->with(['error' => __('message.something_wrong') . $e->getMessage()]);

@@ -30,6 +30,7 @@ class CreateFuelStationsTable extends Migration
             $table->boolean('active_number_of_views')->default(1)->nullable();
             $table->boolean('active')->default(1);
             $table->boolean('available')->default(1);
+            $table->string('created_by')->nullable()->default('system@app.com');
             $table->timestamps();
         });
     }

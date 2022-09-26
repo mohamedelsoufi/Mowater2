@@ -49,6 +49,7 @@ class CarClassController extends Controller
                 $request->request->add(['active' => 0]);
             else
                 $request->request->add(['active' => 1]);
+            $request['created_by'] = auth('admin')->user()->email;
             $car_class = CarClass::create($request->except(['_token']));
             if ($car_class) {
                 return redirect()->route('car-classes.index')->with(['success' => __('message.created_successfully')]);
@@ -79,6 +80,7 @@ class CarClassController extends Controller
                 $request->request->add(['active' => 0]);
             else
                 $request->request->add(['active' => 1]);
+            $request['created_by'] = auth('admin')->user()->email;
             $update_car_class = $car_class->update($request->except(['_token']));
             if ($update_car_class) {
                 return redirect()->route('car-classes.index')->with(['success' => __('message.updated_successfully')]);

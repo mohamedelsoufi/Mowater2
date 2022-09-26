@@ -55,7 +55,7 @@
 
                                             <div class="form-group col-md-6">
                                                 <label>{{__('words.name_en')}}</label>
-                                                <input type="text" name="name_en"
+                                                <input type="text" name="name_en" dir="ltr"
                                                        class="form-control @error('name_en') is-invalid @enderror"
                                                        value="{{ $car_class->name_en }}" placeholder="Class name">
 

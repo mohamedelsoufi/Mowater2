@@ -14,8 +14,8 @@ class AdminAgencyRequest extends FormRequest
     public function rules()
     {
         return [
-            'name_en' => 'unique:agencies,name_en,'.$this->id,
-            'name_ar' => 'unique:agencies,name_ar,'.$this->id,
+            'name_en' => 'required|unique:agencies,name_en,'.$this->id,
+            'name_ar' => 'required|unique:agencies,name_ar,'.$this->id,
             'description_en' => 'nullable',
             'description_ar' => 'nullable',
             'brand_id' => 'exists:brands,id',

@@ -20,7 +20,7 @@ class AdminRolesController extends Controller
     public function index()
     {
         try {
-            $roles = Role::latest('id')->get();
+            $roles = Role::whereNull('rolable_type')->whereNull('rolable_id')->latest('id')->get();
             return view('admin.general.roles.index', compact('roles'));
         } catch (\Exception $e) {
             return redirect()->back()->with(['error' => __('message.something_wrong')]);
@@ -37,8 +37,7 @@ class AdminRolesController extends Controller
         try {
             //create role
             $request_data = $request->except(['_token', 'permissions']);
-            $request_data['is_admin_user'] = 1;
-//            return $request->permissions;
+            $request_data['created_by'] = auth('admin')->user()->email;
             $role = Role::create($request_data);
             $role->attachPermissions($request->permissions);
 
@@ -72,9 +71,10 @@ class AdminRolesController extends Controller
     {
         try {
             $role = Role::find($id);
-            if ($role->name_en == 'super admin' || $role->id == 1)
+            if ($role->is_super == 1)
                 return redirect()->back()->with(['error' => __('message.error_admin_role_update')]);
             $request_data = $request->except(['_token', 'permissions']);
+            $request_data['created_by'] = auth('admin')->user()->email;
             //update role
             $role->update($request_data);
             $role->syncPermissions($request->permissions); //update role permassion
@@ -88,7 +88,7 @@ class AdminRolesController extends Controller
     {
         try {
             $role = Role::find($id);
-            if ($role->name_en == 'super admin' || $role->id == 1)
+            if ($role->is_super == 1)
                 return redirect()->back()->with(['error' => __('message.error_admin_role_delete')]);
 
             $role->delete();

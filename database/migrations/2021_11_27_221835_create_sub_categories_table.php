@@ -19,6 +19,7 @@ class CreateSubCategoriesTable extends Migration
             $table->string('name_ar')->nullable();
             $table->integer('number_of_digits')->nullable();
             $table->unsignedBigInteger('category_id');
+            $table->string('created_by')->nullable()->default('system@app.com');
             $table->timestamps();
 
             $table->foreign('category_id')->on('categories')->references('id');

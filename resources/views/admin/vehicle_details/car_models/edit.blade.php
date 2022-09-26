@@ -53,7 +53,7 @@
 
                                             <div class="form-group col-md-6">
                                                 <label>{{__('words.name_en')}}</label>
-                                                <input type="text" name="name_en"
+                                                <input type="text" name="name_en" dir="ltr"
                                                        class="form-control @error('name_en') is-invalid @enderror"
                                                        value="{{ $car_model->name_en }}" placeholder="Model name">
 
@@ -69,11 +69,11 @@
                                                 <label>{{__('words.brands')}}</label>
                                                 <select id="inputState" name="brand_id"
                                                         class="form-control @error('brand_id') is-invalid @enderror">
-                                                    <option value="" selected>{{__('words.choose')}}</option>
+                                                    <option value="">{{__('words.choose')}}</option>
                                                     @foreach($brands as $brand)
                                                         <option
                                                             value="{{$brand->id}}"
-                                                            {{$car_model->brand_id == $brand->id ? 'selected' : '' }}>{{$brand->name}}</option>
+                                                            {{$car_model->brand_id == $brand->id ? "selected" : "" }}>{{$brand->name}}</option>
                                                     @endforeach
                                                 </select>
                                                 @error('brand_id')

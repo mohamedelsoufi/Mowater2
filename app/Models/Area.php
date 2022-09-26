@@ -11,7 +11,7 @@ class Area extends Model
     use HasFactory;
     protected $table = 'areas';
     public $timestamps = true;
-    protected $fillable = array('name_en', 'name_ar', 'city_id');
+    protected $fillable = array('name_en', 'name_ar', 'city_id', 'created_by');
     protected $hidden = ['created_at', 'updated_at','name_en', 'name_ar'];
     protected $appends = ['name'];
 

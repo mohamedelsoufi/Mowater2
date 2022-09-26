@@ -7,6 +7,7 @@ use App\Http\Requests\API\ShowAdRequest;
 use App\Http\Resources\Ads\GetAdsResource;
 use App\Models\Ad;
 use App\Models\AdType;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -15,7 +16,7 @@ class AdsController extends Controller
     public function index()
     {
         try {
-            $ads = Ad::search()->orderBy(AdType::select('priority')->whereColumn('ad_types.id', 'ads.ad_type_id'), 'desc'
+            $ads = Ad::search()->where('status', 'approved')->where('end_date', '>', Carbon::now()->format('Y-m-d H:i:s'))->orderBy(AdType::select('priority')->whereColumn('ad_types.id', 'ads.ad_type_id'), 'desc'
             )->paginate(3);
             if (empty($ads))
                 return responseJson(0, __('message.no_result'));

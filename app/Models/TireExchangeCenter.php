@@ -25,7 +25,8 @@ class TireExchangeCenter extends Model
     protected $table = 'tire_exchange_centers';
     public $timestamps = true;
     protected $fillable = ['id', 'logo', 'name_en', 'name_ar', 'description_en', 'description_ar',
-        'tax_number', 'address', 'city_id', 'number_of_views','active_number_of_views',  'available', 'active'];
+        'tax_number', 'address', 'city_id', 'number_of_views','active_number_of_views',  'available',
+        'active','created_by'];
     protected $hidden = ['name_en', 'name_ar', 'description_en', 'description_ar', 'created_at', 'updated_at'];
     protected $appends = ['name', 'description', 'rating', 'rating_count', 'is_reviewed', 'is_favorite', 'favorites_count'];
 

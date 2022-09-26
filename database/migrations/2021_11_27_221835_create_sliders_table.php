@@ -12,6 +12,7 @@ class CreateSlidersTable extends Migration {
 			$table->bigIncrements('id');
 			$table->bigInteger('section_id')->unsigned()->nullable();
             $table->string('type')->nullable();
+            $table->string('created_by')->nullable()->default('system@app.com');
             $table->timestamps();
 		});
 	}

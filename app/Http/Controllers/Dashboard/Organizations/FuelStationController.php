@@ -66,7 +66,7 @@ class FuelStationController extends Controller
                 $request->request->add(['active_number_of_views' => 1]);
 
             $request_data = $request->except(['_token', 'logo', 'fuel_types', 'user_name', 'email', 'password', 'password_confirmation']);
-
+            $request_data['created_by'] = auth('admin')->user()->email;
             if ($request->has('logo')) {
                 $image = $request->logo->store('logos');
                 $request_data['logo'] = $image;
@@ -139,7 +139,7 @@ class FuelStationController extends Controller
                 $request->request->add(['active_number_of_views' => 1]);
 
             $request_data = $request->except(['_token', 'logo', 'user_name', 'password', 'password_confirmation', 'organization_user_id', 'fuel_types']);
-
+            $request_data['created_by'] = auth('admin')->user()->email;
             if ($request->has('logo')) {
                 $image_path = public_path('uploads/');
 

@@ -10,7 +10,8 @@ class DiscountCard extends Model
 {
     use HasFactory;
     protected $table = 'discount_cards';
-    protected $fillable = ['id', 'title_en', 'title_ar', 'description_en', 'description_ar', 'price', 'year', 'image', 'status', 'active_number_of_views', 'number_of_views', 'active'];
+    protected $fillable = ['id', 'title_en', 'title_ar', 'description_en', 'description_ar', 'price',
+        'year', 'image', 'status', 'active_number_of_views', 'number_of_views', 'active', 'created_by'];
     protected $hidden = ['title_en', 'title_ar', 'description_en', 'description_ar', 'created_at', 'updated_at'];
     public $timestamps = true;
     protected $appends = ['title', 'description'];

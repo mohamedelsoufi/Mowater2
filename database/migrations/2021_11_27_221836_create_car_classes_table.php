@@ -11,8 +11,9 @@ class CreateCarClassesTable extends Migration {
         Schema::create('car_classes', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name_en')->nullable();
-            $table->string('name_ar');
+            $table->string('name_ar')->nullable();
             $table->boolean('active')->nullable()->default(1);
+            $table->string('created_by')->nullable();
             $table->timestamps();
         });
 	}

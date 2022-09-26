@@ -51,7 +51,9 @@ class CountryController extends Controller
     public function store(CountryRequest $request)
     {
         try {
-            $country = Country::create($request->except(['_token']));
+            $request_data = $request->except(['_token']);
+            $request_data['created_by'] = auth('admin')->user()->email;
+            $country = Country::create($request_data);
             $image = $country->refresh();
             $image->uploadImage();
 
@@ -76,14 +78,11 @@ class CountryController extends Controller
     {
         try {
             $country = Country::find($id);
-
-            $update_country = $country->update($request->except(['_token']));
+            $request_data = $request->except(['_token']);
+            $request_data['created_by'] = auth('admin')->user()->email;
+            $country->update($request_data);
             $country->updateImage();
-            if ($update_country) {
-                return redirect()->route('countries.index')->with(['success' => __('message.updated_successfully')]);
-            } else {
-                return redirect()->route('countries.index')->with(['error' => __('message.something_wrong')]);
-            }
+            return redirect()->route('countries.index')->with(['success' => __('message.updated_successfully')]);
         } catch (\Exception $e) {
             return redirect()->back()->with(['error' => __('message.something_wrong')]);
         }

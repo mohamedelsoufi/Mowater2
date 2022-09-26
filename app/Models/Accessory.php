@@ -99,9 +99,7 @@ class Accessory extends Model
     {
         return $query->where('available', 1);
     }
-    //Scopes end
 
-    // accessors & Mutator start
     public function scopeSearch($query)
     {
 
@@ -122,7 +120,9 @@ class Accessory extends Model
             return $q->where('accessories_store_id', request()->accessories_store_id);
         });
     }
+    //Scopes end
 
+    // accessors & Mutator start
     public function getActive()
     {
         return $this->active == 1 ? __('words.active') : __('words.inactive');

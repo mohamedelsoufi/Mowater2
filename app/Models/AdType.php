@@ -10,11 +10,11 @@ class AdType extends Model
 {
     use HasFactory;
     protected $table = 'ad_types';
-    protected $fillable = ['name_ar', 'name_en', 'priority', 'price'];
+    protected $fillable = ['name_ar', 'name_en', 'priority', 'price', 'created_by'];
     protected $appends = ['name'];
-    public $timestamps = false;
+    public $timestamps = true;
 
-    //// appends attributes start //////
+    // appends attributes start
     public function getNameAttribute()
     {
         if (App::getLocale() == 'ar') {
@@ -22,9 +22,18 @@ class AdType extends Model
         }
         return $this->name_en;
     }
+    // appends attributes end
 
+    // relations start
     public function ad()
     {
         return $this->belongsToMany(Ad::class);
     }
+    // relations end
+
+    // accessors & Mutator start
+    public function getNameEnAttribute($val){
+        return $this->attributes['name_en'] = ucfirst($val);
+    }
+    // accessors & Mutator end
 }

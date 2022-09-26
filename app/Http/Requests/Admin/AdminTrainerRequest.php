@@ -14,7 +14,7 @@ class AdminTrainerRequest extends FormRequest
     public function rules()
     {
         return [
-//            'name_en' => 'required',
+            'name_en' => 'required',
             'name_ar' => 'required',
 //            'manufacturing_year' => 'required',
             'country_id' => 'required|exists:countries,id',

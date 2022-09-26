@@ -108,7 +108,7 @@ class CarShowRoomSeeder extends Seeder
             $color = [1, 2];
             $doors_number = [4, 2];
             $price = [1598753, 3578951, 258963, 147852, 147986325];
-            $threeD = ['1.obj', '2.obj'];
+            $threeD = ['seeder/1.glb', 'seeder/2.glb'];
 
             $vehicle_type = ['cars', 'motorcycles', 'trucks','pickups'];
             $ghamara_count = '';
@@ -175,11 +175,7 @@ class CarShowRoomSeeder extends Seeder
                     'type' => 'vehicle_3D',
                     'color_id' => 1,
                 ]);
-                $vehicle->files()->create([
-                    'path' => $threeD[array_rand($threeD)],
-                    'type' => 'vehicle_3D',
-                    'color_id' => 2,
-                ]);
+
                 $vehicle->offers()->create([
                     'discount_card_id' => 1,
                     'discount_type' => 'percentage',

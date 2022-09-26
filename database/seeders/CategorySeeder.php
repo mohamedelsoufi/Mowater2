@@ -19,19 +19,22 @@ class CategorySeeder extends Seeder
         Category::create([
             'name_en' => 'Car Showrooms',
             'name_ar' => 'معارض سيارات',
-            'section_id' => Section::where('ref_name', 'Agency')->first()->id
+            'section_id' => Section::where('ref_name', 'Agency')->first()->id,
+            'created_by' => 'system@app.com',
         ]);
 
         Category::create([
             'name_en' => 'Maintenance Centers',
             'name_ar' => 'مراكز صيانة',
-            'section_id' => Section::where('ref_name', 'Agency')->first()->id
+            'section_id' => Section::where('ref_name', 'Agency')->first()->id,
+            'created_by' => 'system@app.com',
         ]);
 
         Category::create([
             'name_en' => 'spare parts',
             'name_ar' => 'قطع غيار',
-            'section_id' => Section::where('ref_name', 'Agency')->first()->id
+            'section_id' => Section::where('ref_name', 'Agency')->first()->id,
+            'created_by' => 'system@app.com',
         ]);
 
         /***** */
@@ -42,7 +45,8 @@ class CategorySeeder extends Seeder
             $cat = Category::create([
                 'name_en' => $garage_cat_en[$g],
                 'name_ar' => $garage_cat_ar[$g],
-                'section_id' => Section::where('ref_name', 'Garage')->first()->id
+                'section_id' => Section::where('ref_name', 'Garage')->first()->id,
+                'created_by' => 'system@app.com',
             ]);
 
             for ($s = 0; $s < 2; $s++) {
@@ -50,6 +54,7 @@ class CategorySeeder extends Seeder
                     'name_en' => $cat->name_en . ' ' . $s,
                     'name_ar' => $cat->name_ar . ' ' . $s,
                     'category_id' => $cat->id,
+                    'created_by' => 'system@app.com',
                 ]);
             }
 
@@ -62,7 +67,8 @@ class CategorySeeder extends Seeder
         $special_num_cat1 = Category::create([
             'name_en' => 'private car numbers',
             'name_ar' => 'أرقام السيارات الخصوصية',
-            'section_id' => 4
+            'section_id' => 4,
+            'created_by' => 'system@app.com',
         ]);
 
         $private_car_numbers_en = ['4 Numbers', '5 Numbers', '6 Numbers'];
@@ -84,14 +90,16 @@ class CategorySeeder extends Seeder
                 'name_en' => $private_car_numbers_en[$p],
                 'name_ar' => $private_car_numbers_ar[$p],
                 'number_of_digits' => $number_of_digits,
-                'category_id' => $special_num_cat1->id
+                'category_id' => $special_num_cat1->id,
+                'created_by' => 'system@app.com',
             ]);
         }
 
         $special_num_cat2 = Category::create([
             'name_en' => 'motorcycle numbers',
             'name_ar' => 'أرقام الدراجات النارية',
-            'section_id' => 4
+            'section_id' => 4,
+            'created_by' => 'system@app.com',
         ]);
 
         $motorcycle_numbers_en = ['2 Numbers', '3 Numbers', '4 Numbers'];
@@ -112,7 +120,8 @@ class CategorySeeder extends Seeder
                 'name_en' => $motorcycle_numbers_en[$p],
                 'name_ar' => $motorcycle_numbers_ar[$p],
                 'number_of_digits' => $number_of_digits,
-                'category_id' => $special_num_cat2->id
+                'category_id' => $special_num_cat2->id,
+                'created_by' => 'system@app.com',
             ]);
         }
 
@@ -120,7 +129,8 @@ class CategorySeeder extends Seeder
         $special_num_cat3 = Category::create([
             'name_en' => 'shared car numbers',
             'name_ar' => 'سيارات عام مشترك (البيك أب)',
-            'section_id' => 4
+            'section_id' => 4,
+            'created_by' => 'system@app.com',
         ]);
 
         $shared_car_numbers_en = ['2 Numbers', '3 Numbers', '4 Numbers', '5 Numbers', '6 Numbers'];
@@ -149,36 +159,42 @@ class CategorySeeder extends Seeder
                 'name_en' => $shared_car_numbers_en[$p],
                 'name_ar' => $shared_car_numbers_ar[$p],
                 'number_of_digits' => $number_of_digits,
-                'category_id' => $special_num_cat3->id
+                'category_id' => $special_num_cat3->id,
+                'created_by' => 'system@app.com',
             ]);
         }
 
         Category::create([
             'name_en' => 'Vehicles registration technical inspection centers',
             'name_ar' => 'مراكز الفحص الفني لتسجيل المركبات',
-            'section_id' => 12
+            'section_id' => 12,
+            'created_by' => 'system@app.com',
         ]);
 
         Category::create([
             'name_en' => 'Other technical inspection centers',
             'name_ar' => 'مراكز الفحص الفني الأخرى',
-            'section_id' => 12
+            'section_id' => 12,
+            'created_by' => 'system@app.com',
         ]);
 
         Category::create([
             'name_en' => 'Stationary washing centers',
             'name_ar' => 'مراكز غسيل ثابتة',
-            'section_id' => 10
+            'section_id' => 10,
+            'created_by' => 'system@app.com',
         ]);
         Category::create([
             'name_en' => 'Mobile washing centers',
             'name_ar' => 'مراكز غسيل متحركة',
-            'section_id' => 10
+            'section_id' => 10,
+            'created_by' => 'system@app.com',
         ]);
         Category::create([
             'name_en' => 'Care and polishing centers',
             'name_ar' => 'مراكز العناية والتلميع',
-            'section_id' => 10
+            'section_id' => 10,
+            'created_by' => 'system@app.com',
         ]);
 
         $types_en = ['Trucks', 'Heavy Equipment', 'Pickups', 'Cars', 'Motorcycles', 'Boats'];
@@ -187,13 +203,15 @@ class CategorySeeder extends Seeder
             $cats = Category::create([
                 'name_en' => $types_en[$ac],
                 'name_ar' => $types_ar[$ac],
-                'section_id' => 13
+                'section_id' => 13,
+                'created_by' => 'system@app.com',
             ]);
             for ($sc = 0; $sc < 3; $sc++) {
                 SubCategory::create([
                     'name_en' => $types_en[$ac] . $sc,
                     'name_ar' => $types_ar[$ac] . $sc,
-                    'category_id' => $cats->id
+                    'category_id' => $cats->id,
+                    'created_by' => 'system@app.com',
                 ]);
             }
         }

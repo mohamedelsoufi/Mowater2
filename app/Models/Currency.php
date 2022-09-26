@@ -12,7 +12,7 @@ class Currency extends Model
     use HasFactory;
 
     protected $table = 'currencies';
-    protected $fillable = ['id', 'name_en', 'name_ar', 'code'];
+    protected $fillable = ['id', 'name_en', 'name_ar', 'code', 'created_by'];
     protected $hidden = ['name_en', 'name_ar', 'created_at', 'updated_at'];
     public $timestamps = true;
     protected $appends = ['name'];

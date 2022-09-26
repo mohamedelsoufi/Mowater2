@@ -39,6 +39,7 @@
                                         <th>{{__('words.name_ar')}}</th>
                                         <th>{{__('words.name_en')}}</th>
                                         <th>{{__('words.cities')}}</th>
+                                        <th>{{__('words.created_by')}}</th>
                                         <th>{{__('words.created_at')}}</th>
                                         <th>{{__('words.updated_at')}}</th>
                                         <th>{{__('words.actions')}}</th>
@@ -51,9 +52,10 @@
                                             <td>{{$area->name_ar}}</td>
                                             <td>{{$area->name_en}}</td>
                                             <td>{{$area->city->name}}</td>
+                                            <td>{{$area->created_by}}</td>
                                             <td>{{createdAtFormat($area->created_at)}}</td>
                                             <td>{{createdAtFormat($area->created_at) == updatedAtFormat($area->updated_at) ? '--' : updatedAtFormat($area->updated_at)}}</td>
-                                            <td>
+                                            <td class="action">
                                                 @if(auth('admin')->user()->hasPermission('read-areas'))
                                                     <a href="{{route('areas.show',$area->id)}}"
                                                        class="btn btn-outline-info" data-toggle="tooltip"

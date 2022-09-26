@@ -39,6 +39,7 @@
                                         <th>{{__('words.name_ar')}}</th>
                                         <th>{{__('words.name_en')}}</th>
                                         <th>{{__('words.main_category')}}</th>
+                                        <th>{{__('words.created_by')}}</th>
                                         <th>{{__('words.created_at')}}</th>
                                         <th>{{__('words.updated_at')}}</th>
                                         <th>{{__('words.actions')}}</th>
@@ -51,9 +52,10 @@
                                             <td>{{$sub_category->name_ar}}</td>
                                             <td>{{$sub_category->name_en}}</td>
                                             <td>{{$sub_category->category ? $sub_category->category->name : '--'}}</td>
+                                            <td>{{$sub_category->created_by}}</td>
                                             <td>{{createdAtFormat($sub_category->created_at)}}</td>
                                             <td>{{createdAtFormat($sub_category->created_at) == updatedAtFormat($sub_category->updated_at) ? '--' : updatedAtFormat($sub_category->updated_at)}}</td>
-                                            <td>
+                                            <td class="action">
                                                 @if(auth('admin')->user()->hasPermission('read-sub_categories'))
                                                     <a href="{{route('sub-categories.show',$sub_category->id)}}"
                                                        class="btn btn-outline-info" data-toggle="tooltip"

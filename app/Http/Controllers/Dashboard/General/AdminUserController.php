@@ -55,8 +55,8 @@ class AdminUserController extends Controller
             if (!$request->has('active'))
                 $request->request->add(['active' => 0]);
             $request_data = $request->except(['_token']);
-
-           $admin = Admin::create($request_data);
+            $request_data['created_by'] = auth('admin')->user()->email;
+            $admin = Admin::create($request_data);
             $admin->attachRole($request->role_id);
             return redirect()->route('admin-users.index')->with(['success' => __('message.created_successfully')]);
         } catch (\Exception $e) {
@@ -70,7 +70,7 @@ class AdminUserController extends Controller
         try {
             $roles = Role::latest('id')->get();
             $user = Admin::find($id);
-            return view('admin.general.adminUsers.edit', compact('user','roles'));
+            return view('admin.general.adminUsers.edit', compact('user', 'roles'));
         } catch (\Exception $e) {
             return redirect()->back()->with(['error' => __('message.something_wrong')]);
         }
@@ -87,7 +87,7 @@ class AdminUserController extends Controller
                 $request->request->add(['active' => 1]);
 
             $request_data = $request->except(['_token', 'password', 'password_confirmation']);
-
+            $request_data['created_by'] = auth('admin')->user()->email;
             if ($request->has('password')) {
                 $request_data['password'] = $request->password;
             }

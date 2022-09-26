@@ -514,10 +514,10 @@
                 
 
                 
-                <?php if(auth('admin')->user()->hasPermission(['read-sections','read-categories','read-sub_categories','read-currencies','payment_methods','app_sliders','discount_cards','colors'])): ?>
-                    <li class="nav-item <?php echo e(request()->routeIs('sections.*','categories.*','sub-categories.*','currencies.*','payment-methods.*','app-sliders.*','discount-cards.*','colors.*') ? 'menu-open' : ''); ?>">
+                <?php if(auth('admin')->user()->hasPermission(['read-sections','read-categories','read-sub_categories','read-currencies','read-payment_methods','read-app_sliders','read-discount_cards','read-colors','read-ads','read-ad-types'])): ?>
+                    <li class="nav-item <?php echo e(request()->routeIs('sections.*','categories.*','sub-categories.*','currencies.*','payment-methods.*','app-sliders.*','discount-cards.*','colors.*','ads.*','ad-types.*') ? 'menu-open' : ''); ?>">
                         <a href="#"
-                           class="nav-link <?php echo e(request()->routeIs('sections.*','categories.*','sub-categories.*','currencies.*','payment-methods.*','app-sliders.*','discount-cards.*','colors.*') ? 'active' : ''); ?>">
+                           class="nav-link <?php echo e(request()->routeIs('sections.*','categories.*','sub-categories.*','currencies.*','payment-methods.*','app-sliders.*','discount-cards.*','colors.*','ads.*') ? 'active' : ''); ?>">
                             <i class="fas fa-sliders-h"></i>
                             <p>
                                 <?php echo e(__('words.general')); ?>
@@ -559,6 +559,79 @@
                                                 </a>
                                             </li>
                                         <?php endif; ?>
+                                    </ul>
+                                </li>
+                            <?php endif; ?>
+                            
+
+                            
+                            <?php if(auth('admin')->user()->hasPermission('read-ads')): ?>
+                                <li class="nav-item <?php echo e(request()->routeIs('ads.*') ? 'menu-open' : ''); ?>">
+                                    <a href="#"
+                                       class="nav-link <?php echo e(request()->routeIs('ads.*') ? 'sub-menu active' : ''); ?>">
+                                        <i class="fas fa-ad"></i>
+                                        <p>
+                                            <?php echo e(__('words.ads')); ?>
+
+                                            <i class="<?php echo e(app()->getLocale() == 'ar' ? 'left fas fa-angle-right' :  'right fas fa-angle-left'); ?>"></i>
+                                        </p>
+                                    </a>
+                                    <ul class="nav nav-treeview">
+                                        <?php if(auth('admin')->user()->hasPermission('read-ads')): ?>
+                                            <li class="nav-item">
+                                                <a href="<?php echo e(route('ads.index')); ?>"
+                                                   class="nav-link <?php echo e(request()->routeIs('ads.index') ? 'active' : ''); ?>">
+                                                    <i class="far fa-eye nav-icon"></i>
+                                                    <p><?php echo e(__('words.show_all')); ?></p>
+                                                </a>
+                                            </li>
+                                        <?php endif; ?>
+
+                                        <?php if(auth('admin')->user()->hasPermission('create-ads')): ?>
+                                            <li class="nav-item">
+                                                <a href="<?php echo e(route('ads.create')); ?>"
+                                                   class="nav-link <?php echo e(request()->routeIs('ads.create') ? 'active' : ''); ?>">
+                                                    <i class="fas fa-folder-plus"></i>
+                                                    <p><?php echo e(__('words.create')); ?></p>
+                                                </a>
+                                            </li>
+                                        <?php endif; ?>
+
+                                            
+                                            <?php if(auth('admin')->user()->hasPermission('read-ad_types')): ?>
+                                                <li class="nav-item <?php echo e(request()->routeIs('ad-types.*') ? 'menu-open' : ''); ?>">
+                                                    <a href="#"
+                                                       class="nav-link <?php echo e(request()->routeIs('ad-types.*') ? 'sub-menu active' : ''); ?>">
+                                                        <i class="fas fa-award"></i>
+                                                        <p>
+                                                            <?php echo e(__('words.ad_types')); ?>
+
+                                                            <i class="<?php echo e(app()->getLocale() == 'ar' ? 'left fas fa-angle-right' :  'right fas fa-angle-left'); ?>"></i>
+                                                        </p>
+                                                    </a>
+                                                    <ul class="nav nav-treeview">
+                                                        <?php if(auth('admin')->user()->hasPermission('read-ad_types')): ?>
+                                                            <li class="nav-item">
+                                                                <a href="<?php echo e(route('ad-types.index')); ?>"
+                                                                   class="nav-link <?php echo e(request()->routeIs('ad-types.index') ? 'active' : ''); ?>">
+                                                                    <i class="far fa-eye nav-icon"></i>
+                                                                    <p><?php echo e(__('words.show_all')); ?></p>
+                                                                </a>
+                                                            </li>
+                                                        <?php endif; ?>
+                                                        <?php if(auth('admin')->user()->hasPermission('create-ad_types')): ?>
+                                                            <li class="nav-item">
+                                                                <a href="<?php echo e(route('ad-types.create')); ?>"
+                                                                   class="nav-link <?php echo e(request()->routeIs('ad-types.create') ? 'active' : ''); ?>">
+                                                                    <i class="fas fa-folder-plus"></i>
+                                                                    <p><?php echo e(__('words.create')); ?></p>
+                                                                </a>
+                                                            </li>
+                                                        <?php endif; ?>
+                                                    </ul>
+                                                </li>
+                                            <?php endif; ?>
+                                            
                                     </ul>
                                 </li>
                             <?php endif; ?>

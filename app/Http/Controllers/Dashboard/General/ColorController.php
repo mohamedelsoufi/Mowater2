@@ -35,7 +35,9 @@ class ColorController extends Controller
     public function store(ColorRequest $request)
     {
         try {
-            Color::create($request->except(['_token']));
+            $request_data = $request->except(['_token']);
+            $request_data['created_by'] = auth('admin')->user()->email;
+            Color::create($request_data);
             return redirect()->route('colors.index')->with(['success' => __('message.created_successfully')]);
         } catch (\Exception $e) {
             return redirect()->back()->with(['error' => __('message.something_wrong')]);
@@ -66,7 +68,9 @@ class ColorController extends Controller
     {
         try {
             $color = Color::find($id);
-            $color->update($request->except(['_token']));
+            $request_data = $request->except(['_token']);
+            $request_data['created_by'] = auth('admin')->user()->email;
+            $color->update($request_data);
             return redirect()->route('colors.index')->with(['success' => __('message.updated_successfully')]);
         } catch (\Exception $e) {
             return redirect()->back()->with(['error' => __('message.something_wrong')]);

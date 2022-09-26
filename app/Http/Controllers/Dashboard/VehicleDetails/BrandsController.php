@@ -59,7 +59,7 @@ class BrandsController extends Controller
                 $request->request->add(['active' => 1]);
 
             $request_data = $request->except(['_token', 'logo']);
-
+            $request_data['created_by'] = auth('admin')->user()->email;
             if ($request->has('logo')) {
                 $image = $request->logo->store('brands/logos');
                 $request_data['logo'] = $image;
@@ -94,7 +94,7 @@ class BrandsController extends Controller
                 $request->request->add(['active' => 1]);
 
             $request_data = $request->except(['_token', 'logo']);
-
+            $request_data['created_by'] = auth('admin')->user()->email;
             if ($request->has('logo')) {
                 $image_path = public_path('uploads/');
 

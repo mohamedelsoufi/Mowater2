@@ -21,6 +21,8 @@ return [
         'payment_methods' => ['read', 'create', 'update', 'delete'],
         'app_sliders' => ['read', 'update'],
         'discount_cards' => ['read', 'create', 'update', 'delete'],
+        'ads' => ['read', 'create', 'update', 'delete'],
+        'ad_types' => ['read', 'update'],
         'colors' => ['read', 'create', 'update', 'delete'],
         'special_numbers' => ['read', 'create', 'update', 'delete'],
         'special_numbers_organizations' => ['read', 'create', 'update', 'delete'],
@@ -43,4 +45,13 @@ return [
         'used_vehicles' => ['read', 'create', 'update', 'delete'],
 
     ],
+
+    'org_roles' => [
+        'org_roles' => ['read', 'create', 'update', 'delete'],
+        'general_data' => ['read', 'update'],
+        'vehicles' => ['read', 'create', 'update', 'delete'],
+        'payment_methods' => ['read', 'update'],
+        'work_times' => ['read', 'update'],
+        'day_offs' => ['read', 'create', 'update', 'delete'],
+    ]
 ];

@@ -677,3 +677,28 @@ function phoneCodes()
         "+263" => __("words.Zimbabwe (+263)"),
     ];
 }
+
+function ad_status()
+{
+    $status = array_keys(ad_status_arr());
+    return implode(',', $status);
+}
+
+function ad_status_arr()
+{
+    return array(
+        'pending' => __('words.pending'),
+        'approved' => __('words.approved'),
+        'rejected' => __('words.rejected'),
+    );
+}
+
+function getModelData()
+{
+    $user = auth()->guard('web')->user();
+    $model_type = $user->organizable_type;
+    $model_id = $user->organizable_id;
+    $model = new $model_type;
+    $record = $model->find($model_id);
+    return $record;
+}
