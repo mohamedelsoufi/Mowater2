@@ -30,7 +30,7 @@ class CreateReservationsTable extends Migration
             $table->string('credit_card_number')->nullable();
             $table->boolean('is_mawater_card')->default('0')->nullable();
             $table->text('address')->nullable();
-            $table->string('distinctive_mark');
+            $table->string('distinctive_mark')->nullable();
             $table->float('delivery_fees',11,2)->nullable();
             $table->date('delivery_day')->nullable();
             $table->float('price',11,2)->nullable();
@@ -42,6 +42,7 @@ class CreateReservationsTable extends Migration
             $table->boolean('delivery')->nullable();
             $table->unsignedBigInteger('branch_id')->nullable();
             $table->string('status')->nullable()->default('pending');
+            $table->string('action_by')->nullable();
             $table->timestamps();
 
             $table->foreign('branch_id')->references('id')->on('branches')

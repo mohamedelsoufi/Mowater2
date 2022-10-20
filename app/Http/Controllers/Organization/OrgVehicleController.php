@@ -241,7 +241,7 @@ class OrgVehicleController extends Controller
             $vehcile->update($requested_data);
             return redirect()->route('organization.vehicles.index')->with(['success' => __('message.updated_successfully')]);
         } catch (\Exception $e) {
-            return redirect()->back()->with(['error' => $e->getMessage()]);
+            return redirect()->back()->with(['error' => __('message.something_wrong')]);
         }
     }
 
@@ -253,7 +253,7 @@ class OrgVehicleController extends Controller
             $vehicle->delete();
             return redirect()->route('organization.vehicles.index')->with(['success' => __('message.deleted_successfully')]);
         } catch (\Exception $e) {
-            return redirect()->back()->with(['error' => $e->getMessage()]);
+            return redirect()->back()->with(['error' => __('message.something_wrong')]);
         }
     }
 }

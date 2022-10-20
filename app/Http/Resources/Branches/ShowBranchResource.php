@@ -20,6 +20,7 @@ class ShowBranchResource extends JsonResource
         $data["category_id"] = $this->category_id;
         $data["area_id"] = $this->area_id;
         $data["city_id"] = $this->city_id;
+        $data["country_id"] = $this->country_id;
         $data["longitude"] = $this->longitude;
         $data["latitude"] = $this->latitude;
         $data["work_time"] = $this->work_time;
@@ -33,7 +34,7 @@ class ShowBranchResource extends JsonResource
         $data["favorites_count"] = $this->favorites_count;
         $data["number_of_views"] = $this->number_of_views;
         $data["active_number_of_views"] = $this->active_number_of_views;
-        $data["availability"] = $this->availability;
+        $data["availability"] = $this->available;
 
         return $data;
     }

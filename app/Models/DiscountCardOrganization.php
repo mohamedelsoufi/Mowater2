@@ -13,4 +13,17 @@ class DiscountCardOrganization extends Model
     protected $hidden = ['created_at','updated_at'];
     public $timestamps = true;
 
+    // Scopes start
+    public function scopeActive($query)
+    {
+        return $query->where('active', 1);
+    }
+    // Scopes ثىي
+
+    // accessors & Mutator start
+    public function getActive()
+    {
+        return $this->active == 1 ? __('words.active') : __('words.inactive');
+    }
+    // accessors & Mutator end
 }

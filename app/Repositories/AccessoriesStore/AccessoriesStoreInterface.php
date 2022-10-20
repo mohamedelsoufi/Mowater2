@@ -10,6 +10,8 @@ interface AccessoriesStoreInterface
 
     public function mawaterOffers($request);
 
+    public function offers($request);
+
     public function getAccessories();
 
     public function showAccessory($request);

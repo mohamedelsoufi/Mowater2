@@ -51,6 +51,10 @@ class Broker extends Model
     // end of appends
 
     // relations start
+    public function roles(){
+        return $this->morphMany(Role::class,'rolable');
+    }
+
     public function country()
     {
         return $this->belongsTo('App\Models\Country');
@@ -71,7 +75,7 @@ class Broker extends Model
         return $this->morphMany(Law::class, 'lawable');
     }
 
-    public function packages()
+    public function brokerPackages()
     {
         return $this->hasMany(BrokerPackage::class);
     }

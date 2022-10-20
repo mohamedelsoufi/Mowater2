@@ -47,6 +47,10 @@ class FuelStation extends Model
     // appends attributes end
 
     // relations start
+    public function roles(){
+        return $this->morphMany(Role::class,'rolable');
+    }
+
     public function country()
     {
         return $this->belongsTo('App\Models\Country');

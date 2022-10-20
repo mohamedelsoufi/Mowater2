@@ -25,6 +25,21 @@ class Reservation extends Model
         return $this->morphTo();
     }
 
+    public function brand()
+    {
+        return $this->belongsTo(Brand::class);
+    }
+
+    public function car_class()
+    {
+        return $this->belongsTo(CarClass::class);
+    }
+
+    public function car_model()
+    {
+        return $this->belongsTo(CarModel::class);
+    }
+
     public function products()
     {
         return $this->belongsToMany(Product::class, 'product_reservation')->withPivot('quantity');

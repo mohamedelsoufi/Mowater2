@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Organization;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\AvailableProductRequest;
 use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\Builder;
 use App\Models\Category;
@@ -12,65 +13,59 @@ use App\Models\Area;
 
 class OrgAvailableProductController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware(['HasAvailableProduct:read'])->only(['index', 'show']);
+        $this->middleware(['HasAvailableProduct:update'])->only('edit');
+    }
+
     public function index()
     {
-        $user               = auth()->guard('web')->user();
-        $organization       = $user->organizable;
-        
-        $available_products = $organization->available_products;
-
-        return view('organization.available_products.index' , compact('organization' , 'available_products'));
-    }
-
-    public function create()
-    {
-        $user         = auth()->guard('web')->user();
-        $branch       = $user->organizable;
-        $organization = $branch->branchable; //agency
-
-        $products           = $organization->products;
-        $available_products = $branch->available_products->pluck('id')->toArray();
-
-        return view('organization.available_products.create' , compact('branch' , 'products' , 'available_products'));
-    }
-
-    public function store(Request $request)
-    {
-        $rules = [
-            'products'    => 'nullable|array',
-            'products.*'  => 'exists:products,id',
-        ];
-
-        $request->validate($rules);
-
-        $user         = auth()->guard('web')->user();
-        $organization = $user->organizable; //branch
-
-        $organization->available_products()->sync($request->products);  //products should belongs to this org
-        
-        return redirect()->route('organization.available_product.index')->with('success' , __('message.created_successfully'));
+        try {
+            $record = getModelData();
+            $availableProducts = $record->available_products()->latest('id')->get();
+            return view('organization.availableProducts.index', compact('record', 'availableProducts'));
+        } catch (\Exception $e) {
+            return redirect()->back()->with(['error' => __('message.something_wrong')]);
+        }
     }
 
     public function show($id)
     {
-
+        try {
+            $record = getModelData();
+            $availableProduct = $record->available_products->find($id);
+            return view('organization.availableProducts.show', compact('record', 'availableProduct'));
+        } catch (\Exception $e) {
+            return redirect()->back()->with(['error' =>$e->getMessage()]);
+        }
     }
 
-    public function edit($id)
+    public function edit()
     {
-       
+        try {
+            $record = getModelData();
+            $org = $record->branchable;
+            $products = $org->products()->active()->available()->latest('id')->get();
+            $availableProducts = $record->available_products()->pluck('usable_id')->toArray();
+            return view('organization.availableProducts.edit', compact('record', 'products','availableProducts'));
+        } catch (\Exception $e) {
+            return redirect()->back()->with(['error' => __('message.something_wrong')]);
+        }
     }
 
 
-    public function update(Request $request , $id)
+    public function update(AvailableProductRequest $request)
     {
-       
-    }
+        try {
+            $record = getModelData();
 
-    public function destroy($id)
-    {  
-       
-    }
+            $record->available_products()->sync($request->available_products);
 
+            return redirect()->route('organization.available-products.index')->with('success', __('message.updated_successfully'));
+        } catch (\Exception $e) {
+            return redirect()->back()->with(['error' => __('message.something_wrong')]);
+        }
+    }
 
 }

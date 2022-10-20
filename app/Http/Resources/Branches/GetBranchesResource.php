@@ -18,6 +18,7 @@ class GetBranchesResource extends JsonResource
             "category_id" => $this->category_id,
             "area_id" => $this->area_id,
             "city_id" => $this->city_id,
+            "country_id" => $this->country_id,
             "longitude" => $this->longitude,
             "latitude" => $this->latitude,
             "reservation_availability" => $this->reservation_availability,

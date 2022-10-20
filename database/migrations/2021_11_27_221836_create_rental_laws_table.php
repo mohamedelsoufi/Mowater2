@@ -13,6 +13,8 @@ class CreateRentalLawsTable extends Migration {
             $table->bigInteger('rental_office_id')->unsigned();
             $table->string('title_en')->nullable();
             $table->string('title_ar')->nullable();
+            $table->string('created_by')->default('system@app.com')->nullable();
+
             $table->timestamps();
         });
 	}

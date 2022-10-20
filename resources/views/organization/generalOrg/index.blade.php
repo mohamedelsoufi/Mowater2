@@ -36,7 +36,9 @@
                                 <table id="example1" class="table table-bordered table-striped text-center">
                                     <thead>
                                     <tr>
+                                        @if(!$record->getAttribute('branchable_type'))
                                         <th>{{__('words.logo')}}</th>
+                                        @endif
                                         <th>{{__('words.name')}}</th>
                                         <th>{{__('words.availability')}}</th>
                                         <th>{{__('words.updated_at')}}</th>
@@ -45,6 +47,7 @@
                                     </thead>
                                     <tbody>
                                     <tr>
+                                        @if(!$record->getAttribute('branchable_type'))
                                         <td>
                                             @if(!$record->logo)
                                                 <a href="{{asset('uploads/default_image.png')}}"
@@ -64,6 +67,7 @@
                                                 </a>
                                             @endif
                                         </td>
+                                         @endif
                                         <td>{{$record->name}}</td>
                                         <td>{{$record->getAvailable()}}</td>
                                         <td>{{createdAtFormat($record->created_at) == updatedAtFormat($record->updated_at) ? '--' : updatedAtFormat($record->updated_at)}}</td>

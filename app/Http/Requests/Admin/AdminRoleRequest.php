@@ -17,8 +17,8 @@ class AdminRoleRequest extends FormRequest
         return [
             'name_en' => 'required|unique:roles,name_en,'.$this->id,
             'name_ar' => 'required|unique:roles,name_ar,'.$this->id,
-            'description_en' => 'required|unique:roles,description_en,'.$this->id,
-            'description_ar' => 'required|unique:roles,description_ar,'.$this->id,
+            'description_en' => 'nullable',
+            'description_ar' =>'nullable',
             'permissions' => 'required|min:1',
         ];
     }

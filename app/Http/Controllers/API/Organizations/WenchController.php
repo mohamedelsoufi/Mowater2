@@ -231,7 +231,7 @@ class WenchController extends Controller
         try {
             $wench = Wench::active()->find($request->id);
 
-            $services = $wench->services()->latest('id')->paginate(PAGINATION_COUNT);
+            $services = $wench->services()->active()->latest('id')->paginate(PAGINATION_COUNT);
             if ($services->count() == 0)
                 return responseJson(0, __('message.no_services_for_this_wench'));
 

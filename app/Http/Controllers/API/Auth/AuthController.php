@@ -251,30 +251,4 @@ class AuthController extends Controller
             return responseJson(0, 'error', __('message.something_wrong'));
         }
     }
-
-//update firebase token
-    public function updateToken(Request $request)
-    {
-        $validator = Validator::make($request->all(), [
-            'fcm_token' => 'required',
-            'device_token' => 'required',
-            'platform' => 'nullable',
-        ]);
-
-        if ($validator->fails()) {
-            return responseJson(0, $validator->errors());
-        }
-        try {
-            $user = auth('api')->user();
-            if (!$user)
-                return responseJson(0, __('message.user_not_registered'));
-
-            $data = $user->update($request->only('fcm_token', 'device_token', 'platform'));
-            return responseJson(1, 'success', $data);
-        } catch (\Exception $e) {
-            report($e);
-            return responseJson(0, 'error', $e->getMessage());
-        }
-    }
-
 }

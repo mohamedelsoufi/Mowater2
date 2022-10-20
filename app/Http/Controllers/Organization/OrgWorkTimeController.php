@@ -13,7 +13,7 @@ class OrgWorkTimeController extends Controller
 
     public function __construct(WorkTime $workTimes)
     {
-        $this->middleware(['HasOrgWorkTime:read'])->only(['index', 'show']);
+        $this->middleware(['HasOrgWorkTime:read'])->only(['index']);
         $this->middleware(['HasOrgWorkTime:update'])->only('edit');
 
         $this->workTimes = $workTimes;
@@ -24,7 +24,11 @@ class OrgWorkTimeController extends Controller
         try {
             $record = getModelData();
             $work_time = $record->work_time;
-            return view('organization.workTimes.index', compact('record', 'work_time'));
+            if(isset($work_time)){
+                return view('organization.workTimes.index', compact('record', 'work_time'));
+            }
+            $work_time = '';
+            return view('organization.workTimes.edit', compact('record','work_time'));
         } catch (\Exception $e) {
             return redirect()->back()->with(['error' => __('message.something_wrong')]);
         }
@@ -35,7 +39,10 @@ class OrgWorkTimeController extends Controller
         try {
             $record = getModelData();
             $work_time = $record->work_time;
-
+            if(isset($work_time)){
+                return view('organization.workTimes.edit', compact('record', 'work_time'));
+            }
+            $work_time = '';
             return view('organization.workTimes.edit', compact('record', 'work_time'));
         } catch (\Exception $e) {
             return redirect()->back()->with(['error' => __('message.something_wrong')]);

@@ -111,7 +111,7 @@
                                                                  onerror="this.src='{{asset('uploads/default_image.png')}}'" alt="slider_image">
                                                         </a>
                                                     @endif
-                                                    <div class="form-check form-check-inline">
+                                                    <div class="form-check form-check-inline mx-2">
                                                         <input
                                                             class="form-check-input checkImage @error('checkImage') is-invalid @enderror"
                                                             type="checkbox" id="image-{{$file->id}}">

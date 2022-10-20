@@ -42,7 +42,7 @@
                                         <div class="form-row mb-3">
                                             <div class="form-group col-md-6">
                                                 <label>{{__('words.title_ar')}}</label>
-                                                <input type="text" name="title_ar"
+                                                <input type="text" name="title_ar" dir="rtl"
                                                        class="form-control @error('title_ar') is-invalid @enderror"
                                                        value="{{ old('title_ar') }}" placeholder="عنوان الإعلان">
                                                 @error('title_ar')
@@ -69,7 +69,7 @@
                                         <div class="form-row mb-3">
                                             <div class="form-group col-md-6">
                                                 <label>{{__('words.description_ar')}}</label>
-                                                <textarea name="description_ar" placeholder="وصف الإعلان"
+                                                <textarea name="description_ar" dir="rtl" placeholder="وصف الإعلان"
                                                           class="form-control @error('description_ar') is-invalid @enderror">{{ old('description_ar') }}</textarea>
 
                                                 @error('description_ar')
@@ -158,7 +158,7 @@
 
                                             <div class="form-group col-md-3 link {{ old('link') ? "d-block" : "d-none"}}">
                                                 <label>{{__('words.link')}}</label>
-                                                <input type="text" name="link"
+                                                <input type="url" name="link" dir="ltr"
                                                        class="form-control @error('link') is-invalid @enderror"
                                                        value="{{ old('link') }}" placeholder="https://www.domain.com">
                                                 @error('link')
@@ -362,7 +362,7 @@
                                             <div class="form-group col-md-6">
                                                 <div class="form-check">
                                                     <input class="form-check-input" name="active" value="1"
-                                                           type="checkbox">
+                                                           {{old('active') ? "checked" : ""}} type="checkbox">
                                                     <label class="form-check-label">
                                                         {{__('words.activity')}}
                                                     </label>
@@ -372,7 +372,7 @@
                                             <div class="form-group col-md-6">
                                                 <div class="form-check">
                                                     <input class="form-check-input" name="active_number_of_views"
-                                                           value="1" type="checkbox">
+                                                           value="1" {{old('active_number_of_views') ? "checked" : ""}} type="checkbox">
                                                     <label class="form-check-label">
                                                         {{__('words.active_number_of_views')}}
                                                     </label>

@@ -15,15 +15,16 @@ class RequestProductOrganization extends Migration
     {
         Schema::create('request_products', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->unsignedBigInteger('brand_id')->nullable();
             $table->string('car_model');
             $table->string('manufacturing_year');
+            $table->unsignedBigInteger('category_id')->nullable();
             $table->enum('type', ['original', 'commercial'])->nullable();
             $table->boolean('is_new')->nullable();
             $table->enum('status', ['pending', 'replied'])->default('pending');
             $table->integer('vehicle_number')->nullable();
             $table->bigInteger('user_id')->unsigned()->nullable();
-            $table->unsignedBigInteger('category_id')->nullable();
-            $table->unsignedBigInteger('brand_id')->nullable();
+
             $table->timestamps();
 
             $table->foreign('category_id')->on('categories')->references('id')->onUpdate('set null')->onDelete('set null');

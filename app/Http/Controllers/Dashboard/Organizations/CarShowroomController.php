@@ -83,11 +83,7 @@ class CarShowroomController extends Controller
 
             $car_showroom = $this->model->create($request_data);
 
-            $car_showroom->organization_users()->create([
-                'user_name' => $request->user_name,
-                'email' => $request->email,
-                'password' => $request->password,
-            ]);
+            createMasterOrgUser($car_showroom);
             return redirect()->route('car-showrooms.index')->with(['success' => __('message.created_successfully')]);
         } catch (\Exception $e) {
             return redirect()->back()->with(['error' => __('message.something_wrong')]);

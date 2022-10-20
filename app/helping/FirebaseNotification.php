@@ -6,7 +6,8 @@ function notifyByFirebase($title, $body, $image, $tokens, $data = [])
     $fcmMsg = array(
         'body' => $body,
         'title' => $title,
-        'image' => $image
+        'image' => $image,
+        "sound"=> "default"
     );
 
     $fcmFields = array(
@@ -25,7 +26,6 @@ function notifyByFirebase($title, $body, $image, $tokens, $data = [])
     //return $headers;
 // Firebase API Key
 
-
     $ch = curl_init();
     curl_setopt($ch, CURLOPT_URL, 'https://fcm.googleapis.com/fcm/send');
     curl_setopt($ch, CURLOPT_POST, true);
@@ -38,6 +38,7 @@ function notifyByFirebase($title, $body, $image, $tokens, $data = [])
     //die('Curl failed: ' . curl_error($ch));
 
     curl_close($ch);
+    dd($result);
     return $result;
 }
 

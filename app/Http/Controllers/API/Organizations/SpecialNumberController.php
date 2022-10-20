@@ -86,7 +86,7 @@ class SpecialNumberController extends Controller
     public function getCategories()
     {
         try {
-            $categories = Category::with('sub_categories')->where('section_id', 4)->paginate(PAGINATION_COUNT);
+            $categories = Category::with('sub_categories')->where('section_id', 4)->search()->paginate(PAGINATION_COUNT);
             if (empty($categories))
                 return responseJson(0, __('message.no_result'));
             return responseJson(1, 'success', AllSpecialNumberCategoriesResource::collection($categories)->response()->getData(true));

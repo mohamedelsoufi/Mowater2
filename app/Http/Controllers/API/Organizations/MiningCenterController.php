@@ -5,9 +5,10 @@ namespace App\Http\Controllers\API\Organizations;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\API\ShowMiningCenterRequest;
 use App\Http\Requests\API\ShowMiningCenterServiceRequest;
-use App\Http\Resources\MiningCenter\GetMiningCenterOffersResource;
+use App\Http\Resources\MiningCenter\GetMiningCenterMowaterOffersResource;
 use App\Http\Resources\MiningCenter\GetMiningCenters;
 use App\Http\Resources\MiningCenter\GetMiningCenterServicesResource;
+use App\Http\Resources\MiningCenter\GetMiningOffersResource;
 use App\Http\Resources\TireExchangeCenter\GetTireCenters;
 use App\Repositories\MiningCenter\MiningCenterInterface;
 use Illuminate\Http\Request;
@@ -82,7 +83,19 @@ class MiningCenterController extends Controller
             $data = $this->center->mawaterOffers($request->id)->paginate(PAGINATION_COUNT);
             if (empty($data))
                 return responseJson(0,__('message.no_result'));
-            return responseJson(1, 'success', GetMiningCenterOffersResource::collection($data)->response()->getData(true));
+            return responseJson(1, 'success', GetMiningCenterMowaterOffersResource::collection($data)->response()->getData(true));
+        } catch (\Exception $e) {
+            return responseJson(0, 'error', $e->getMessage());
+        }
+    }
+
+    public function getOffers(ShowMiningCenterRequest $request)
+    {
+        try {
+            $data = $this->center->offers($request->id)->paginate(PAGINATION_COUNT);
+            if (empty($data))
+                return responseJson(0,__('message.no_result'));
+            return responseJson(1, 'success', GetMiningOffersResource::collection($data)->response()->getData(true));
         } catch (\Exception $e) {
             return responseJson(0, 'error', $e->getMessage());
         }

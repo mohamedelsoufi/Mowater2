@@ -1,4 +1,4 @@
-<form action="{{route('admin-roles.destroy',$role->id)}}"
+<form action="{{route('organization.org-roles.destroy',$role->id)}}"
       method="POST" style="display: inline-block">
     {{ csrf_field() }}
     {{ method_field('delete') }}

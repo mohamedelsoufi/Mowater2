@@ -82,11 +82,7 @@ class RentalOfficeController extends Controller
 
             $rental_office = RentalOffice::create($request_data);
 
-            $rental_office->organization_users()->create([
-                'user_name' => $request->user_name,
-                'email' => $request->email,
-                'password' => $request->password,
-            ]);
+            createMasterOrgUser($rental_office);
             return redirect()->route('rental-offices.index')->with(['success' => __('message.created_successfully')]);
         } catch (\Exception $e) {
             return redirect()->back()->with(['error' => __('message.something_wrong')]);

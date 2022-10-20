@@ -87,6 +87,13 @@
                                                         <i class="fas fa-eye"></i>
                                                     </a>
                                                 @endif
+                                                    @if(auth('admin')->user()->hasPermission('read-org-discount_cards'))
+                                                    <a href="{{route('discount-cards.org.get',$discount_card->id)}}"
+                                                       class="btn btn-outline-info" data-toggle="tooltip"
+                                                       title="{{__('words.organizations')}}">
+                                                        <i class="fas fa-place-of-worship"></i>
+                                                    </a>
+                                                @endif
 
                                                 @if(auth('admin')->user()->hasPermission('update-discount_cards'))
                                                     <a href="{{route('discount-cards.edit',$discount_card->id)}}"

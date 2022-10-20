@@ -77,11 +77,7 @@ class BrokerController extends Controller
                 $request_data['logo'] = $image;
             }
             $broker = $this->model->create($request_data);
-            $broker->organization_users()->create([
-                'user_name' => $request->user_name,
-                'email' => $request->email,
-                'password' => $request->password
-            ]);
+            createMasterOrgUser($broker);
             return redirect()->route('brokers.index')->with(['success' => __('message.created_successfully')]);
         } catch (\Exception $e) {
             return redirect()->back()->with(['error' => __('message.something_wrong')]);

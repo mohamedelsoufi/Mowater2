@@ -45,7 +45,7 @@
                                         <div class="form-row mb-3">
                                             <div class="form-group col-md-6">
                                                 <label>{{__('words.title_ar')}}</label>
-                                                <input type="text" name="title_ar"
+                                                <input type="text" name="title_ar" dir="rtl"
                                                        class="form-control @error('title_ar') is-invalid @enderror"
                                                        value="{{ old('title_ar',$ad->title_ar) }}" placeholder="عنوان الإعلان">
                                                 @error('title_ar')
@@ -72,7 +72,7 @@
                                         <div class="form-row mb-3">
                                             <div class="form-group col-md-6">
                                                 <label>{{__('words.description_ar')}}</label>
-                                                <textarea name="description_ar" placeholder="وصف الإعلان"
+                                                <textarea name="description_ar" dir="rtl" placeholder="وصف الإعلان"
                                                           class="form-control @error('description_ar') is-invalid @enderror">{{ old('description_ar',$ad->description_ar) }}</textarea>
 
                                                 @error('description_ar')
@@ -161,7 +161,7 @@
 
                                             <div class="form-group col-md-3 link {{ old('link') ? "d-block" : "d-none"}}">
                                                 <label>{{__('words.link')}}</label>
-                                                <input type="text" name="link"
+                                                <input type="url" name="link" dir="ltr"
                                                        class="form-control @error('link') is-invalid @enderror"
                                                        value="{{ old('link',$ad->link) }}" placeholder="https://www.domain.com">
                                                 @error('link')

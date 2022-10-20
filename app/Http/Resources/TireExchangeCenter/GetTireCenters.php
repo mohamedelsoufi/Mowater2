@@ -3,6 +3,7 @@
 namespace App\Http\Resources\TireExchangeCenter;
 
 use App\Http\Resources\PaymentMethods\GetPaymentMethodsResource;
+use App\Http\Resources\Reviews\ShowReviewResource;
 use App\Http\Resources\TechnicalInspectionCenter\InspectionCenterServicesResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -36,7 +37,7 @@ class GetTireCenters extends JsonResource
         $data["active"] = $this->active;
 
         if ($request->routeIs('inspection-centers.show')){
-            $data["reviews"] = $this->reviews;
+            $data["reviews"] = ShowReviewResource::collection($this->reviews);
         }
         return $data;
     }

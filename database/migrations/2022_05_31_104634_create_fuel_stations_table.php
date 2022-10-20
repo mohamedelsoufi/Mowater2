@@ -24,8 +24,8 @@ class CreateFuelStationsTable extends Migration
             $table->bigInteger('country_id')->unsigned()->nullable();
             $table->bigInteger('city_id')->unsigned()->nullable();
             $table->bigInteger('area_id')->unsigned()->nullable();
-            $table->decimal('latitude', 10, 8)->nullable();
-            $table->decimal('longitude', 11, 8)->nullable();
+            $table->string('latitude')->nullable();
+            $table->string('longitude')->nullable();
             $table->integer('number_of_views')->default(0)->nullable();
             $table->boolean('active_number_of_views')->default(1)->nullable();
             $table->boolean('active')->default(1);

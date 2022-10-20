@@ -52,45 +52,45 @@
                                             <th class="show-details-table">
                                                 {{__('words.work_days')}}</th>
                                             <td>
-                                                <input type="checkbox" name="work_days[]" value="Sun"
+                                                <input type="checkbox" name="work_days[]" value="Sun" disabled
                                                        id="Sun" {{ $work_time && in_array('Sun' , $work_time->days) ? 'checked' : ''   }} >
-                                                <label for="Sun">{{__('words.Sun')}}</label>
+                                                <label for="Sun" class="{{$work_time && in_array('Sun' , $work_time->days) ? 'text-success' : ''}}">{{__('words.Sun')}}</label>
                                                 &nbsp;
                                                 &nbsp;
                                                 &nbsp;
-                                                <input type="checkbox" name="work_days[]" value="Mon"
+                                                <input type="checkbox" name="work_days[]" value="Mon" disabled
                                                        id="Mon" {{ $work_time && in_array('Mon' , $work_time->days) ? 'checked' : ''   }} >
-                                                <label for="Mon">{{__('words.Mon')}}</label>
+                                                <label for="Mon" class="{{$work_time && in_array('Mon' , $work_time->days) ? 'text-success' : ''}}">{{__('words.Mon')}}</label>
                                                 &nbsp;
                                                 &nbsp;
                                                 &nbsp;
-                                                <input type="checkbox" name="work_days[]" value="Tue"
+                                                <input type="checkbox" name="work_days[]" value="Tue" disabled
                                                        id="Tue" {{ $work_time && in_array('Tue' , $work_time->days) ? 'checked' : ''   }} >
-                                                <label for="Tue">{{__('words.Tue')}}</label>
+                                                <label for="Tue" class="{{$work_time && in_array('Tue' , $work_time->days) ? 'text-success' : ''}}">{{__('words.Tue')}}</label>
                                                 &nbsp;
                                                 &nbsp;
                                                 &nbsp;
-                                                <input type="checkbox" name="work_days[]" value="Wed"
+                                                <input type="checkbox" name="work_days[]" value="Wed" disabled
                                                        id="Wed" {{ $work_time && in_array('Wed' , $work_time->days) ? 'checked' : ''   }} >
-                                                <label for="Wed">{{__('words.Wed')}}</label>
+                                                <label for="Wed" class="{{$work_time && in_array('Wed' , $work_time->days) ? 'text-success' : ''}}">{{__('words.Wed')}}</label>
                                                 &nbsp;
                                                 &nbsp;
                                                 &nbsp;
-                                                <input type="checkbox" name="work_days[]" value="Thu"
+                                                <input type="checkbox" name="work_days[]" value="Thu" disabled
                                                        id="Thu" {{ $work_time && in_array('Thu' , $work_time->days) ? 'checked' : ''   }} >
-                                                <label for="Thu">{{__('words.Thur')}}</label>
+                                                <label for="Thu" class="{{$work_time && in_array('Thu' , $work_time->days) ? 'text-success' : ''}}">{{__('words.Thur')}}</label>
                                                 &nbsp;
                                                 &nbsp;
                                                 &nbsp;
-                                                <input type="checkbox" name="work_days[]" value="Fri"
+                                                <input type="checkbox" name="work_days[]" value="Fri" disabled
                                                        id="Fri" {{ $work_time && in_array('Fri' , $work_time->days) ? 'checked' : ''   }} >
-                                                <label for="Fri">{{__('words.Fri')}}</label>
+                                                <label for="Fri" class="{{$work_time && in_array('Fri' , $work_time->days) ? 'text-success' : ''}}">{{__('words.Fri')}}</label>
                                                 &nbsp;
                                                 &nbsp;
                                                 &nbsp;
-                                                <input type="checkbox" name="work_days[]" value="Sat"
+                                                <input type="checkbox" name="work_days[]" value="Sat" disabled
                                                        id="Sat" {{ $work_time && in_array('Sat' , $work_time->days) ? 'checked' : ''   }} >
-                                                <label for="Sat">{{__('words.Sat')}}</label>
+                                                <label for="Sat" class="{{$work_time && in_array('Sat' , $work_time->days) ? 'text-success' : ''}}">{{__('words.Sat')}}</label>
                                             </td>
                                         </tr>
                                     </table>

@@ -3,6 +3,7 @@
 namespace App\Http\Resources\AccessoriesStore;
 
 use App\Http\Resources\PaymentMethods\GetPaymentMethodsResource;
+use App\Http\Resources\Reviews\ShowReviewResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class GetAccessoriesStoresResource extends JsonResource
@@ -29,7 +30,7 @@ class GetAccessoriesStoresResource extends JsonResource
         $data["is_favorite"] = $this->is_favorite;
         $data["favorites_count"] = $this->favorites_count;
         if ($request->routeIs('accessories-store.show')){
-            $data["reviews"] = $this->reviews;
+            $data["reviews"] = ShowReviewResource::collection($this->reviews);
         }
         $data["reservation_availability"] = $this->reservation_availability;
         $data["reservation_active"] = $this->reservation_active;

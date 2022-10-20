@@ -49,8 +49,8 @@ class VehicleController extends Controller
     {
         try {
             $vehicle = Vehicle::find($request->id);
-            if (empty($vehicle)){
-                return responseJson(0,'error',__('message.no_result'));
+            if (empty($vehicle)) {
+                return responseJson(0, 'error', __('message.no_result'));
             }
             //update number of views start
             updateNumberOfViews($vehicle);
@@ -72,7 +72,7 @@ class VehicleController extends Controller
             $user = getAuthAPIUser();
 
             // store vehicle
-            $validator = $request->except(['personal_ID', 'driving_license']);
+            $validator = $request->except(['personal_ID', 'driving_license', 'barcode']);
             $vehicle = Vehicle::find($request->vehicle_id);
 
             if ($vehicle->active == false)
@@ -81,9 +81,10 @@ class VehicleController extends Controller
             if ($vehicle->availability == false)
                 return responseJson(0, __('message.reservation_not_available'));
 
-            $user_vehicle_reservations =  $user->reserve_vehicles()->first();
+           $user_vehicle_reservations = $user->reserve_vehicles()->where('vehicle_id',$request->vehicle_id)->first();
             if ($user_vehicle_reservations)
                 return responseJson(0, __('message.vehicle_reserved_before'));
+
 
             // use mawater card start
             if ($request->is_mawater_card == true) {
@@ -95,6 +96,22 @@ class VehicleController extends Controller
                     if (in_array($request->vehicle_id, $vehicle_offers)) {
                         $vehicle_offer = Offer::where('offerable_id', $vehicle->id)
                             ->where('offerable_type', 'App\\Models\\Vehicle')->first();
+
+                        // add price after mowater card from original price start
+                        $vehicle_in_offer_class = new $vehicle_offer->offerable_type;
+                        $vehicle_in_offer = $vehicle_in_offer_class->find($vehicle_offer->offerable_id);
+
+                        $Original_price = $vehicle_in_offer->price;
+
+                        $discount_type = $vehicle_offer->discount_type;
+                        $percentage_value = ((100 - $vehicle_offer->discount_value) / 100);
+                        if ($discount_type == 'percentage') {
+                            $price_after_mowater_discount = $Original_price * $percentage_value;
+                        } else {
+                            $price_after_mowater_discount = $Original_price - $Original_price->discount_value;
+                        }
+                        $validator['price'] = $price_after_mowater_discount;
+                        // add price after mowater card from original price end
 
                         $consumption = DiscoutnCardUserUse::where('barcode', $request->barcode)
                             ->where('offer_id', $vehicle_offer->id)->first();
@@ -118,13 +135,16 @@ class VehicleController extends Controller
                         return responseJson(0, 'error', __('message.vehicle_id') . $request->vehicle_id . __('message.service_not_fount_in_offer'));
                     }
 
-
                     \DB::commit();
                 } catch (\Exception $e) {
                     \DB::rollBack();
                     return responseJson(0, 'error', $e->getMessage());
                 }
-
+            }
+            if ($request->is_mawater_card == false) {
+                if ($vehicle->price_after_discount != 0)
+                    $validator['price'] = $vehicle->price_after_discount;
+                $validator['price'] = $vehicle->price;
             }
             // use mawater card end
 
@@ -134,8 +154,10 @@ class VehicleController extends Controller
             $vehicle = $store_vehicle_reservation->refresh();
 
             $vehicle->upload_reserve_vehicle_images();
+             notifyByFirebase('vehicle reservation title', $body='', $vehicle->one_image, $user->notifications()->pluck('fcm_token')->toArray(), $vehicle);
 
-            return responseJson(1, 'success',__('message.vehicle_successfully_reserved'));
+
+            return responseJson(1, 'success', __('message.vehicle_successfully_reserved'));
         } catch (\Exception $e) {
             return responseJson(0, 'error', $e->getMessage());
         }
@@ -178,7 +200,7 @@ class VehicleController extends Controller
                 $id = $request->branch_id;
                 $date = $request->date;
                 $vehicle_id = $request->vehicle_id;
-                $available_times =  branchAvailableTimeForTestDrive($date,$id, $vehicle_id);
+                $available_times = branchAvailableTimeForTestDrive($date, $id, $vehicle_id);
                 if (!$available_times) {
                     return responseJson(0, __('message.this_time_is_not_available'));
                 } else {
@@ -199,7 +221,7 @@ class VehicleController extends Controller
                             // store vehicle
                             $validator = $request->except(['driving_license_for_test']);
                             $validator['user_id'] = $user->id;
-                            $store_test_drive = $record->tests()->create($validator);
+                            $store_test_drive = $organization->tests()->create($validator);
 
                             // add related files images for (driving license [front,back] , personal ID [front,back])
                             $vehicle = $store_test_drive->refresh();
@@ -263,8 +285,8 @@ class VehicleController extends Controller
             if (empty($object))
                 return responseJson(0, __('message.no_result'));
             return responseJson(1, 'success', $object);
-        }catch (\Exception $e){
-            return responseJson(0,'error',$e->getMessage());
+        } catch (\Exception $e) {
+            return responseJson(0, 'error', $e->getMessage());
         }
     }
 

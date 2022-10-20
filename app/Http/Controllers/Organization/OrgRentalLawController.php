@@ -3,113 +3,95 @@
 namespace App\Http\Controllers\Organization;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\RentalLawRequest;
+use App\Models\RentalLaw;
 use Illuminate\Http\Request;
 
 class OrgRentalLawController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware(['HasOrgRentalLaw:read'])->only(['index', 'show']);
+        $this->middleware(['HasOrgRentalLaw:update'])->only('edit');
+        $this->middleware(['HasOrgRentalLaw:create'])->only('create');
+        $this->middleware(['HasOrgRentalLaw:delete'])->only('destroy');
+    }
+
     public function index()
     {
-        $user         = auth()->guard('web')->user();
-        $organization = $user->organizable;
-        $rental_laws  = $organization->rental_laws;
-
-        return view('organization.rental_laws.index' , compact('organization' , 'rental_laws'));
+        try {
+            $record = getModelData();
+            $laws = getModelData()->rental_laws()->latest('id')->get();
+            return view('organization.rentalLaws.index', compact('laws', 'record'));
+        } catch (\Exception $e) {
+            return redirect()->back()->with(['error' => __('message.something_wrong')]);
+        }
     }
 
     public function create()
     {
-        return view('organization.rental_laws.create');
+        try {
+            $record = getModelData();
+            return view('organization.rentalLaws.create', compact('record'));
+        } catch (\Exception $e) {
+            return redirect()->back()->with(['error' => __('message.something_wrong')]);
+        }
     }
 
-    public function store(Request $request)
+    public function store(RentalLawRequest $request)
     {
-        $rules = [
-            'title_en' => 'required|max:255',
-            'title_ar' => 'required|max:255',
-        ];
-
-        $request->validate($rules);
-
-        $user         = auth()->guard('web')->user();
-        $organization = $user->organizable;
-
-        $organization->rental_laws()->create($request->all());
-        
-        return redirect()->route('organization.rental_law.index')->with('success' , __('message.created_successfully'));
+        try {
+            $record = getModelData();
+            $record->rental_laws()->create($request->except('_token'));
+            return redirect()->route('organization.rental-laws.index')->with(['success' => __('message.created_successfully')]);
+        } catch (\Exception $e) {
+            return redirect()->back()->with(['error' => $e->getMessage()]);
+        }
     }
 
     public function show($id)
     {
-        $user         = auth()->guard('web')->user();
-        $organization = $user->organizable;
-
-        $rental_law = $organization->rental_laws()->where('rental_laws.id' , $id)->firstOrFail();
-        $rental_law->makeVisible('title_en', 'title_ar');
-        $data = compact('rental_law');
-        return response()->json(['status' => true, 'data'=>$data]);
+        try {
+            $record = getModelData();
+            $law = $record->rental_laws()->find($id);
+            return view('organization.rentalLaws.show', compact('law', 'record'));
+        } catch (\Exception $e) {
+            return redirect()->back()->with(['error' => __('message.something_wrong')]);
+        }
     }
 
     public function edit($id)
     {
-        $user         = auth()->guard('web')->user();
-        $organization = $user->organizable;
-
-        $rental_law = $organization->rental_laws()->where('rental_laws.id' , $id)->firstOrFail();
-
-        return view('organization.rental_laws.edit' , compact('organization' , 'rental_law'));
+        try {
+            $record = getModelData();
+            $law = $record->rental_laws()->find($id);
+            return view('organization.rentalLaws.edit', compact('law', 'record'));
+        } catch (\Exception $e) {
+            return redirect()->back()->with(['error' => __('message.something_wrong')]);
+        }
     }
 
-
-    public function update(Request $request , $id)
+    public function update(RentalLawRequest $request, $id)
     {
-        $rules = [
-            'title_en' => 'required|max:255',
-            'title_ar' => 'required|max:255',
-        ];
-        $validator = validator()->make($request->all() , $rules);
-        if($validator->fails())
-        {
-            $validator->errors()->add('update_modal', $request->id);
-            return redirect()->back()->withInput()->withErrors($validator);
+        try {
+            $record = getModelData();
+            $law = $record->rental_laws()->find($id);
+            $law->update($request->except('_token'));
+            return redirect()->route('organization.rental-laws.index')->with(['success' => __('message.updated_successfully')]);
+        } catch (\Exception $e) {
+            return redirect()->back()->with(['error' => $e->getMessage()]);
         }
-
-        $user         = auth()->guard('web')->user();
-        $organization = $user->organizable;
-    
-        $rental_law = $organization->rental_laws()->where('rental_laws.id' , $id)->firstOrFail();
-
-        
-        if($rental_law)
-        {
-            $rental_law->update($request->all());
-            return redirect()->route('organization.rental_law.index')->with('success' , __('message.updated_successfully'));
-        }
-        else 
-        {
-            return back()->with(['error'=> __('message.something_wrong')]);
-        }
-
-        
     }
 
     public function destroy($id)
-    {  
-        $user         = auth()->guard('web')->user();
-        $organization = $user->organizable;
-    
-        $rental_law = $organization->rental_laws()->where('rental_laws.id' , $id)->firstOrFail();
-
-        
-        if($rental_law)
-        {
-            $rental_law->delete();
-            return redirect()->route('organization.rental_law.index')->with('success' , __('message.deleted_successfully'));
-        }
-        else 
-        {
-            return back()->with(['error'=> __('message.something_wrong')]);
+    {
+        try {
+            $record = getModelData();
+            $law = $record->rental_laws()->find($id);
+            $law->delete();
+            return redirect()->route('organization.rental-laws.index')->with(['success' => __('message.deleted_successfully')]);
+        } catch (\Exception $e) {
+            return redirect()->back()->with(['error' => $e->getMessage()]);
         }
     }
-
-
 }

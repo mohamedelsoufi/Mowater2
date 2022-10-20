@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\AdRequest;
 use App\Models\AdType;
 use App\Models\Area;
+use App\Models\Contact;
 use App\Models\Country;
 use App\Models\City;
 use App\Models\Ad;
@@ -15,138 +16,224 @@ use Illuminate\Support\Facades\Validator;
 
 class OrgAdController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    private $ad;
+    private $ad_type;
+    private $country;
+
+    public function __construct(Ad $ad, AdType $ad_type, Country $country)
+    {
+        $this->middleware(['HasOrgAd:read'])->only(['index', 'show']);
+        $this->middleware(['HasOrgAd:update'])->only('edit');
+        $this->middleware(['HasOrgAd:create'])->only('create');
+        $this->middleware(['HasOrgAd:delete'])->only('destroy');
+
+        $this->ad = $ad;
+        $this->ad_type = $ad_type;
+        $this->country = $country;
+    }
+
     public function index()
     {
-        $user = auth()->guard('web')->user();
-        $model_type = $user->organizable_type;
-        $model_id = $user->organizable_id;
-        $model = new $model_type;
-        $record = $model->find($model_id);
-        $ads = $record->ads;
-        $countries = Country::all();
-        $cities = City::all();
-        $areas = Area::all();
-        $ad_types = AdType::all();
-        return view('organization.ads.index', compact('ads', 'ad_types', 'countries', 'cities', 'areas'));
+        try {
+            $record = getModelData();
+            $ads = $record->ads()->latest('id')->get();
+            return view('organization.ads.index', compact('ads', 'record'));
+        } catch (\Exception $e) {
+            return redirect()->back()->with(['error' => __('message.something_wrong')]);
+        }
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
-        //
+        try {
+            $record = getModelData();
+            $ad_types = $this->ad_type->all();
+            $countries = $this->country->all();
+            $modules = $this->getAdModuleType();
+            return view('organization.ads.create', compact('record', 'ad_types', 'countries', 'modules'));
+        } catch (\Exception $e) {
+            return redirect()->back()->with(['error' => __('message.something_wrong')]);
+        }
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
-     */
+    private function getAdModuleType()
+    {
+        $modules = [];
+        if (method_exists(auth()->guard('web')->user()->organizable, 'vehicles'))
+            $modules['App\\Models\\Vehicle'] = 'vehicles';
+        if (method_exists(auth()->guard('web')->user()->organizable, 'products'))
+            $modules['App\\Models\\Product'] = 'products';
+        if (method_exists(auth()->guard('web')->user()->organizable, 'services'))
+            $modules['App\\Models\\Service'] = 'services';
+        if (method_exists(auth()->guard('web')->user()->organizable, 'accessories'))
+            $modules['App\\Models\\Accessory'] = 'accessories';
+        if (method_exists(auth()->guard('web')->user()->organizable, 'carWashServices'))
+            $modules['App\\Models\\CarWashService'] = 'carWashServices';
+        if (method_exists(auth()->guard('web')->user()->organizable, 'packages'))
+            $modules['App\\Models\\InsuranceCompanyPackage'] = 'packages';
+        if (method_exists(auth()->guard('web')->user()->organizable, 'brokerPackages'))
+            $modules['App\\Models\\BrokerPackage'] = 'brokerPackages';
+        if (method_exists(auth()->guard('web')->user()->organizable, 'miningCenterService'))
+            $modules['App\\Models\\MiningCenterService'] = 'miningCenterService';
+        if (method_exists(auth()->guard('web')->user()->organizable, 'rental_office_cars'))
+            $modules['App\\Models\\RentalOfficeCar'] = 'rental_office_cars';
+        if (method_exists(auth()->guard('web')->user()->organizable, 'special_numbers'))
+            $modules['App\\Models\\SpecialNumber'] = 'special_numbers';
+        if (method_exists(auth()->guard('web')->user()->organizable, 'inspectionCenterService'))
+            $modules['App\\Models\\TechnicalInspectionCenterService'] = 'inspectionCenterService';
+        if (method_exists(auth()->guard('web')->user()->organizable, 'tireExchangeService'))
+            $modules['App\\Models\\TireExchangeCenterService'] = 'tireExchangeService';
+        if (method_exists(auth()->guard('web')->user()->organizable, 'trafficServices'))
+            $modules['App\\Models\\TrafficClearingService'] = 'trafficServices';
+
+        return $modules;
+    }
+
+    public function getModule($relation)
+    {
+        try {
+            $record = getModelData();
+            $model_data = $record[$relation];
+            if ($relation == 'vehicles') {
+                foreach ($model_data as $model) {
+                    $model['name'] = $model->name;
+                }
+            }
+            $data = compact('model_data');
+            return response()->json(['status' => true, 'data' => $data]);
+        } catch (\Exception $e) {
+            return responseJson(false, 'error', $e->getMessage());
+        }
+    }
+
     public function store(AdRequest $request)
     {
-        if (!$request->has('available'))
-            $request->request->add(['available' => 0]);
-        else
-            $request->request->add(['available' => 1]);
-        if (!$request->has('active'))
-            $request->request->add(['active' => 1]);
-        else
-            $request->request->add(['active' => 0]);
+        try {
+            $record = getModelData();
+            if (!$request->has('active'))
+                $request->request->add(['active' => 0]);
+            else
+                $request->request->add(['active' => 1]);
 
-        $request_data = $request->except(['images']);
-        $user = auth()->guard('web')->user();
-        $model_type = $user->organizable_type;
-        $model_id = $user->organizable_id;
-        $model = new $model_type;
-        $record = $model->find($model_id);
-        $ad = $record->ads()->create($request_data);
-        if ($request->has('images')) {
-            $ad->uploadImages();
-        }
-        if ($ad)
+            if (!$request->has('active_number_of_views'))
+                $request->request->add(['active_number_of_views' => 0]);
+            else
+                $request->request->add(['active_number_of_views' => 1]);
+
+            $request_data = $request->except(['_token', 'image', 'link']);
+
+            $request_data['created_by'] = auth('web')->user()->email;
+            $request_data['status'] = 'pending';
+            $request_data['start_date'] = date('Y-m-d H:i:s', strtotime($request->start_date));
+            $request_data['end_date'] = date('Y-m-d H:i:s', strtotime($request->end_date));
+
+            if ($request->ad_type_id == 4){
+                $request_data['module_type'] = null;
+                $request_data['module_id'] = null;
+                $request_data['link'] = $request->link;
+            }else{
+                $request_data['link'] = null;
+            }
+
+            if ($request->has('image')) {
+                $image = $request->image->store('ads');
+                $request_data['image'] = $image;
+            }
+
+            $record->ads()->create($request_data);
+
             return redirect()->route('organization.ads.index')->with(['success' => __('message.created_successfully')]);
-        else
+        } catch (\Exception $e) {
             return redirect()->back()->with(['error' => __('message.something_wrong')]);
+        }
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param int $id
-     * @return \Illuminate\Http\Response
-     */
     public function show($id)
     {
-        //
-        $show_ad = Ad::find($id);
-        $countries = Country::all();
-        $cities = City::all();
-        $areas = Area::all();
-        $ad_types = AdType::all();
-
-//        $data = compact('show_ad');
-//        return response()->json(['status' => true, 'data' => $data]);
-        return view('organization.ads.update', compact('show_ad', 'ad_types', 'countries', 'cities', 'areas'));
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        $show_ad = Ad::find($id);
-        $data = compact('show_ad');
-        return response()->json(['status' => true, 'data' => $data]);
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param \Illuminate\Http\Request $request
-     * @param int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(AdRequest $request, $id)
-    {
-        $ad = Ad::find($id);
-        if ($request->has('images') || $request->has('deleted_images')) {
-            $ad->updateImages();
-        }
-        $ad->update($request->all());
-        if ($ad) {
-            return redirect()->route('organization.ads.index')->with(['success' => __('message.updated_successfully')]);
-        } else {
-
+        try {
+            $record = getModelData();
+            $ad = $this->ad->find($id);
+            return view('organization.ads.show', compact('record', 'ad'));
+        } catch (\Exception $e) {
             return redirect()->back()->with(['error' => __('message.something_wrong')]);
         }
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param int $id
-     * @return \Illuminate\Http\Response
-     */
+    public function edit($id)
+    {
+        try {
+            $record = getModelData();
+            $ad = $this->ad->find($id);
+            $ad_types = $this->ad_type->all();
+            $countries = $this->country->all();
+            $modules = $this->getAdModuleType();
+            return view('organization.ads.edit', compact('ad', 'record', 'ad_types', 'countries', 'modules'));
+        } catch (\Exception $e) {
+            return redirect()->back()->with(['error' => __('message.something_wrong')]);
+        }
+    }
+
+    public function update(AdRequest $request, $id)
+    {
+        try {
+            $ad = $this->ad->find($id);
+
+            if (!$request->has('active'))
+                $request->request->add(['active' => 0]);
+            else
+                $request->request->add(['active' => 1]);
+
+            if (!$request->has('active_number_of_views'))
+                $request->request->add(['active_number_of_views' => 0]);
+            else
+                $request->request->add(['active_number_of_views' => 1]);
+
+            $request_data = $request->except(['_token', 'image', 'link']);
+
+            $request_data['created_by'] = auth('web')->user()->email;
+            $request_data['status'] = 'pending';
+            $request_data['start_date'] = date('Y-m-d H:i:s', strtotime($request->start_date));
+            $request_data['end_date'] = date('Y-m-d H:i:s', strtotime($request->end_date));
+            if ($request->ad_type_id == 4){
+                $request_data['module_type'] = null;
+                $request_data['module_id'] = null;
+                $request_data['link'] = $request->link;
+            }else{
+                $request_data['link'] = null;
+            }
+
+
+            if ($request->has('image')) {
+                $image_path = public_path('uploads/');
+
+                if (File::exists($image_path . $ad->getRawOriginal('image'))) {
+                    File::delete($image_path . $ad->getRawOriginal('image'));
+                }
+
+                $image = $request->image->store('ads');
+                $request_data['image'] = $image;
+            }
+
+            $ad->update($request_data);
+
+            return redirect()->route('organization.ads.index')->with(['success' => __('message.updated_successfully')]);
+        } catch (\Exception $e) {
+            return redirect()->back()->with(['error' => __('message.something_wrong')]);
+        }
+    }
+
     public function destroy($id)
     {
-        $ad = Ad::find($id);
-
-        $ad->deleteImages();
-
-        $ad->delete();
-        return redirect()->route('organization.ads.index')->with(['success' => __('message.deleted_successfully')]);
-
+        try {
+            $ad = $this->ad->find($id);
+            $image_path = public_path('uploads/');
+            if (File::exists($image_path . $ad->getRawOriginal('image'))) {
+                File::delete($image_path . $ad->getRawOriginal('image'));
+            }
+            $ad->delete();
+            return redirect()->route('organization.ads.index')->with(['success' => __('message.deleted_successfully')]);
+        } catch (\Exception $e) {
+            return redirect()->back()->with(['error' => __('message.something_wrong')]);
+        }
     }
 }

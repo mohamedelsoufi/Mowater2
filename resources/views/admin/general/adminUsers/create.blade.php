@@ -116,7 +116,7 @@
                                                     class="form-control @error('role_id') is-invalid @enderror">
                                                 <option value="" selected>{{__('words.choose')}}</option>
                                                 @foreach($roles as $role)
-                                                    <option value="{{$role->id}}">{{$role->name}}</option>
+                                                    <option value="{{$role->id}}" {{old('role_id') == $role->id ? "selected" : ""}}>{{$role->name}}</option>
                                                 @endforeach
                                             </select>
                                             @error('role_id')
@@ -130,7 +130,7 @@
                                     <div class="row">
                                             <div class="input-group col-6 mb-3">
                                                 <div class="form-check">
-                                                    <input class="form-check-input" name="active" type="checkbox" value="1">
+                                                    <input class="form-check-input" name="active" type="checkbox" value="1" {{old('active') ? "checked" : ""}}>
                                                     <label class="form-check-label">{{__('words.active')}}</label>
                                                 </div>
                                             </div>

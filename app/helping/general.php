@@ -2,6 +2,7 @@
 
 use App\Models\Agency;
 use App\Models\Branch;
+use App\Models\Permission;
 use App\Models\Reservation;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
@@ -201,10 +202,10 @@ function g_status()
 function g_status_arr()
 {
     return [
+        'excellent' => __('words.excellent'),
         'not_mentioned' => __('words.not_mentioned'),
         'good' => __('words.good'),
         'very_good' => __('words.very_good'),
-        'excellent' => __('words.excellent'),
     ];
 }
 
@@ -701,4 +702,70 @@ function getModelData()
     $model = new $model_type;
     $record = $model->find($model_id);
     return $record;
+}
+
+function createMasterOrgUser($model){
+    $user = $model->organization_users()->create([
+        'user_name' => request()->user_name,
+        'email' => request()->email,
+        'password' => request()->password,
+    ]);
+
+    $org_role = $model->roles()->create([
+        'name_en' => 'Organization super admin' .' '. $model->name_en,
+        'name_ar' => 'صلاحية المدير المتميز' .' '. $model->name_ar,
+        'display_name_ar' => 'صلاحية المدير المتميز' .' '. $model->name_ar,
+        'display_name_en' => 'Organization super admin' .' '. $model->name_en,
+        'description_ar' => 'له جميع الصلاحيات',
+        'description_en' => 'has all permissions',
+        'is_super' => 1,
+    ]);
+
+    foreach (\config('laratrust_seeder.org_roles') as $key => $values) {
+        foreach ($values as $value) {
+            $permission = Permission::create([
+                'name' => $value . '-' . $key.'-'. $model->name_en,
+                'display_name_ar' => __('words.' . $value) . ' ' . __('words.' . $key) . ' ' . $model->name_ar,
+                'display_name_en' => $value . ' ' . $key . ' ' . $model->name_en,
+                'description_ar' => __('words.' . $value) . ' ' . __('words.' . $key) . ' ' . $model->name_ar,
+                'description_en' => $value . ' ' . $key . ' ' . $model->name_en,
+            ]);
+            $org_role->attachPermissions([$permission]);
+        }
+    }
+
+    $user->attachRole($org_role);
+}
+
+function createMasterBranchUser($branch){
+    $user = $branch->organization_users()->create([
+        'user_name' => request()->user_name,
+        'email' => request()->email,
+        'password' => request()->password,
+    ]);
+
+    $branch_role = $branch->roles()->create([
+        'name_en' => 'Branch super admin' .' '. $branch->name_en,
+        'name_ar' => 'صلاحية المدير المتميز' .' '. $branch->name_ar,
+        'display_name_ar' => 'صلاحية المدير المتميز' .' '. $branch->name_ar,
+        'display_name_en' => 'Branch super admin' .' '. $branch->name_en,
+        'description_ar' => 'له جميع الصلاحيات',
+        'description_en' => 'has all permissions',
+        'is_super' => 1,
+    ]);
+
+    foreach (\config('laratrust_seeder.org_roles') as $key => $values) {
+        foreach ($values as $value) {
+            $permission = Permission::create([
+                'name' => $value . '-' . $key.'-'. $branch->name_en,
+                'display_name_ar' => __('words.' . $value) . ' ' . __('words.' . $key) . ' ' . $branch->name_ar,
+                'display_name_en' => $value . ' ' . $key . ' ' . $branch->name_en,
+                'description_ar' => __('words.' . $value) . ' ' . __('words.' . $key) . ' ' . $branch->name_ar,
+                'description_en' => $value . ' ' . $key . ' ' . $branch->name_en,
+            ]);
+            $branch_role->attachPermissions([$permission]);
+        }
+    }
+
+    $user->attachRole($branch_role);
 }

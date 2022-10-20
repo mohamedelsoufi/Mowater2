@@ -22,7 +22,7 @@ class Product extends Model
     protected $hidden = ['name_en', 'name_ar', 'description_en', 'description_ar', 'created_at', 'updated_at'];
     protected $appends = ['name', 'description', 'one_image', 'price_after_discount'];
 
-    //// appends attributes start //////
+    // appends attributes start
     public function getNameAttribute()
     {
         if (App::getLocale() == 'ar')
@@ -37,10 +37,9 @@ class Product extends Model
         return $this->description_en;
     }
 
-    //// appends attributes end //////f
+    // appends attributes end
 
-    //relationship start
-
+    //relations start
     public function productable()
     {
         return $this->morphTo();
@@ -90,15 +89,9 @@ class Product extends Model
     {
         return $this->morphMany(Offer::class, 'offerable');
     }
+    //relations end
 
-    //relationship end
-
-    // scopes
-    public function get_offer($discount_card_id)
-    {
-        return $this->offers()->where('offers.discount_card_id', $discount_card_id)->first();
-    }
-
+    // Scopes start
     public function scopeActive($query)
     {
         return $query->where('active', 1);
@@ -144,6 +137,13 @@ class Product extends Model
             }
         });
     }
+    //Scopes end
+
+    // accessors & Mutator start
+    public function get_offer($discount_card_id)
+    {
+        return $this->offers()->where('offers.discount_card_id', $discount_card_id)->first();
+    }
 
     public function getOneImageAttribute()
     {
@@ -162,6 +162,16 @@ class Product extends Model
         return $this->available == 1 ? __('words.available_prop') : __('words.not_available_prop');
     }
 
+    public function getActive()
+    {
+        return $this->active == 1 ? __('words.active') : __('words.inactive');
+    }
+
+    public function getActiveNumberOfViews()
+    {
+        return $this->active_number_of_views == 1 ? __('words.active') : __('words.inactive');
+    }
+
     public function getPriceAfterDiscountAttribute()
     {
         if ($this->discount != null) {
@@ -176,5 +186,5 @@ class Product extends Model
         }
         return 0;
     }
-
+    // accessors & Mutator end
 }

@@ -12,8 +12,8 @@ class CreateCitiesTable extends Migration {
             $table->bigIncrements('id');
             $table->string('name_en')->nullable();
             $table->string('name_ar')->nullable();
-            $table->decimal('latitude', 10, 8)->nullable();
-            $table->decimal('longitude', 11, 8)->nullable();
+            $table->string('latitude')->nullable();
+            $table->string('longitude')->nullable();
             $table->bigInteger('country_id')->unsigned();
             $table->string('created_by')->nullable()->default('system@app.com');
             $table->timestamps();

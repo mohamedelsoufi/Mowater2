@@ -42,7 +42,7 @@
                                         <div class="form-row">
                                             <div class="form-group col-md-6">
                                                 <label>{{__('words.name_ar')}}</label>
-                                                <input type="text" name="name_ar"
+                                                <input type="text" name="name_ar" dir="rtl"
                                                        class="form-control @error('name_ar') is-invalid @enderror"
                                                        value="{{ old('name_ar') }}"
                                                        placeholder="{{__('words.name_ar')}}">
@@ -71,7 +71,7 @@
                                         <div class="form-row">
                                             <div class="form-group col-md-12">
                                                 <label>{{__('words.description_ar')}}</label>
-                                                <textarea name="description_ar"
+                                                <textarea name="description_ar" dir="rtl"
                                                           class="form-control @error('description_ar') is-invalid @enderror">{{ old('description_ar') }}</textarea>
 
                                                 @error('description_ar')
@@ -406,8 +406,8 @@
                                         <div class="form-row">
                                             <div class="form-group col-md-6">
                                                 <div class="form-check">
-                                                    <input class="form-check-input" name="active" value="0"
-                                                           type="checkbox">
+                                                    <input class="form-check-input" name="active" value="1"
+                                                           {{old('active') ? "checked" : ""}} type="checkbox">
                                                     <label class="form-check-label">
                                                         {{__('words.activity')}}
                                                     </label>
@@ -417,7 +417,7 @@
                                             <div class="form-group col-md-6">
                                                 <div class="form-check">
                                                     <input class="form-check-input" name="active_number_of_views"
-                                                           value="0" type="checkbox">
+                                                           value="1" {{old('active_number_of_views') ? "checked" : ""}} type="checkbox">
                                                     <label class="form-check-label">
                                                         {{__('words.active_number_of_views')}}
                                                     </label>

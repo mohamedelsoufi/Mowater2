@@ -15,8 +15,6 @@ class OrgAvailablePaymentMethodController extends Controller
     {
         $this->middleware(['HasOrgPaymentMethod:read'])->only(['index', 'show']);
         $this->middleware(['HasOrgPaymentMethod:update'])->only('edit');
-        $this->middleware(['HasOrgPaymentMethod:create'])->only('create');
-        $this->middleware(['HasOrgPaymentMethod:delete'])->only('destroy');
 
         $this->paymentMethod = $method;
     }

@@ -99,3 +99,9 @@ a:active, a:focus {
     display: inline-block;
     margin: 0px 15px;
 }
+
+.coordinate_text {
+    cursor: pointer;
+    text-decoration: underline;
+    color: #8c0f0f;
+}

@@ -4,26 +4,20 @@ namespace App\Http\Controllers\API\Organizations;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\API\ReserveBrokerRequest;
-use App\Http\Requests\API\ReserveInsuranceCompanyServiceRequest;
 use App\Http\Requests\API\ShowBrokerPackageRequest;
 use App\Http\Requests\API\ShowBrokerRequest;
 use App\Http\Requests\API\ShowBrokerReservationRequest;
 use App\Http\Resources\Brokers\BrokerPackagesResource;
 use App\Http\Resources\Brokers\GetBrokersResource;
+use App\Http\Resources\Brokers\GetMowaterOffersResource;
+use App\Http\Resources\Brokers\GetOffersResource;
 use App\Http\Resources\Brokers\ReservationsResource;
-use App\Http\Resources\Features\MawaterOffersResource;
-use App\Http\Resources\Insurance\InsuranceCompanyPackagesResource;
-use App\Http\Resources\Insurance\ServiceReservationsResource;
 use App\Models\Branch;
 use App\Models\Broker;
 use App\Models\BrokerPackage;
-use App\Models\BrokerReservation;
-use App\Models\BrokerUse;
 use App\Models\DiscoutnCardUserUse;
 use App\Models\Offer;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Validator;
 
 class BrokerController extends Controller
 {
@@ -32,7 +26,7 @@ class BrokerController extends Controller
         try {
             $brokers = Broker::active()->search()->latest('id')->paginate(PAGINATION_COUNT);
             if (empty($brokers))
-                return responseJson(0,__('message.no_result'));
+                return responseJson(0, __('message.no_result'));
             return responseJson(1, 'success', GetBrokersResource::collection($brokers)->response()->getData(true));
         } catch (\Exception $e) {
             return responseJson(0, 'error', $e->getMessage());
@@ -44,7 +38,7 @@ class BrokerController extends Controller
         try {
             $broker = Broker::find($request->id);
             if (empty($broker))
-                return responseJson(0,__('message.no_result'));
+                return responseJson(0, __('message.no_result'));
             //update number of views start
             updateNumberOfViews($broker);
             //update number of views end
@@ -57,41 +51,88 @@ class BrokerController extends Controller
 
     public function getDiscountCardOffers(ShowBrokerRequest $request)
     {
-        $broker = Broker::active()->find($request->id);
+        try {
+            $broker = Broker::active()->find($request->id);
 
-        $discount_cards = $broker->discount_cards()->where('status', 'started')->get();
+            $discount_cards = $broker->discount_cards()->where('status', 'started')->get();
 
-        if (!$discount_cards->isEmpty()) {
+            if (!$discount_cards->isEmpty()) {
 
-            $features = $broker->packages()->whereHas('offers')->paginate(PAGINATION_COUNT);
-            if (empty($features))
-                return responseJson(0,__('message.no_result'));
-            foreach ($features as $feature) {
-                foreach ($feature->offers as $offer) {
-                    $discount_type = $offer->discount_type;
-                    $percentage_value = ((100 - $offer->discount_value) / 100);
-                    if ($discount_type == 'percentage') {
-                        $price_after_discount = $feature->price * $percentage_value;
-                        $feature->card_discount_value = $offer->discount_value . '%';
-                        $feature->card_price_after_discount = $price_after_discount . ' BHD';
-                        $feature->card_number_of_uses_times = $offer->number_of_uses_times == 'endless' ? __('words.endless') : $offer->specific_number;
-                    } else {
-                        $price_after_discount = $feature->price - $offer->discount_value;
-                        $feature->card_discount_value = $offer->discount_value . ' BHD';
-                        $feature->card_price_after_discount = $price_after_discount . ' BHD';
-                        $feature->card_number_of_uses_times = $offer->number_of_uses_times == 'endless' ? __('words.endless') : $offer->specific_number;
+                $features = $broker->brokerPackages()->whereHas('offers')->paginate(PAGINATION_COUNT);
+                if (empty($features))
+                    return responseJson(0, __('message.no_result'));
+                foreach ($features as $feature) {
+                    foreach ($feature->offers as $offer) {
+                        $discount_type = $offer->discount_type;
+                        $percentage_value = ((100 - $offer->discount_value) / 100);
+                        if ($discount_type == 'percentage') {
+                            $price_after_discount = $feature->price * $percentage_value;
+                            $feature->card_discount_value = $offer->discount_value . '%';
+                            $feature->card_price_after_discount = $price_after_discount . ' BHD';
+                            $feature->card_number_of_uses_times = $offer->number_of_uses_times == 'endless' ? __('words.endless') : $offer->specific_number;
+                        } else {
+                            $price_after_discount = $feature->price - $offer->discount_value;
+                            $feature->card_discount_value = $offer->discount_value . ' BHD';
+                            $feature->card_price_after_discount = $price_after_discount . ' BHD';
+                            $feature->card_number_of_uses_times = $offer->number_of_uses_times == 'endless' ? __('words.endless') : $offer->specific_number;
+                        }
+                        $feature->notes = $offer->notes;
+                        $feature->makeHidden('offers');
                     }
-                    $feature->notes = $offer->notes;
-                    $feature->makeHidden('offers');
+                }
+
+                return responseJson(1, 'success', GetMowaterOffersResource::collection($features)->response()->getData(true));
+
+            } else {
+                return responseJson(0, 'error', __('message.something_wrong'));
+            }
+        } catch (\Exception $e) {
+            return responseJson(0, 'error', $e->getMessage());
+        }
+    }
+
+    public function getOffers(ShowBrokerRequest $request)
+    {
+        try {
+            $broker = Broker::active()->find($request->id);
+
+            $packages = $broker->brokerPackages()->where('discount_type', '!=', '')->latest('id')->get();
+            if (isset($packages))
+                $packages->each(function ($item) {
+                    $item->is_mowater_card = false;
+                });
+
+            $mowater_packages = $broker->brokerPackages()->whereHas('offers')->latest('id')->get();
+            if (isset($mowater_packages)) {
+                foreach ($mowater_packages as $package) {
+                    foreach ($package->offers as $offer) {
+                        $discount_type = $offer->discount_type;
+                        $percentage_value = ((100 - $offer->discount_value) / 100);
+                        if ($discount_type == 'percentage') {
+                            $price_after_discount = $package->price * $percentage_value;
+                            $package->card_discount_value = $offer->discount_value . '%';
+                            $package->card_price_after_discount = $price_after_discount . ' BHD';
+                            $package->card_number_of_uses_times = $offer->number_of_uses_times == 'endless' ? __('words.endless') : $offer->specific_number;
+                        } else {
+                            $price_after_discount = $package->price - $offer->discount_value;
+                            $package->card_discount_value = $offer->discount_value . ' BHD';
+                            $package->card_price_after_discount = $price_after_discount . ' BHD';
+                            $package->card_number_of_uses_times = $offer->number_of_uses_times == 'endless' ? __('words.endless') : $offer->specific_number;
+                        }
+                        $package->notes = $offer->notes;
+                        $package->is_mowater_card = true;
+                        $package->makeHidden('offers');
+                    }
                 }
             }
 
-            return responseJson(1, 'success', MawaterOffersResource::collection($features)->response()->getData(true));
+            $merged = collect($packages)->merge($mowater_packages)->paginate(PAGINATION_COUNT);
 
-        } else {
-            return responseJson(0, 'error', __('message.something_wrong'));
+            return responseJson(1, 'success', GetOffersResource::collection($merged)->response()->getData(true));
+
+        } catch (\Exception $e) {
+            return responseJson(0, 'error', $e->getMessage());
         }
-
     }
 
     public function reserveBrokerService(ReserveBrokerRequest $request)
@@ -120,7 +161,7 @@ class BrokerController extends Controller
             $requested_data = $request->except(['is_mawater_card', 'barcode', 'driving_license_for_broker', 'vehicle_ownership_for_broker', 'no_accident_certificate_for_broker']);
             $requested_data['user_id'] = $user->id;
 
-            $feature_offers = $broker->packages()->whereHas('offers')->first();
+            $feature_offers = $broker->brokerPackages()->whereHas('offers')->first();
 
 //            // use mawater card start
             if ($request->is_mawater_card == true) {
@@ -182,7 +223,7 @@ class BrokerController extends Controller
             $user = getAuthAPIUser();
             $reservations = $user->brokerReservations()->latest()->get();
             if (empty($reservations))
-                return responseJson(0,__('message.no_result'));
+                return responseJson(0, __('message.no_result'));
             return responseJson(1, 'success', ReservationsResource::collection($reservations)->response()->getData(true));
         } catch (\Exception $e) {
             return responseJson(0, 'error', $e->getMessage());
@@ -195,7 +236,7 @@ class BrokerController extends Controller
             $user = getAuthAPIUser();
             $reservation = $user->brokerReservations()->find($request->id);
             if (empty($reservation))
-                return responseJson(0,__('message.no_result'));
+                return responseJson(0, __('message.no_result'));
             return responseJson(1, 'success', new ReservationsResource($reservation));
         } catch (\Exception $e) {
             return responseJson(0, 'error', $e->getMessage());

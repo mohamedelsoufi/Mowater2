@@ -44,7 +44,7 @@
                                         <div class="form-row">
                                             <div class="form-group col-md-6">
                                                 <label>{{__('words.name_ar')}}</label>
-                                                <input type="text" name="name_ar"
+                                                <input type="text" name="name_ar" dir="rtl"
                                                        class="form-control @error('name_ar') is-invalid @enderror"
                                                        value="{{ old('name_ar',$delivery->name_ar) }}"
                                                        placeholder="{{__('words.name_ar')}}">
@@ -73,7 +73,7 @@
                                         <div class="form-row">
                                             <div class="form-group col-md-12">
                                                 <label>{{__('words.description_ar')}}</label>
-                                                <textarea name="description_ar"
+                                                <textarea name="description_ar" dir="rtl"
                                                           class="form-control @error('description_ar') is-invalid @enderror">{{ old('description_ar',$delivery->description_ar) }}</textarea>
 
                                                 @error('description_ar')

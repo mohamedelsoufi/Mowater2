@@ -23,11 +23,11 @@ class CreateServicesTable extends Migration {
             $table->boolean('location_required')->nullable();
             $table->float('discount',11,2)->nullable();
             $table->enum('discount_type',array(['percentage','amount']))->nullable();
-            $table->boolean('discount_availability')->nullable()->default(0);
             $table->integer('number_of_views')->default(0)->nullable();
             $table->boolean('active_number_of_views')->default(1)->nullable();
             $table->boolean('active')->nullable()->default(1);
             $table->boolean('available')->nullable()->default(1);
+            $table->string('created_by')->nullable()->default('system@app.com');
             $table->timestamps();
 
             $table->foreign('category_id')->on('categories')->references('id')->onUpdate('set null')->onDelete('set null');

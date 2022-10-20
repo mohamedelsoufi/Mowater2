@@ -44,7 +44,7 @@
                                         <div class="form-row mb-3">
                                             <div class="form-group col-md-6">
                                                 <label>{{__('words.title_ar')}}</label>
-                                                <input type="text" name="title_ar" id="title_ar"
+                                                <input type="text" name="title_ar" dir="rtl" id="title_ar"
                                                        value="{{$discount_card->title_ar}}"
                                                        class="form-control @error('title_ar') is-invalid @enderror"
                                                        placeholder="عنوان البطاقة">
@@ -73,7 +73,7 @@
                                         <div class="form-row mb-3">
                                             <div class="form-group col-md-12">
                                                 <label>{{__('words.description_ar')}}</label>
-                                                <textarea name="description_ar" id="description_ar"
+                                                <textarea name="description_ar" dir="rtl" id="description_ar"
                                                           placeholder="وصف البطاقة"
                                                           class="form-control @error('description_ar') is-invalid @enderror">
                                                     {{$discount_card->description_ar}}

@@ -7,14 +7,13 @@ use App\Http\Requests\API\ReserveInsuranceCompanyServiceRequest;
 use App\Http\Requests\API\ShowInsuranceCompanyRequest;
 use App\Http\Requests\API\ShowInsurancePackageRequest;
 use App\Http\Requests\API\ShowInsuranceServiceReservationRequest;
-use App\Http\Resources\Features\MawaterOffersResource;
 use App\Http\Resources\Insurance\GetInsuranceCompaniesResource;
 use App\Http\Resources\Insurance\InsuranceCompanyPackagesResource;
+use App\Http\Resources\Insurance\InsuranceMowaterOffersResource;
+use App\Http\Resources\Insurance\InsuranceOffersResource;
 use App\Http\Resources\Insurance\ServiceReservationsResource;
-use App\Http\Resources\Insurance\ShowInsuranceCompanyResource;
 use App\Models\Branch;
 use App\Models\DiscoutnCardUserUse;
-use App\Models\FeatureInsuranceCompany;
 use App\Models\InsuranceCompany;
 use App\Models\InsuranceCompanyPackage;
 use App\Models\InsuranceCompanyUse;
@@ -57,43 +56,88 @@ class IsuranceCompanyController extends Controller
 
     public function getDiscountCardOffers(ShowInsuranceCompanyRequest $request)
     {
-        $company = InsuranceCompany::active()->find($request->id);
+        try {
+            $company = InsuranceCompany::active()->find($request->id);
 
-        $discount_cards = $company->discount_cards()->where('status', 'started')->get();
+            $discount_cards = $company->discount_cards()->where('status', 'started')->get();
 
-        if (!$discount_cards->isEmpty()) {
+            if (!$discount_cards->isEmpty()) {
 
-            $features = $company->packages()->whereHas('offers')->paginate(PAGINATION_COUNT);
-            if (empty($features))
-                return responseJson(0, __('message.no_result'));
+                $features = $company->packages()->whereHas('offers')->paginate(PAGINATION_COUNT);
+                if (empty($features))
+                    return responseJson(0, __('message.no_result'));
 
-            foreach ($features as $feature) {
-                foreach ($feature->offers as $offer) {
-                    $discount_type = $offer->discount_type;
-                    $percentage_value = ((100 - $offer->discount_value) / 100);
-                    if ($discount_type == 'percentage') {
-                        $price_after_discount = $feature->price * $percentage_value;
-                        $feature->card_discount_value = $offer->discount_value . '%';
-                        $feature->card_price_after_discount = $price_after_discount . ' BHD';
-                        $feature->card_number_of_uses_times = $offer->number_of_uses_times == 'endless' ? __('words.endless') : $offer->specific_number;
-                    } else {
-                        $price_after_discount = $feature->price - $offer->discount_value;
-                        $feature->card_discount_value = $offer->discount_value . ' BHD';
-                        $feature->card_price_after_discount = $price_after_discount . ' BHD';
-                        $feature->card_number_of_uses_times = $offer->number_of_uses_times == 'endless' ? __('words.endless') : $offer->specific_number;
+                foreach ($features as $feature) {
+                    foreach ($feature->offers as $offer) {
+                        $discount_type = $offer->discount_type;
+                        $percentage_value = ((100 - $offer->discount_value) / 100);
+                        if ($discount_type == 'percentage') {
+                            $price_after_discount = $feature->price * $percentage_value;
+                            $feature->card_discount_value = $offer->discount_value . '%';
+                            $feature->card_price_after_discount = $price_after_discount . ' BHD';
+                            $feature->card_number_of_uses_times = $offer->number_of_uses_times == 'endless' ? __('words.endless') : $offer->specific_number;
+                        } else {
+                            $price_after_discount = $feature->price - $offer->discount_value;
+                            $feature->card_discount_value = $offer->discount_value . ' BHD';
+                            $feature->card_price_after_discount = $price_after_discount . ' BHD';
+                            $feature->card_number_of_uses_times = $offer->number_of_uses_times == 'endless' ? __('words.endless') : $offer->specific_number;
+                        }
+                        $feature->notes = $offer->notes;
+                        $feature->makeHidden('offers');
                     }
-                    $feature->notes = $offer->notes;
-                    $feature->makeHidden('offers');
+                }
+                return responseJson(1, 'success', InsuranceMowaterOffersResource::collection($features)->response()->getData(true));
+
+            } else {
+                return responseJson(0, 'error', __('message.something_wrong'));
+            }
+        } catch (\Exception $e) {
+            return responseJson(0, 'error', $e->getMessage());
+        }
+    }
+
+    public function getOffers(ShowInsuranceCompanyRequest $request)
+    {
+        try {
+            $insurance = InsuranceCompany::active()->find($request->id);
+
+            $packages = $insurance->packages()->where('discount_type', '!=', '')->latest('id')->get();
+            if (isset($packages))
+                $packages->each(function ($item) {
+                    $item->is_mowater_card = false;
+                });
+
+            $mowater_packages = $insurance->packages()->whereHas('offers')->latest('id')->get();
+            if (isset($mowater_packages)) {
+                foreach ($mowater_packages as $package) {
+                    foreach ($package->offers as $offer) {
+                        $discount_type = $offer->discount_type;
+                        $percentage_value = ((100 - $offer->discount_value) / 100);
+                        if ($discount_type == 'percentage') {
+                            $price_after_discount = $package->price * $percentage_value;
+                            $package->card_discount_value = $offer->discount_value . '%';
+                            $package->card_price_after_discount = $price_after_discount . ' BHD';
+                            $package->card_number_of_uses_times = $offer->number_of_uses_times == 'endless' ? __('words.endless') : $offer->specific_number;
+                        } else {
+                            $price_after_discount = $package->price - $offer->discount_value;
+                            $package->card_discount_value = $offer->discount_value . ' BHD';
+                            $package->card_price_after_discount = $price_after_discount . ' BHD';
+                            $package->card_number_of_uses_times = $offer->number_of_uses_times == 'endless' ? __('words.endless') : $offer->specific_number;
+                        }
+                        $package->notes = $offer->notes;
+                        $package->is_mowater_card = true;
+                        $package->makeHidden('offers');
+                    }
                 }
             }
-//return $features;
 
-            return responseJson(1, 'success', MawaterOffersResource::collection($features)->response()->getData(true));
+            $merged = collect($packages)->merge($mowater_packages)->paginate(PAGINATION_COUNT);
 
-        } else {
-            return responseJson(0, 'error', __('message.something_wrong'));
+            return responseJson(1, 'success', InsuranceOffersResource::collection($merged)->response()->getData(true));
+
+        } catch (\Exception $e) {
+            return responseJson(0, 'error', $e->getMessage());
         }
-
     }
 
     public function reserveInsuranceService(ReserveInsuranceCompanyServiceRequest $request)
@@ -207,7 +251,7 @@ class IsuranceCompanyController extends Controller
     public function ShowPackage(ShowInsurancePackageRequest $request)
     {
         try {
-          $package = InsuranceCompanyPackage::find($request->id);
+            $package = InsuranceCompanyPackage::find($request->id);
             if (empty($package))
                 return responseJson(0, __('message.no_result'));
             return responseJson(1, 'success', new InsuranceCompanyPackagesResource($package));

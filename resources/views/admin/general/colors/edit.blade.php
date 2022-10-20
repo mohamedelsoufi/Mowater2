@@ -45,7 +45,7 @@
                                         <div class="form-row">
                                             <div class="form-group col-md-6">
                                                 <label>{{__('words.color_name_ar')}}</label>
-                                                <input type="text" name="color_name_ar" id="color_name_ar"
+                                                <input type="text" name="color_name_ar" dir="rtl" id="color_name_ar"
                                                        class="form-control @error('color_name_ar') is-invalid @enderror"
                                                       value="{{$color->color_name_ar}}" placeholder="إسم اللون" >
                                                 @error('color_name_ar')

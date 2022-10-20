@@ -3,6 +3,7 @@
 namespace App\Http\Resources\AccessoriesStore;
 
 use App\Http\Resources\Categories\GetCategoriesResource;
+use App\Http\Resources\Reviews\ShowReviewResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class GetAccessoriesResource extends JsonResource
@@ -49,7 +50,7 @@ class GetAccessoriesResource extends JsonResource
         $data["is_favorite"] = $this->is_favorite;
         $data["favorites_count"] = $this->favorites_count;
         if($request->routeIs('accessories.show')){
-            $data["reviews"] = $this->reviews;
+            $data["reviews"] = ShowReviewResource::collection($this->reviews);
             $data["files"] = $this->files;
         }
         $data["available"] = $this->available;

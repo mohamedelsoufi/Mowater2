@@ -75,11 +75,7 @@ class CarWashController extends Controller
 
             $car_wash = $this->model->create($request_data);
 
-            $car_wash->organization_users()->create([
-                'user_name' => $request->user_name,
-                'email' => $request->email,
-                'password' => $request->password,
-            ]);
+            createMasterOrgUser($car_wash);
             return redirect()->route('car-washes.index')->with(['success' => __('message.created_successfully')]);
         } catch (\Exception $e) {
             return redirect()->back()->with(['error' => __('message.something_wrong')]);

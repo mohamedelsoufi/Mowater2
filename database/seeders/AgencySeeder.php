@@ -47,6 +47,8 @@ class AgencySeeder extends Seeder
         $threeD = ['seeder/1.glb', 'seeder/2.glb'];
         $payment_methods = PaymentMethod::pluck('id');
         $phone = ['3366 7714', '1311 2262', '1725 3470', '1773 2426', '3838 7468', ''];
+        $discount_value = ['','10','20','','30'];
+        $discount_type = ['','percentage','amount','','percentage'];
 
         foreach ($brands as $main_key => $brand) {
             $agency1 = Agency::create([
@@ -78,7 +80,6 @@ class AgencySeeder extends Seeder
                 'instagram_link' => 'https://www.google.com/',
             ]);
 
-
             $agency1->payment_methods()->attach($payment_methods);
 
             $agency1->work_time()->create([
@@ -103,10 +104,9 @@ class AgencySeeder extends Seeder
             foreach ($car_models as $key => $car_model) {
                 foreach ($car_classes as $car_class) {
                     $vehicle_type = ['cars', 'trucks', 'pickups'];
-                    $ghamara_count = '';
-                    if ($vehicle_type[array_rand($vehicle_type)] == 'pickups') {
-                        $ghamara_count = array_rand(ghamara_count_arr());
-                    }
+                    $discount = $discount_value[array_rand($discount_value)];
+                    $dis_type = ['percentage','amount'];
+
                     $vehicle = $agency1->vehicles()->create([
                         'vehicle_type' => $vehicle_type[array_rand($vehicle_type)],
 //                        'ghamara_count' => $ghamara_count,
@@ -159,8 +159,10 @@ class AgencySeeder extends Seeder
                         'location' => '',
                         'additional_notes' => '',
                         'price' => $price[array_rand($price)],
-                        'availability' => array_rand($is_new),
-                        'active' => array_rand($is_new),
+                        'discount'=>$discount,
+                        'discount_type'=>$discount != '' ? $dis_type[array_rand($dis_type)] : '',
+                        'availability' => 1,
+                        'active' => 1,
                     ]);
 
                     for ($i = 0; $i < 4; $i++) {
@@ -174,15 +176,6 @@ class AgencySeeder extends Seeder
                         'path' => $threeD[array_rand($threeD)],
                         'type' => 'vehicle_3D',
                         'color_id' => 1,
-                    ]);
-
-                    $vehicle->offers()->create([
-                        'discount_card_id' => 1,
-                        'discount_type' => 'percentage',
-                        'discount_value' => 5,
-                        'number_of_uses_times' => 'specific_number',
-                        'specific_number' => 2,
-                        'notes' => 'خصم 5 % على التالي',
                     ]);
 
                     $name_en = ['Car mirror sticker waterproof and anti-fog', 'spare parts set belt', 'Complete dynamo spool - OEM 252812b010', 'R Brake Front Brake Pads ( VW GROUP ) RB2111'];
@@ -206,7 +199,9 @@ class AgencySeeder extends Seeder
                                 'car_class_id' => $car_class->id,
                                 'manufacturing_year' => $manufacturing_year[array_rand($manufacturing_year)],
                                 'engine_size' => array_rand(engine_size_arr()),
-                                'price' => $i * 6,
+                                'price' => mt_rand(12354,98753),
+                                'discount'=>$discount_value[$i],
+                                'discount_type'=>$discount_type[$i],
                                 'status' => 'excellent',
                                 'type' => 'original',
                                 'is_new' => 1,
@@ -223,14 +218,6 @@ class AgencySeeder extends Seeder
                                 'path' => 'seeder/' . $images[array_rand($images)],
                             ]);
 
-                            $p->offers()->create([
-                                'discount_card_id' => 1,
-                                'discount_type' => 'percentage',
-                                'discount_value' => 5,
-                                'number_of_uses_times' => 'specific_number',
-                                'specific_number' => 2,
-                                'notes' => 'خصم 5 % على التالي',
-                            ]);
                         }
 
                     }
@@ -244,10 +231,10 @@ class AgencySeeder extends Seeder
             ]);
 
             $org_role = $agency1->roles()->create([
-                'name_en' => 'Organization super admin' .' '. $agency1->name_en,
-                'name_ar' => 'صلاحية المدير المتميز' .' '. $agency1->name_ar,
-                'display_name_ar' => 'صلاحية المدير المتميز' .' '. $agency1->name_ar,
-                'display_name_en' => 'Organization super admin' .' '. $agency1->name_en,
+                'name_en' => 'Organization super admin' . ' ' . $agency1->name_en,
+                'name_ar' => 'صلاحية المدير المتميز' . ' ' . $agency1->name_ar,
+                'display_name_ar' => 'صلاحية المدير المتميز' . ' ' . $agency1->name_ar,
+                'display_name_en' => 'Organization super admin' . ' ' . $agency1->name_en,
                 'description_ar' => 'له جميع الصلاحيات',
                 'description_en' => 'has all permissions',
                 'is_super' => 1,
@@ -256,7 +243,7 @@ class AgencySeeder extends Seeder
             foreach (\config('laratrust_seeder.org_roles') as $key => $values) {
                 foreach ($values as $value) {
                     $permission = Permission::create([
-                        'name' => $value . '-' . $key.'-'. $agency1->name_en,
+                        'name' => $value . '-' . $key . '-' . $agency1->name_en,
                         'display_name_ar' => __('words.' . $value) . ' ' . __('words.' . $key) . ' ' . $agency1->name_ar,
                         'display_name_en' => $value . ' ' . $key . ' ' . $agency1->name_en,
                         'description_ar' => __('words.' . $value) . ' ' . __('words.' . $key) . ' ' . $agency1->name_ar,
@@ -288,28 +275,59 @@ class AgencySeeder extends Seeder
                     'description_en' => $service_desc_en[$s],
                     'description_ar' => $service_desc_ar[$s],
                     'price' => $service_price[$s],
+                    'discount'=>$discount_value[$s],
+                    'discount_type'=>$discount_type[$s],
                     'category_id' => $service_category->id,
                     'location_required' => true,
                 ]);
             }
 
-            $service_offer->offers()->create([
-                'discount_card_id' => 1,
-                'discount_type' => 'amount',
-                'discount_value' => 200,
-                'number_of_uses_times' => 'endless',
-                'notes' => 'خصم 200 درهم على الخدمة',
-            ]);
+            $service_offers = $agency1->services()->where('discount_type', '')->get();
+            foreach ($service_offers as $ser ){
+                $ser->offers()->create([
+                    'discount_card_id' => 1,
+                    'discount_type' => 'amount',
+                    'discount_value' => 200,
+                    'number_of_uses_times' => 'endless',
+                    'notes' => 'خصم 200 درهم على الخدمة',
+                ]);
+            }
 
+            $vehicle_offers = $agency1->vehicles()->where('discount_type', '')->get();
+            foreach ($vehicle_offers as $veh ){
+                $veh->offers()->create([
+                    'discount_card_id' => 1,
+                    'discount_type' => 'percentage',
+                    'discount_value' => 5,
+                    'number_of_uses_times' => 'specific_number',
+                    'specific_number' => 2,
+                    'notes' => 'خصم 5 % على التالي',
+                ]);
+            }
+
+            $product_offers = $agency1->products()->where('discount_type', '')->get();
+            foreach ($product_offers as $pro ){
+                $pro->offers()->create([
+                    'discount_card_id' => 1,
+                    'discount_type' => 'percentage',
+                    'discount_value' => 5,
+                    'number_of_uses_times' => 'specific_number',
+                    'specific_number' => 2,
+                    'notes' => 'خصم 5 % على التالي',
+                ]);
+            }
 
             $vehicles = $agency1->vehicles()->pluck('id');
             $products = $agency1->products()->pluck('id');
 
             for ($b = 0; $b < 4; $b++) {
+                $city = City::inRandomOrder()->first()->id;
                 $branch = $agency1->branches()->create([
-                    'name_en' => 'Branch ' . $b,
-                    'name_ar' => 'فرع ' . $b,
-                    'area_id' => Area::first()->id,
+                    'name_en' => $agency1->name_en . ' Branch ' . $b,
+                    'name_ar' =>$agency1->name_ar .  ' فرع ' . $b,
+                    'country_id' => 1,
+                    'city_id' => $city,
+                    'area_id' => Area::where('city_id', $city)->first()->id,
                     'address_en' => 'Branch Address ' . $b,
                     'address_ar' => 'عنوان الفرع ' . $b,
                     'category_id' => null,
@@ -330,11 +348,37 @@ class AgencySeeder extends Seeder
                     'website' => 'https://www.google.com/',
                     'instagram_link' => 'https://www.google.com/',
                 ]);
-                $branch->organization_users()->create([
+                $branch_user = $branch->organization_users()->create([
                     'user_name' => 'Agency branch user ' . $b,
                     'email' => 'ba' . $main_key . $b . '@gmail.com',
                     'password' => "123456",
                 ]);
+
+                $branch_role = $branch->roles()->create([
+                    'name_en' => 'super admin' . ' ' . $agency1->name_en . ' ' . $branch->name_en,
+                    'name_ar' => 'صلاحية المدير المتميز' . ' ' . $agency1->name_ar . ' ' . $branch->name_ar,
+                    'display_name_ar' => 'صلاحية المدير المتميز' . ' ' . $branch->name_ar,
+                    'display_name_en' => 'super admin' . ' ' . $branch->name_en,
+                    'description_ar' => 'له جميع الصلاحيات',
+                    'description_en' => 'has all permissions',
+                    'is_super' => 1,
+                ]);
+
+                foreach (\config('laratrust_seeder.org_roles') as $key => $values) {
+                    foreach ($values as $value) {
+                        $permission = Permission::create([
+                            'name' => $value . '-' . $key . '-' . $branch->name_en,
+                            'display_name_ar' => __('words.' . $value) . ' ' . __('words.' . $key) . ' ' . $branch->name_ar,
+                            'display_name_en' => $value . ' ' . $key . ' ' . $branch->name_en,
+                            'description_ar' => __('words.' . $value) . ' ' . __('words.' . $key) . ' ' . $branch->name_ar,
+                            'description_en' => $value . ' ' . $key . ' ' . $branch->name_en,
+                        ]);
+                        $branch_role->attachPermissions([$permission]);
+                    }
+                }
+
+                $branch_user->attachRole($branch_role);
+
                 $branch->available_vehicles()->attach($vehicles);
                 $branch->available_products()->attach($products);
                 $branch->available_services()->attach($service_offer->id);
@@ -342,8 +386,8 @@ class AgencySeeder extends Seeder
                 $branch->phones()->create([
                     'country_code' => '+973',
                     'phone' => $phone[array_rand($phone)],
-                    'title_en' => $name_en[$b],
-                    'title_ar' => $name_ar[$b]
+                    'title_en' => $branch->name_en,
+                    'title_ar' =>  $branch->name_ar
                 ]);
 
             }

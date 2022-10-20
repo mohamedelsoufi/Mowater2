@@ -8,7 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-    <title>@yield('title',__('words.organization_dashboard'))</title>
+    <title>@yield('title', $record->getTable() == 'branches' ? __('words.branch_dashboard') : __('words.organization_dashboard'))</title>
     <link rel="icon" href="{{ URL::asset('logo.png') }}" type="image/x-icon" sizes="32x32"/>
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet"

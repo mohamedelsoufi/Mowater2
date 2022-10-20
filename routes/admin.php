@@ -70,6 +70,10 @@ Route::group(['prefix' => LaravelLocalization::setLocale(),
 
             //Discount card routes
             Route::resource('discount-cards', 'General\DiscountCardController');
+            Route::get('discount-card-organization/{id}', 'General\DiscountCardController@getDiscountCardOrg')->name('discount-cards.org.get');
+            Route::get('show-discount-card-organization/{id}', 'General\DiscountCardController@showDiscountCardOrg')->name('discount-cards.org.show');
+            Route::delete('delete-discount-card-organization/{id}', 'General\DiscountCardController@deleteDiscountCardOrg')->name('discount-cards.org.delete');
+            Route::put('update-discount-card-organization/{id}', 'General\DiscountCardController@updateDiscountCardOrg')->name('discount-cards.org.update');
 
             //Ad routes
             Route::resource('ads', 'General\AdminAdController');
@@ -192,7 +196,6 @@ Route::group(['prefix' => LaravelLocalization::setLocale(),
             Route::get('car-wash-users-org/{org_id}', 'Organizations\CarWashController@getUsers')->name('car-wash.users');
             Route::get('mining-center-user-org/{org_id}/id/{user_id}', 'Organizations\MiningCenterController@getUser')->name('mining-center.user');
             Route::get('mining-center-users-org/{org_id}', 'Organizations\MiningCenterController@getUsers')->name('mining-center.users');
-
         });
 
         Route::get('categories-of-main-category/{main_category}', 'Organizations\SpecialNumberCategoryController@get_categories_of_main_category')->name('main-category');

@@ -236,8 +236,8 @@
                                         <div class="form-row">
                                             <div class="form-group col-md-4">
                                                 <div class="form-check">
-                                                    <input class="form-check-input" name="active_number_of_views"
-                                                           {{old('active_number_of_views') == 1 ? 'checked' : ''}} value="0"
+                                                    <input class="form-check-input" name="active_number_of_views" value="1"
+                                                           {{old('active_number_of_views') == 1 ? 'checked' : ''}}
                                                            type="checkbox">
                                                     <label class="form-check-label">
                                                         {{__('words.active_number_of_views')}}
@@ -247,8 +247,8 @@
 
                                             <div class="form-group col-md-4">
                                                 <div class="form-check">
-                                                    <input class="form-check-input" name="availability"
-                                                           {{old('availability') == 1 ? 'checked' : ''}} value="0"
+                                                    <input class="form-check-input" name="availability" value="1"
+                                                           {{old('availability') == 1 ? 'checked' : ''}}
                                                            type="checkbox">
                                                     <label class="form-check-label">
                                                         {{__('words.available_prop')}}
@@ -258,8 +258,8 @@
 
                                             <div class="form-group col-md-4">
                                                 <div class="form-check">
-                                                    <input class="form-check-input" name="active"
-                                                           {{old('active') == 1 ? 'checked' : ''}} value="0"
+                                                    <input class="form-check-input" name="active" value="1"
+                                                           {{old('active') == 1 ? 'checked' : ''}}
                                                            type="checkbox">
                                                     <label class="form-check-label">
                                                         {{__('words.activity')}}

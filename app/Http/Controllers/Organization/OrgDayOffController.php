@@ -49,8 +49,9 @@ class OrgDayOffController extends Controller
     {
         try {
             $organization = getModelData();
-
-            $organization->day_offs()->create($request->all());
+            $request_data = $request->except('token');
+            $request_data['created_by'] = auth()->user()->email;
+            $organization->day_offs()->create($request_data);
 
             return redirect()->route('organization.days-off.index')->with('success', __('message.created_successfully'));
         } catch (\Exception $e) {
@@ -84,8 +85,9 @@ class OrgDayOffController extends Controller
     {
         try {
             $day_off = $this->dayOff->find($id);
-
-            $day_off->update($request->except('token'));
+            $request_data = $request->except('token');
+            $request_data['created_by'] = auth('web')->user()->email;
+            $day_off->update($request_data);
             return redirect()->route('organization.days-off.index')->with('success', __('message.updated_successfully'));
         } catch (\Exception $e) {
             return redirect()->back()->with(['error' => __('message.something_wrong')]);

@@ -10,6 +10,6 @@ trait HasOrganizationDiscountCard
 {
     public function discount_cards()
     {
-        return $this->morphToMany(DiscountCard::class, 'organizable' , DiscountCardOrganization::class);
+        return $this->morphToMany(DiscountCard::class, 'organizable' , DiscountCardOrganization::class)->withTimestamps();
     }
 }

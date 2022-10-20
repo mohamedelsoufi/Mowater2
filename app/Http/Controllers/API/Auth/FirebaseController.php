@@ -3,38 +3,63 @@
 namespace App\Http\Controllers\API\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\API\ShowUserRequest;
+use App\Http\Requests\API\StoreFirebaseTokenRequest;
 use App\Models\FirebaseNotification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
 class FirebaseController extends Controller
 {
-    public function storeToken(Request $request)
+    public function storeToken(StoreFirebaseTokenRequest $request)
     {
-        $validator = Validator::make($request->all(), [
-            'firebase_token' => 'required',
-            'platform' => 'nullable',
-        ]);
-        if ($validator->fails())
-            return responseJson(0, $validator->errors());
-        $user = auth('api')->user()->id;
-        $validator = $request->all();
-        $validator['user_id'] = $user;
-        $notification = FirebaseNotification::create($validator);
+        try {
+            $user = auth('api')->user()->id;
+            $requested_data = $request->all();
+            $requested_data['user_id'] = $user;
+            $notification = FirebaseNotification::create($requested_data);
 
-        return responseJson(1, 'success', $notification);
+            return responseJson(1, 'success', $notification);
+        } catch (\Exception $e) {
+            return responseJson(1, 'error', $e->getMessage());
+        }
     }
 
-    public function deleteToken(Request $request)
+    public function getUserTokens()
     {
-        $validator = Validator::make($request->all(), [
-            'user_id' => 'required|exists:users,id',
-        ]);
-        if ($validator->fails())
-            return responseJson(0, $validator->errors());
-        $user = FirebaseNotification::where('user_id', $request->user_id);
-        $user->delete();
+        try {
+            $user_id = getAuthAPIUser()->id;
+            $user = FirebaseNotification::where('user_id', $user_id)->get();
+            return responseJson(1, 'success', $user);
+        } catch (\Exception $e) {
+            return responseJson(1, 'error', $e->getMessage());
+        }
+    }
 
-        return responseJson(1, 'success');
+    public function deleteUserTokens()
+    {
+        try {
+            $user_id = getAuthAPIUser()->id;
+            $tokens = FirebaseNotification::where('user_id', $user_id);
+            $tokens->delete();
+
+            return responseJson(1, 'success');
+        } catch (\Exception $e) {
+            return responseJson(1, 'error', $e->getMessage());
+        }
+    }
+
+    public function deleteUserToken(Request $request)
+    {
+        try {
+            $user_id = getAuthAPIUser()->id;
+            $user = FirebaseNotification::where('user_id', $user_id)
+                ->where('fcm_token', $request->device_token)->first();
+            $user->delete();
+
+            return responseJson(1, 'success');
+        } catch (\Exception $e) {
+            return responseJson(1, 'error', $e->getMessage());
+        }
     }
 }

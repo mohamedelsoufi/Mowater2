@@ -87,12 +87,16 @@ class Agency extends Model
 
     public function tests()
     {
-        return $this->hasManyThrough(TestDrive::class, Vehicle::class, 'vehicable_id', 'vehicle_id');
+        return $this->hasManyThrough(TestDrive::class,
+            Vehicle::class, 'vehicable_id', 'vehicle_id')
+            ->whereIn('vehicle_id',$this->vehicles()->pluck('id')->toArray());
     }
 
     public function reserve_vehicles()
     {
-        return $this->hasManyThrough(ReserveVehicle::class, Vehicle::class, 'vehicable_id', 'vehicle_id');
+        return $this->hasManyThrough(ReserveVehicle::class,
+            Vehicle::class, 'vehicable_id', 'vehicle_id')
+            ->whereIn('vehicle_id',$this->vehicles()->pluck('id')->toArray());
     }
 
     // relationship end

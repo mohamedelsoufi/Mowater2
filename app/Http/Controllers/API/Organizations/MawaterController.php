@@ -6,10 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\API\StoreProfileVehicle;
 use App\Http\Requests\API\StoreVehicleForSale;
 use App\Http\Requests\API\UpdateVehicleForSale;
-use App\Http\Requests\API\VehicleForSale;
+use App\Http\Resources\Vehicles\GetVehiclesForSaleResource;
 use App\Http\Resources\Vehicles\ProfileVehiclesResource;
-use App\Models\File;
-use App\Models\ProfileVehicle;
 use App\Models\Vehicle;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
@@ -23,10 +21,7 @@ class MawaterController extends Controller
             $vehicles = Vehicle::where('user_vehicle_status', 'for_sale')->active()->overView()->search()->latest('id')->paginate(PAGINATION_COUNT);
             if (empty($vehicles))
                 return responseJson(0, __('message.no_result'));
-            foreach ($vehicles as $vehicle) {
-                $vehicle->time = Carbon::createFromFormat('Y-m-d H:i:s', $vehicle->created_at)->format('d-m-Y H:i A');
-            }
-            return responseJson(1, 'success', $vehicles);
+            return responseJson(1, 'success', GetVehiclesForSaleResource::collection($vehicles)->response()->getData());
         } catch (\Exception $e) {
             return responseJson(0, 'error', $e->getMessage());
         }
@@ -135,11 +130,7 @@ class MawaterController extends Controller
             if (empty($sale_vehicle))
                 return responseJson(0, __('message.no_result'));
 
-            foreach ($sale_vehicle as $vehicle) {
-                $vehicle->time = Carbon::createFromFormat('Y-m-d H:i:s', $vehicle->created_at)->format('d-m-Y H:i A');
-            }
-
-            return responseJson(1, 'success', $sale_vehicle);
+            return responseJson(1, 'success', GetVehiclesForSaleResource::collection($sale_vehicle)->response()->getData());
         } catch (\Exception $e) {
             return responseJson(0, 'error', $e->getMessage());
         }

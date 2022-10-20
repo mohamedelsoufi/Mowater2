@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\PaymentMethod;
+use App\Models\Permission;
 use Illuminate\Database\Seeder;
 
 use App\Models\Brand;
@@ -78,11 +79,36 @@ class GarageSeeder extends Seeder
             ]);
 
 
-            $office->organization_users()->create([
+            $org_user = $office->organization_users()->create([
                 'user_name' => 'garage user ' . $counter,
                 'email' => $users[$counter],
                 'password' => "123456",
             ]);
+
+            $org_role = $office->roles()->create([
+                'name_en' => 'Organization super admin' .' '. $office->name_en,
+                'name_ar' => 'صلاحية المدير المتميز' .' '. $office->name_ar,
+                'display_name_ar' => 'صلاحية المدير المتميز' .' '. $office->name_ar,
+                'display_name_en' => 'Organization super admin' .' '. $office->name_en,
+                'description_ar' => 'له جميع الصلاحيات',
+                'description_en' => 'has all permissions',
+                'is_super' => 1,
+            ]);
+
+            foreach (\config('laratrust_seeder.org_roles') as $key => $values) {
+                foreach ($values as $value) {
+                    $permission = Permission::create([
+                        'name' => $value . '-' . $key.'-'. $office->name_en,
+                        'display_name_ar' => __('words.' . $value) . ' ' . __('words.' . $key) . ' ' . $office->name_ar,
+                        'display_name_en' => $value . ' ' . $key . ' ' . $office->name_en,
+                        'description_ar' => __('words.' . $value) . ' ' . __('words.' . $key) . ' ' . $office->name_ar,
+                        'description_en' => $value . ' ' . $key . ' ' . $office->name_en,
+                    ]);
+                    $org_role->attachPermissions([$permission]);
+                }
+            }
+
+            $org_user->attachRole($org_role);
 
             $office->discount_cards()->attach(1);
 

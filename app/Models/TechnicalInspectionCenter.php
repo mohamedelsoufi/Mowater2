@@ -53,6 +53,10 @@ class TechnicalInspectionCenter extends Model
     // appends attributes End
 
     // relations start
+    public function roles(){
+        return $this->morphMany(Role::class,'rolable');
+    }
+
     public function city()
     {
         return $this->belongsTo('App\Models\City');

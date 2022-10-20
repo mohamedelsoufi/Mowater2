@@ -13,6 +13,7 @@ class GetTrainersResource extends JsonResource
 
         $data["id"]= $this->id;
         $data["profile"]= $this->profile;
+        $data["training_license"]= $this->training_license;
         $data["name"]= $this->name;
         $data["description"]= $this->description;
         $data["gender"]= $this->gender;
@@ -20,7 +21,7 @@ class GetTrainersResource extends JsonResource
         $data["birth_date"]= $this->birth_date;
         $data["hour_price"]= $this->hour_price;
         $data["vehicle_type"]= $this->vehicle_type;
-        $data["vehicle_image"]= $this->file_url;
+        $data["vehicle_image"]= $this->vehicle_image;
         $data["conveyor_type"]= $this->conveyor_type;
         $data["manufacturing_year"]= $this->manufacturing_year;
         $data["brand_id"]=$this->brand_id;
@@ -51,6 +52,7 @@ class GetTrainersResource extends JsonResource
             $data["contact"] = $this->contact;
             $data["phones"] = $this->phones;
             $data["reviews"]= $this->reviews;
+            $data["conditions"] = $this->conditions;
         }
         $data['payment_methods'] =  GetPaymentMethodsResource::collection($this->payment_methods);
         $data["is_reviewed"]= $this->is_reviewed;

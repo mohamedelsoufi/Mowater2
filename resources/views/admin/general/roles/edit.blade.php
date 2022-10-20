@@ -42,7 +42,7 @@
                                     <input type="hidden" name="id" value="{{$role->id}}">
                                     <div class="row">
                                         <div class="input-group col-6 mb-3">
-                                            <input type="text" name="name_ar"
+                                            <input type="text" name="name_ar" dir="rtl"
                                                    class="form-control @error('name_ar') is-invalid @enderror"
                                                    value="{{$role->name_ar}}"
                                                    placeholder="{{__('words.name_ar')}}">
@@ -68,7 +68,7 @@
 
                                     <div class="row">
                                         <div class="input-group col-6 mb-3">
-                                            <input type="text" name="description_ar"
+                                            <input type="text" name="description_ar" dir="rtl"
                                                    class="form-control @error('description_ar') is-invalid @enderror"
                                                    value="{{$role->description_ar}}"
                                                    placeholder="{{__('words.description_ar')}}">

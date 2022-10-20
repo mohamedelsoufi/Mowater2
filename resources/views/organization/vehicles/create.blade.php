@@ -116,7 +116,7 @@
                                                         class="form-control @error('vehicle_type') is-invalid @enderror">
                                                     @foreach(vehicle_type_arr() as $key => $val)
                                                         <option
-                                                            value="{{$key}}">{{$val}}</option>
+                                                            value="{{$key}}" {{old('vehicle_type') == $key ?  "selected" : ""}}>{{$val}}</option>
                                                     @endforeach
                                                 </select>
                                                 @error('vehicle_type')
@@ -1114,8 +1114,8 @@
                                         <div class="form-row">
                                             <div class="form-group col-md-4">
                                                 <div class="form-check">
-                                                    <input class="form-check-input" name="active" value="0"
-                                                           type="checkbox">
+                                                    <input class="form-check-input" name="active" value="1"
+                                                           {{old('active') ? "checked" : ""}} type="checkbox">
                                                     <label class="form-check-label">
                                                         {{__('words.activity')}}
                                                     </label>
@@ -1124,8 +1124,8 @@
 
                                             <div class="form-group col-md-4">
                                                 <div class="form-check">
-                                                    <input class="form-check-input" name="availability" value="0"
-                                                           type="checkbox">
+                                                    <input class="form-check-input" name="availability" value="1"
+                                                           {{old('availability') ? "checked" : ""}} type="checkbox">
                                                     <label class="form-check-label">
                                                         {{__('words.availability')}}
                                                     </label>
@@ -1135,7 +1135,7 @@
                                             <div class="form-group col-md-4">
                                                 <div class="form-check">
                                                     <input class="form-check-input" name="active_number_of_views"
-                                                           value="0" type="checkbox">
+                                                           value="1" {{old('active_number_of_views') ? "checked" : ""}} type="checkbox">
                                                     <label class="form-check-label">
                                                         {{__('words.active_number_of_views')}}
                                                     </label>

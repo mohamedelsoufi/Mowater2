@@ -19,6 +19,7 @@ class CreateRentalPropertiesTable extends Migration
             $table->string('name_ar')->nullable();
             $table->string('description_en')->nullable();
             $table->string('description_ar')->nullable();
+            $table->string('created_by')->nullable()->default('system@app.com');
             $table->timestamps();
         });
     }

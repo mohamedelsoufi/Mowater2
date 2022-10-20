@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Organization;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\AvailableServiceRequest;
 use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\Builder;
 use App\Models\Category;
@@ -12,66 +13,59 @@ use App\Models\Area;
 
 class OrgAvailableServiceController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware(['HasAvailableService:read'])->only(['index', 'show']);
+        $this->middleware(['HasAvailableService:update'])->only('edit');
+    }
+
     public function index()
     {
-        $user               = auth()->guard('web')->user();
-        $organization       = $user->organizable;
-        
-        $available_services = $organization->available_services;
-
-        return view('organization.available_services.index' , compact('organization' , 'available_services'));
-    }
-
-    public function create()
-    {
-        $user         = auth()->guard('web')->user();
-        $branch       = $user->organizable;
-        $organization = $branch->branchable; //agency
-
-        $services           = $organization->services;
-        $available_services = $branch->available_services->pluck('id')->toArray();
-
-        return view('organization.available_services.create' , compact('branch' , 'services' , 'available_services'));
-    }
-
-    public function store(Request $request)
-    {
-        $rules = [
-            'services'    => 'nullable|array',
-            'services.*'  => 'exists:services,id',
-        ];
-
-        $request->validate($rules);
-
-        $user         = auth()->guard('web')->user();
-        $organization = $user->organizable; //branch
-
-        $organization->available_services()->sync($request->services);  //services should belongs to this org
-        
-
-        return redirect()->route('organization.available_service.index')->with('success' , __('message.created_successfully'));
+        try {
+            $record = getModelData();
+            $availableServices = $record->available_services()->latest('id')->get();
+            return view('organization.availableServices.index', compact('record', 'availableServices'));
+        } catch (\Exception $e) {
+            return redirect()->back()->with(['error' => __('message.something_wrong')]);
+        }
     }
 
     public function show($id)
     {
-
+        try {
+            $record = getModelData();
+            $availableService = $record->available_services->find($id);
+            return view('organization.availableServices.show', compact('record', 'availableService'));
+        } catch (\Exception $e) {
+            return redirect()->back()->with(['error' =>$e->getMessage()]);
+        }
     }
 
-    public function edit($id)
+    public function edit()
     {
-       
+        try {
+            $record = getModelData();
+            $org = $record->branchable;
+            $services = $org->services()->active()->available()->latest('id')->get();
+            $availableServices = $record->available_services()->pluck('usable_id')->toArray();
+            return view('organization.availableServices.edit', compact('record', 'services','availableServices'));
+        } catch (\Exception $e) {
+            return redirect()->back()->with(['error' => __('message.something_wrong')]);
+        }
     }
 
 
-    public function update(Request $request , $id)
+    public function update(AvailableServiceRequest $request)
     {
-       
-    }
+        try {
+            $record = getModelData();
 
-    public function destroy($id)
-    {  
-       
-    }
+            $record->available_services()->sync($request->available_services);
 
+            return redirect()->route('organization.available-services.index')->with('success', __('message.updated_successfully'));
+        } catch (\Exception $e) {
+            return redirect()->back()->with(['error' => __('message.something_wrong')]);
+        }
+    }
 
 }

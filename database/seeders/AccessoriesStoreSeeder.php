@@ -8,6 +8,7 @@ use App\Models\CarModel;
 use App\Models\Category;
 use App\Models\City;
 use App\Models\PaymentMethod;
+use App\Models\Permission;
 use App\Models\SubCategory;
 use Illuminate\Database\Seeder;
 use Faker\Factory;
@@ -35,6 +36,8 @@ class AccessoriesStoreSeeder extends Seeder
         $images = ['accessory1.jpg', 'accessory2.jpg', 'accessory3.jpg', 'accessory4.jpg',
             'accessory5.jpg', 'accessory6.jpg', 'accessory7.jpg', 'accessory8.jpg', 'accessory9.jpg',
             'accessory10.jpg', 'accessory11.jpg', 'accessory12.jpg', 'accessory13.jpg', 'accessory14.jpg'];
+        $discount_value = ['', '10', '20', '', '30'];
+        $discount_type = ['', 'percentage', 'amount', '', 'percentage'];
 
 //        $guarantee_month = ['01','02','03','04',''];
         foreach ($cities as $key => $city) {
@@ -53,19 +56,23 @@ class AccessoriesStoreSeeder extends Seeder
                 $sub_category = SubCategory::where('category_id', $category)->inRandomOrder()->first()->id;
                 $brand = Brand::inRandomOrder()->first()->id;
                 $car_model = CarModel::where('brand_id', $brand)->inRandomOrder()->first()->id;
-                $guarantee =$faker->numberBetween(0,1);
+                $guarantee = $faker->numberBetween(0, 1);
+                $discount = $discount_value[array_rand($discount_value)];
+                $dis_type = ['percentage', 'amount'];
                 $accessories = $store->accessories()->create([
                     'name_en' => 'Accessory name ' . $t,
                     'name_ar' => 'اسم الاكسسوار ' . $t,
                     'description_en' => 'Accessory description ' . $t,
                     'description_ar' => 'وصف الاكسسوار ' . $t,
                     'price' => mt_rand(550, 9526),
+                    'discount' => $discount,
+                    'discount_type' => $discount != '' ? $dis_type[array_rand($dis_type)] : '',
                     'category_id' => $category,
                     'sub_category_id' => $sub_category,
                     'brand_id' => $brand,
                     'car_model_id' => $car_model,
                     'guarantee' => $guarantee,
-                    'guarantee_year' => $guarantee == 1 ? $faker->numberBetween(2022,2030) : '',
+                    'guarantee_year' => $guarantee == 1 ? $faker->numberBetween(2022, 2030) : '',
                     'guarantee_month' => $guarantee == 1 ? $faker->month : '',
                 ]);
                 for ($s = 0; $s < 5; $s++) {
@@ -79,7 +86,7 @@ class AccessoriesStoreSeeder extends Seeder
             $store->discount_cards()->attach(1);
 
 
-            $store_accessories = $store->accessories;
+            $store_accessories = $store->accessories()->where('discount_type', '')->get();
             foreach ($store_accessories as $accessory) {
                 $accessory->offers()->create([
                     'discount_card_id' => 1,
@@ -109,11 +116,36 @@ class AccessoriesStoreSeeder extends Seeder
                 'days' => 'Sun,Mon,Tue,Wed,Thu',
             ]);
 
-            $store->organization_users()->create([
+            $org_user = $store->organization_users()->create([
                 'user_name' => $name_en . ' ' . $key,
                 'email' => 'accessories_store' . $key . '@gmail.com',
                 'password' => "123456",
             ]);
+
+            $org_role = $store->roles()->create([
+                'name_en' => 'Organization super admin' . ' ' . $store->name_en . $key,
+                'name_ar' => 'صلاحية المدير المتميز' . ' ' . $store->name_ar . $key,
+                'display_name_ar' => 'صلاحية المدير المتميز' . ' ' . $store->name_ar,
+                'display_name_en' => 'Organization super admin' . ' ' . $store->name_en,
+                'description_ar' => 'له جميع الصلاحيات',
+                'description_en' => 'has all permissions',
+                'is_super' => 1,
+            ]);
+
+            foreach (\config('laratrust_seeder.org_roles') as $key => $values) {
+                foreach ($values as $value) {
+                    $permission = Permission::create([
+                        'name' => $value . '-' . $key . '-' . $store->name_en . $key,
+                        'display_name_ar' => __('words.' . $value) . ' ' . __('words.' . $key) . ' ' . $store->name_ar,
+                        'display_name_en' => $value . ' ' . $key . ' ' . $store->name_en,
+                        'description_ar' => __('words.' . $value) . ' ' . __('words.' . $key) . ' ' . $store->name_ar,
+                        'description_en' => $value . ' ' . $key . ' ' . $store->name_en,
+                    ]);
+                    $org_role->attachPermissions([$permission]);
+                }
+            }
+
+            $org_user->attachRole($org_role);
 
         }
     }

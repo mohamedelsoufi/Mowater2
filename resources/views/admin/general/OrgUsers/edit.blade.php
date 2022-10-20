@@ -111,6 +111,24 @@
                                         </div>
                                     </div>
 
+                                    <div class="row mb-3">
+                                        <div class="form-group col-md-6">
+                                            <label>{{__('words.roles')}}</label>
+                                            <select name="role_id"
+                                                    class="form-control @error('role_id') is-invalid @enderror">
+                                                <option value="" selected>{{__('words.choose')}}</option>
+                                                @foreach($roles as $role)
+                                                    <option value="{{$role->id}}" {{old('role_id',$user->roles()->first()->id) == $role->id ? "selected" : ""}}>{{$role->name}}</option>
+                                                @endforeach
+                                            </select>
+                                            @error('role_id')
+                                            <span class="invalid-feedback" role="alert">
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
+                                            @enderror
+                                        </div>
+                                    </div>
+
                                     <div class="form-row">
                                         <div class="input-group col-6 mb-3">
                                             <div class="form-check">

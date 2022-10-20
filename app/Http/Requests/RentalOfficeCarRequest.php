@@ -14,29 +14,23 @@ class RentalOfficeCarRequest extends FormRequest
     public function rules()
     {
         return [
-            'vehicle_type' => 'required|in:' . vehicle_type(),
-            'ghamara_count' => ['required_if:vehicle_type,pickups'],
+            'vehicle_type' => 'required|in:' . rental_car_types(),
             'brand_id' => 'required|exists:brands,id',
             'car_model_id' => 'required|exists:car_models,id',
             'car_class_id' => 'required|exists:car_classes,id',
-            'manufacture_year' => 'required|max:255',
-            'color' => 'required|max:255',
-            'daily_rental_price' => 'nullable|numeric',
-            'weekly_rental_price' => 'nullable|numeric',
-            'monthly_rental_price' => 'nullable|numeric',
-            'yearly_rental_price' => 'nullable|numeric',
-            'available' => 'nullable'
+            'manufacture_year' => 'required|numeric',
+            'daily_rental_price' => 'required|between:0,9999999999.99',
+            'weekly_rental_price' => 'required|between:0,9999999999.99',
+            'monthly_rental_price' => 'required|between:0,9999999999.99',
+            'yearly_rental_price' => 'required|between:0,9999999999.99',
+            'cars_properties' => 'required|array',
+            'cars_properties.*' => 'exists:rental_properties,id',
+            'images' => 'required_without:id|array',
+            'images.*' => 'image|max:10000',
+            'color_id' => 'nullable|exists:colors,id',
+            'available' => 'nullable|boolean',
+            'active' => 'nullable|boolean',
+            'active_number_of_views' => 'nullable|boolean',
         ];
-    }
-
-    public function withValidator($validator)
-    {
-        if ($validator->fails()) {
-            $validator->after(function ($validator) {
-                if ($this->id != null) {
-                    $validator->errors()->add('update_modal', $this->id);
-                }
-            });
-        }
     }
 }

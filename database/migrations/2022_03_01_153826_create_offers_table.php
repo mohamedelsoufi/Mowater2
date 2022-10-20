@@ -21,7 +21,7 @@ class CreateOffersTable extends Migration
             $table->float('discount_value',11,2)->nullable();
             $table->string('number_of_uses_times')->nullable();
             $table->integer('specific_number')->nullable();
-            $table->string('notes')->nullable();
+            $table->text('notes')->nullable();
             $table->timestamps();
 
             $table->foreign('discount_card_id')->references('id')->on('discount_cards')->onUpdate('cascade')->onDelete('cascade');

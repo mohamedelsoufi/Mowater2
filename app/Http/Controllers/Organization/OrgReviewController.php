@@ -3,97 +3,53 @@
 namespace App\Http\Controllers\Organization;
 
 use App\Http\Controllers\Controller;
+use App\Models\Review;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\File;
 
 class OrgReviewController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    private $review;
+
+    public function __construct(Review $review)
+
+    {
+        $this->middleware(['HasOrgReview:read'])->only(['index', 'show']);
+        $this->middleware(['HasOrgReview:delete'])->only('destroy');
+        $this->review = $review;
+    }
+
     public function index()
     {
-        $user                = auth()->guard('web')->user();
-        $organization        = $user->organizable;
-        $reviews             = $organization->reviews;
-        return view('organization.reviews.index', compact('organization' , 'reviews'));
+        try {
+            $record = getModelData();
+            $reviews = $record->reviews;
+            return view('organization.reviews.index', compact('record', 'reviews'));
+        } catch (\Exception $e) {
+            return redirect()->back()->with(['error' => __('message.something_wrong')]);
+        }
     }
 
-    public function create()
-    {
-        //
-    }
-
-    public function store(Request $request)
-    {
-
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param int $id
-     * @return \Illuminate\Http\Response
-     */
     public function show($id)
     {
-        $user            = auth()->guard('web')->user();
-        $organization    = $user->organizable;
-        $review          = $organization->reviews()->with('user')->where('reviews.id' , $id )->first();
+        try {
+            $record = getModelData();
+            $review = $this->review->find($id);
 
-        if($review)
-        {
-            return response()->json(['status' => true, 'data' => $review]);
-        }
-        else
-        {
-            return response()->json(['status' => false, 'data' => null]);
+            return view('organization.reviews.show', compact('record', 'review'));
+        } catch (\Exception $e) {
+            return redirect()->back()->with(['error' => __('message.something_wrong')]);
         }
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param \Illuminate\Http\Request $request
-     * @param int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(ProductRequest $request, $id)
-    {
-   
-    }
-
-  
     public function destroy($id)
     {
-        $user            = auth()->guard('web')->user();
-        $organization    = $user->organizable;
-        $review          = $organization->reviews()->where('reviews.id' , $id )->first();
-
-        if($review)
-        {
+        try {
+            $review = $this->review->find($id);
             $review->delete();
-            return redirect()->route('organization.review.index')->with('success' , __('message.deleted_successfully'));
+            return redirect()->route('organization.reviews.index')->with('success', __('message.deleted_successfully'));
+        } catch (\Exception $e) {
+            return redirect()->back()->with(['error' => __('message.something_wrong')]);
         }
-
-        else 
-        {
-            return back()->with(['error'=> __('message.something_wrong')]);
-        }
-      
 
     }
 }

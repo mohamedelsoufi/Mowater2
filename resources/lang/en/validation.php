@@ -251,6 +251,8 @@ return [
         'end_date' => 'End Date',
         'discount' => 'Discount',
         'discount_type' => 'Discount Type',
+        'sub_category_id' => 'sub category',
+        'module_type' => 'section',
     ],
     'insurance_amount' => 'Insurance amount',
 

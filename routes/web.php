@@ -20,19 +20,31 @@ Route::group(['prefix' => LaravelLocalization::setLocale(),
             Route::get('logout', 'Auth\AuthController@logout')->name('logout');
 
             // organization route
-            Route::resource('organizations', 'OrgDataController')->except(['create','store','destroy']);
+            Route::resource('organizations', 'OrgDataController');
+            //update_branch_data
+            Route::get('get-branches', 'OrgDataController@getBranches')->name('org.branches.index');
+            Route::get('show-branch/{id}', 'OrgDataController@showBranch')->name('org.branches.show');
+            Route::get('create-branch', 'OrgDataController@createBranch')->name('org.branches.create');
+            Route::post('store-branch', 'OrgDataController@storeBranch')->name('org.branches.store');
+            Route::get('edit-branch/{id}', 'OrgDataController@editBranch')->name('org.branches.edit');
+            Route::put('update-branch/{id}', 'OrgDataController@updateBranch')->name('org.branches.update');
+            Route::delete('delete-branch/{id}', 'OrgDataController@deleteBranch')->name('org.branches.delete');
+            Route::get('branch-user-org/{org_id}/id/{user_id}', 'OrgDataController@getUser')->name('org.branches.user');
+            Route::get('branch-users-org/{org_id}', 'OrgDataController@getUsers')->name('org.branches.users');
 
             //users
             Route::resource('users', 'OrgUsersController');
+            Route::get('organization-branches-users', 'OrgUsersController@getBranchUsers')->name('org-branches-users.index');
+            Route::get('organization-branch-user/{id}/show', 'OrgUsersController@showBranchUser')->name('org-branches-users.show');
+            Route::get('organization-branch-user/{id}/edit', 'OrgUsersController@editBranchUser')->name('org-branches-users.edit');
+            Route::put('organization-branch-user/{id}/update', 'OrgUsersController@updateBranchUser')->name('org-branches-users.update');
+            Route::delete('organization-branch-user/{id}/delete', 'OrgUsersController@deleteBranchUser')->name('org-branches-users.delete');
 
             //Roles
             Route::resource('org-roles', 'OrgRolesController');
 
             //brokers requirements
 //            Route::get('/show-requirements', 'OrgDataController@show_requirements')->name('brokers.requirements');
-
-            //update_branch_data
-            Route::put('update_branch_data', 'OrgDataController@update_branch_data')->name('update_branch_data');
 
             // vehicle routes
             Route::resource('vehicles', 'OrgVehicleController');
@@ -43,29 +55,44 @@ Route::group(['prefix' => LaravelLocalization::setLocale(),
             Route::put('update-work-time', 'OrgWorkTimeController@update')->name('work-times.update');
 
             //contact
-            Route::get('contact', 'OrgContactController@edit')->name('contact.edit');
-            Route::put('contact', 'OrgContactController@update')->name('contact.update');
+            Route::get('contacts', 'OrgContactController@index')->name('contacts.index');
+            Route::get('edit-contacts', 'OrgContactController@edit')->name('contacts.edit');
+            Route::post('update-contacts', 'OrgContactController@update')->name('contacts.update');
 
             //day offs
             Route::resource('days-off', 'OrgDayOffController');
 
             //reserve
-            Route::resource('reserve_vehicle', 'OrgVehicleReservationController');
+            Route::get('vehicle-reservations', 'OrgVehicleReservationController@index')->name('vehicle-reservations.index');
+            Route::get('vehicle-reservations/{id}/show', 'OrgVehicleReservationController@show')->name('vehicle-reservations.show');
+            Route::put('vehicle-reservations/{id}/update', 'OrgVehicleReservationController@update')->name('vehicle-reservations.update');
 
             //test drive
-            Route::resource('test', 'OrgVehicleTestController');
+            Route::get('tests', 'OrgVehicleTestController@index')->name('tests.index');
+            Route::get('tests/{id}/show', 'OrgVehicleTestController@show')->name('tests.show');
+            Route::put('tests/{id}/update', 'OrgVehicleTestController@update')->name('tests.update');
 
             //review
-            Route::resource('review', 'OrgReviewController');
+            Route::resource('reviews', 'OrgReviewController');
 
             //available vehicles
-            Route::resource('available_vehicle', 'OrgAvailableVehicleController');
+            Route::get('available-vehicles', 'OrgAvailableVehicleController@index')->name('available-vehicles.index');
+            Route::get('available-vehicles/{id}/show', 'OrgAvailableVehicleController@show')->name('available-vehicles.show');
+            Route::get('available-vehicles/edit', 'OrgAvailableVehicleController@edit')->name('available-vehicles.edit');
+            Route::post('available-vehicles/update', 'OrgAvailableVehicleController@update')->name('available-vehicles.update');
 
             //available products
-            Route::resource('available_product', 'OrgAvailableProductController');
+            Route::get('available-products', 'OrgAvailableProductController@index')->name('available-products.index');
+            Route::get('available-products/{id}/show', 'OrgAvailableProductController@show')->name('available-products.show');
+            Route::get('available-products/edit', 'OrgAvailableProductController@edit')->name('available-products.edit');
+            Route::post('available-products/update', 'OrgAvailableProductController@update')->name('available-products.update');
 
             //available services
-            Route::resource('available_service', 'OrgAvailableServiceController');
+            Route::get('available-services', 'OrgAvailableServiceController@index')->name('available-services.index');
+            Route::get('available-services/{id}/show', 'OrgAvailableServiceController@show')->name('available-services.show');
+            Route::get('available-services/edit', 'OrgAvailableServiceController@edit')->name('available-services.edit');
+            Route::post('available-services/update', 'OrgAvailableServiceController@update')->name('available-services.update');
+
 
             // products routes
             Route::resource('products', 'OrgProductController');
@@ -78,15 +105,20 @@ Route::group(['prefix' => LaravelLocalization::setLocale(),
             Route::resource('branch', 'OrgBranchController');
 
             //phones
-            Route::resource('phone', 'OrgPhoneController');
-            Route::resource('phone', 'OrgPhoneController');
-            Route::resource('phone', 'OrgPhoneController');
+            Route::resource('phones', 'OrgPhoneController');
 
             //rental office cars
-            Route::resource('rental_office_car', 'OrgRentalOfficeCarController');
+            Route::resource('rental-office-cars', 'OrgRentalOfficeCarController');
+            Route::get('cars/properties', 'OrgRentalOfficeCarController@getProperties')->name('rental-cars-properties.index');
+            Route::get('cars/properties/{id}/show', 'OrgRentalOfficeCarController@showProperty')->name('rental-cars-properties.show');
+            Route::get('cars/properties/create', 'OrgRentalOfficeCarController@createProperty')->name('rental-cars-properties.create');
+            Route::post('cars/properties/store', 'OrgRentalOfficeCarController@storeProperty')->name('rental-cars-properties.store');
+            Route::get('cars/properties/{id}/edit', 'OrgRentalOfficeCarController@editProperty')->name('rental-cars-properties.edit');
+            Route::put('cars/properties/{id}/update', 'OrgRentalOfficeCarController@updateProperty')->name('rental-cars-properties.update');
+            Route::delete('cars/properties/{id}/delete', 'OrgRentalOfficeCarController@destroyProperty')->name('rental-cars-properties.destroy');
 
             //rental laws
-            Route::resource('rental_law', 'OrgRentalLawController');
+            Route::resource('rental-laws', 'OrgRentalLawController');
 
             //Available Payment Methods
             Route::get('available-payment-methods', 'OrgAvailablePaymentMethodController@index')->name('available-payment-methods.index');
@@ -105,13 +137,13 @@ Route::group(['prefix' => LaravelLocalization::setLocale(),
 
             //ads
             Route::resource('ads', 'OrgAdController');
+            Route::get('get-module/{relation}', 'OrgAdController@getModule')->name('ads.get-module');
 
             //reservations
             Route::get('/reservations', 'OrgReservationsController@index')->name('reservations.index');
-            Route::get('/reservations-edit/{id}', 'OrgReservationsController@edit')->name('reservations.edit');
-            Route::get('/reservations-show/{id}', 'OrgReservationsController@show')->name('reservations.show');
-            Route::post('/update/{id}', 'OrgReservationsController@update')->name('reservations.update');
-            Route::post('/reservations_delivery/{id}', 'OrgReservationsController@delivery_details')->name('reservations.delivery_details');
+            Route::get('/reservations/show/{id}', 'OrgReservationsController@show')->name('reservations.show');
+            Route::put('/reservations/update/{id}', 'OrgReservationsController@update')->name('reservations.update');
+
             //trainer reservations
             Route::get('/trainer_reservations', 'TrainerReservationController@index')->name('trainer_reservations.index');
             Route::get('/trainer_reservations-edit/{id}', 'TrainerReservationController@edit')->name('trainer_reservations.edit');

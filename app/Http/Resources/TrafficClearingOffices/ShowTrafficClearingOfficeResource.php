@@ -22,7 +22,7 @@ class ShowTrafficClearingOfficeResource extends JsonResource
             "phones" => $this->phones,
             "contact" => $this->contact,
             "work_time" => $this->work_time,
-            "services" => TrafficServicesResource::collection($this->services),
+            "services" => TrafficServicesResource::collection($this->trafficServices),
             "rating" => $this->rating,
             "rating_count" => $this->rating_count,
             "is_reviewed" => $this->is_reviewed,

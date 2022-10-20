@@ -44,6 +44,10 @@ class InsuranceCompany extends Model
     // end of appends
 
     // relations start
+    public function roles(){
+        return $this->morphMany(Role::class,'rolable');
+    }
+
     public function request_insurance_organizations()
     {
         return $this->morphToMany(RequestInsurance::class, 'organizationable', 'request_insurance_organization')->withPivot('status', 'price');

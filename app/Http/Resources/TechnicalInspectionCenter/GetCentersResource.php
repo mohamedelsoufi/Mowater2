@@ -4,6 +4,7 @@ namespace App\Http\Resources\TechnicalInspectionCenter;
 
 use App\Http\Resources\Categories\GetCategoriesResource;
 use App\Http\Resources\PaymentMethods\GetPaymentMethodsResource;
+use App\Http\Resources\Reviews\ShowReviewResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class GetCentersResource extends JsonResource
@@ -39,7 +40,7 @@ class GetCentersResource extends JsonResource
         $data["active"] = $this->active;
 
         if ($request->routeIs('inspection-centers.show')){
-            $data["reviews"] = $this->reviews;
+            $data["reviews"] = ShowReviewResource::collection($this->reviews);
         }
         return $data;
     }

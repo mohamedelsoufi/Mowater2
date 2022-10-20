@@ -41,7 +41,7 @@ class AdminUserController extends Controller
     public function create()
     {
         try {
-            $roles = Role::latest('id')->get();
+            $roles = Role::where('rolable_id',null)->where('rolable_type',null)->latest('id')->get();
             return view('admin.general.adminUsers.create', compact('roles'));
         } catch (\Exception $e) {
             return redirect()->back()->with(['error' => __('message.something_wrong')]);
@@ -68,7 +68,7 @@ class AdminUserController extends Controller
     public function edit($id)
     {
         try {
-            $roles = Role::latest('id')->get();
+            $roles = Role::where('rolable_id',null)->where('rolable_type',null)->latest('id')->get();
             $user = Admin::find($id);
             return view('admin.general.adminUsers.edit', compact('user', 'roles'));
         } catch (\Exception $e) {

@@ -37,6 +37,7 @@ class BranchReservationRequest extends FormRequest
             'owen_vehicles' => 'required_if:is_mawater_card,1|array',
             'owen_vehicle.*.id' => 'required_if:is_mawater_card,1|exists:vehicles,id',
             'delivery' => 'required|boolean',
+            'distinctive_mark' => 'required_if:delivery,1',
             'brand_id' => 'required|exists:brands,id',
             'car_model_id' => 'required|exists:car_models,id',
             'car_class_id' => 'required|exists:car_classes,id',

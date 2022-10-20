@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\AdType;
+use App\Models\Permission;
 use App\Models\SubCategory;
 use Illuminate\Database\Seeder;
 
@@ -104,11 +105,36 @@ class WenchSeeder extends Seeder
             ]);
 
 
-            $wench->organization_users()->create([
+            $org_user = $wench->organization_users()->create([
                 'user_name' => 'wench user ' . $counter,
                 'email' => $users[$counter],
                 'password' => "123456",
             ]);
+
+            $org_role = $wench->roles()->create([
+                'name_en' => 'Organization super admin' .' '. $wench->name_en. $counter,
+                'name_ar' => 'صلاحية المدير المتميز' .' '. $wench->name_ar. $counter,
+                'display_name_ar' => 'صلاحية المدير المتميز' .' '. $wench->name_ar,
+                'display_name_en' => 'Organization super admin' .' '. $wench->name_en,
+                'description_ar' => 'له جميع الصلاحيات',
+                'description_en' => 'has all permissions',
+                'is_super' => 1,
+            ]);
+
+            foreach (\config('laratrust_seeder.org_roles') as $key => $values) {
+                foreach ($values as $value) {
+                    $permission = Permission::create([
+                        'name' => $value . '-' . $key.'-'. $wench->name_en. $counter,
+                        'display_name_ar' => __('words.' . $value) . ' ' . __('words.' . $key) . ' ' . $wench->name_ar,
+                        'display_name_en' => $value . ' ' . $key . ' ' . $wench->name_en,
+                        'description_ar' => __('words.' . $value) . ' ' . __('words.' . $key) . ' ' . $wench->name_ar,
+                        'description_en' => $value . ' ' . $key . ' ' . $wench->name_en,
+                    ]);
+                    $org_role->attachPermissions([$permission]);
+                }
+            }
+
+            $org_user->attachRole($org_role);
 
             $wench->discount_cards()->attach(1);
 

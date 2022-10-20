@@ -37,5 +37,6 @@ class OrganizationUser extends Authenticatable
     {
         return $this->active == 1 ? __('words.active') : __('words.inactive');
     }
+
     // accessors & Mutator end
 }

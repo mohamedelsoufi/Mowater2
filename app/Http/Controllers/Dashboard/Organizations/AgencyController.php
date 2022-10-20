@@ -9,6 +9,7 @@ use App\Models\Area;
 use App\Models\Brand;
 use App\Models\City;
 use App\Models\Country;
+use App\Models\Permission;
 use App\Models\SpecialNumberOrganization;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
@@ -94,11 +95,8 @@ class AgencyController extends Controller
 
             $agency = $this->model->create($request_data);
 
-            $agency->organization_users()->create([
-                'user_name' => $request->user_name,
-                'email' => $request->email,
-                'password' => $request->password,
-            ]);
+            createMasterOrgUser($agency);
+
             return redirect()->route('agencies.index')->with(['success' => __('message.created_successfully')]);
         } catch (\Exception $e) {
             return redirect()->back()->with(['error' => __('message.something_wrong')]);

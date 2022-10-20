@@ -97,11 +97,7 @@ class DrivingTrainersController extends Controller
                 $trainer->uploadImage();
             }
 
-            $trainer->organization_users()->create([
-                'user_name' => $request->user_name,
-                'email' => $request->email,
-                'password' => $request->password
-            ]);
+            createMasterOrgUser($trainer);
 
             return redirect()->route('trainers.index')->with(['success' => __('message.created_successfully')]);
         } catch (\Exception $e) {

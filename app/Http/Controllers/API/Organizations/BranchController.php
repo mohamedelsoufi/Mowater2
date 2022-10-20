@@ -105,7 +105,7 @@ class BranchController extends Controller
         try {
             $vehicles = Vehicle::with('brand', 'car_model', 'car_class')->overView()->search()->whereHas('branches', function ($query) use ($request) {
                 $query->where('branches.id', $request->id);
-            })->latest('id')->paginate();
+            })->active()->latest('id')->paginate();
             if (empty($vehicles))
                 return responseJson(0,__('message.no_result'));
             return responseJson(1, 'success', $vehicles);
@@ -117,19 +117,16 @@ class BranchController extends Controller
     public function reservations(BranchReservationRequest $request)
     {
         try {
-//            $class = 'App\\Models\\' . $request->reservable_type;
-//            $model = new $class;
             $id = $request->reservable_id;
             $date = $request->date;
             $time = $request->time;
-
-            $record = Branch::find($request->reservable_id); // $record = Product::find(1);
+            $totalServicePrice = 0;
+            $totalProductPrice = 0;
 
             $auth_user = getAuthAPIUser();
 
             if ($request->has('services') || $request->has('products')) {
-                $branch = $record->with(['day_offs'])->find($request->reservable_id);
-
+                $branch = Branch::with(['day_offs'])->find($id);
                 if ($branch) {
                     if ($branch->reservation_active == 0)
                         return responseJson(0, 'error', __('message.reservation_not_active'));
@@ -138,12 +135,11 @@ class BranchController extends Controller
 
                         $user = $auth_user->id;
 
-                        $validator = $request->except('services', 'products');
-                        $validator['user_id'] = $user;
-                        $validator['reservable_type'] = 'App\\Models\\Branch';
-
-                        $product_offers = $record->products()->wherehas('offers')->pluck('id')->toArray();
-                        $service_offers = $record->services()->wherehas('offers')->pluck('id')->toArray();
+                        $requested_data = $request->except('services', 'products');
+                        $requested_data['user_id'] = $user;
+                        $requested_data['reservable_type'] = 'App\\Models\\Branch';
+                        $product_offers = $branch->available_products()->wherehas('offers')->get()->pluck('id')->toArray();
+                        $service_offers = $branch->available_services()->wherehas('offers')->get()->pluck('id')->toArray();
 
                         // use mawater card start
                         if ($request->is_mawater_card == true) {
@@ -164,6 +160,22 @@ class BranchController extends Controller
                                         if (in_array($product['id'], $product_offers)) {
                                             $product_offer = Offer::where('offerable_id', $product['id'])
                                                 ->where('offerable_type', 'App\\Models\\Product')->first();
+
+                                            // add price after mowater card from original price start
+                                            $product_in_offer_class = new $product_offer->offerable_type;
+                                            $product_in_offer = $product_in_offer_class->find($product_offer->offerable_id);
+
+                                            $Original_price = $product_in_offer->price;
+
+                                            $discount_type = $product_offer->discount_type;
+                                            $percentage_value = ((100 - $product_offer->discount_value) / 100);
+                                            if ($discount_type == 'percentage') {
+                                                $price_after_mowater_discount = $Original_price * $percentage_value;
+                                            } else {
+                                                $price_after_mowater_discount = $Original_price - $Original_price->discount_value;
+                                            }
+                                            $totalProductPrice += $price_after_mowater_discount * $product['quantity'];
+                                            // add price after mowater card from original price end
 
                                             $consumption = DiscoutnCardUserUse::where('barcode', $request->barcode)
                                                 ->where('offer_id', $product_offer->id)->first();
@@ -195,6 +207,22 @@ class BranchController extends Controller
                                             $service_offer = Offer::where('offerable_id', $service)
                                                 ->where('offerable_type', 'App\\Models\\Service')->first();
 
+                                            // add price after mowater card from original price start
+                                            $service_in_offer_class = new $service_offer->offerable_type;
+                                            $service_in_offer = $service_in_offer_class->find($service_offer->offerable_id);
+
+                                            $Original_price = $service_in_offer->price;
+
+                                            $discount_type = $service_offer->discount_type;
+                                            $percentage_value = ((100 - $service_offer->discount_value) / 100);
+                                            if ($discount_type == 'percentage') {
+                                                $price_after_mowater_discount = $Original_price * $percentage_value;
+                                            } else {
+                                                $price_after_mowater_discount = $Original_price - $Original_price->discount_value;
+                                            }
+                                            $totalServicePrice += $price_after_mowater_discount;
+                                            // add price after mowater card from original price end
+
                                             $service_consumption = DiscoutnCardUserUse::where('barcode', $request->barcode)
                                                 ->where('offer_id', $service_offer->id)->first();
                                             if (!$service_consumption) {
@@ -218,6 +246,7 @@ class BranchController extends Controller
                                         }
                                     }
                                 }
+                                $requested_data['price'] = $totalServicePrice + $totalProductPrice;
                                 DB::commit();
                             } catch (\Exception $e) {
                                 DB::rollBack();
@@ -228,7 +257,30 @@ class BranchController extends Controller
                         // use mawater card end
 
                         DB::beginTransaction();
-                        $reservation = $branch->reservations()->create($validator);
+                        // total price without mowater card start
+                        if ($request->is_mawater_card == 0) {
+                            if ($request->has('services')) {
+                                foreach ($request->services as $service) {
+                                    $find_service = Service::find($service);
+                                    if ($find_service->price_after_discount != 0)
+                                        $totalServicePrice += $find_service->price_after_discount;
+                                    $totalServicePrice += $find_service->price;
+                                }
+                            }
+                            if ($request->has('products')) {
+                                foreach ($request->products as $product) {
+                                    $find_product = Product::find($product['id']);
+                                    if ($find_product->price_after_discount != 0)
+                                        $totalProductPrice += $find_product->price_after_discount * $product['quantity'];
+                                    $totalProductPrice += $find_product->price * $product['quantity'];
+                                }
+                            }
+                            $requested_data['price'] = $totalServicePrice + $totalProductPrice;
+                        }
+
+                        // total price without mowater card end
+
+                        $reservation = $branch->reservations()->create($requested_data);
 
                         if ($request->has('services')) {
                             foreach ($request->services as $service) {

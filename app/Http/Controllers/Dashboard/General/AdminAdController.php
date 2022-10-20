@@ -111,7 +111,7 @@ class AdminAdController extends Controller
         try {
             $ad = $this->getModelById($id);
             $sections = Section::where('id','!=',4)->get();
-            $ad_types = AdType::whereIn('id',[1,4])->get();
+            $ad_types = AdType::get();
             $countries = $this->country->latest('id')->get();
             return view('admin.general.ads.edit', compact('ad', 'sections', 'ad_types','countries'));
         } catch (\Exception $e) {

@@ -48,14 +48,14 @@
                                             <div class="form-group col-md-6">
                                                 <label>{{__('words.time_from')}}</label>
                                                 <input type="time" name="from"
-                                                       value="{{$work_time ? $work_time->from : ''}}"
+                                                       value="{{$work_time != null ? $work_time->from : ''}}"
                                                        class="form-control @error('from') is-invalid @enderror">
                                             </div>
 
                                             <div class="form-group col-md-6">
                                                 <label>{{__('words.time_to')}}</label>
                                                 <input type="time" name="to"
-                                                       value="{{$work_time ? $work_time->to : ''}}"
+                                                       value="{{$work_time != null ? $work_time->to : ''}}"
                                                        class="form-control @error('to') is-invalid @enderror">
                                             </div>
 
@@ -64,7 +64,7 @@
                                                 <input type="number" name="duration"
                                                        @if( get_class($record)=='App\Models\DrivingTrainer')disabled
                                                        value="120"
-                                                       @endif value="{{$work_time ? $work_time->duration : ''}}"
+                                                       @endif value="{{$work_time != null ? $work_time->duration : ''}}"
                                                        class="form-control @error('duration') is-invalid @enderror">
                                                 @if(get_class($record)=='App\Models\DrivingTrainer')
                                                     <input type="hidden" name="duration" value="120">
@@ -78,43 +78,43 @@
                                                     <div class="col-md-2">
                                                         <label for="Sun">{{__('words.Sun')}}</label>
                                                         <input type="checkbox" name="work_days[]" value="Sun"
-                                                               id="Sun" {{ $work_time && in_array('Sun' , $work_time->days) ? 'checked' : ''   }} >
+                                                               id="Sun" {{ $work_time != null && in_array('Sun' , $work_time->days) ? 'checked' : ''   }} >
                                                     </div>
 
                                                     <div class="col-md-2">
                                                         <label for="Mon">{{__('words.Mon')}}</label>
                                                         <input type="checkbox" name="work_days[]" value="Mon"
-                                                               id="Mon" {{ $work_time && in_array('Mon' , $work_time->days) ? 'checked' : ''   }} >
+                                                               id="Mon" {{ $work_time != null && in_array('Mon' , $work_time->days) ? 'checked' : ''   }} >
                                                     </div>
 
                                                     <div class="col-md-2">
                                                         <label for="Tue">{{__('words.Tue')}}</label>
                                                         <input type="checkbox" name="work_days[]" value="Tue"
-                                                               id="Tue" {{ $work_time && in_array('Tue' , $work_time->days) ? 'checked' : ''   }} >
+                                                               id="Tue" {{ $work_time != null && in_array('Tue' , $work_time->days) ? 'checked' : ''   }} >
                                                     </div>
 
                                                     <div class="col-md-2">
                                                         <label for="Wed">{{__('words.Wed')}}</label>
                                                         <input type="checkbox" name="work_days[]" value="Wed"
-                                                               id="Wed" {{ $work_time && in_array('Wed' , $work_time->days) ? 'checked' : ''   }} >
+                                                               id="Wed" {{ $work_time != null && in_array('Wed' , $work_time->days) ? 'checked' : ''   }} >
                                                     </div>
 
                                                     <div class="col-md-2">
                                                         <label for="Thu">{{__('words.Thur')}}</label>
                                                         <input type="checkbox" name="work_days[]" value="Thu"
-                                                               id="Thu" {{ $work_time && in_array('Thu' , $work_time->days) ? 'checked' : ''   }} >
+                                                               id="Thu" {{ $work_time != null && in_array('Thu' , $work_time->days) ? 'checked' : ''   }} >
                                                     </div>
 
                                                     <div class="col-md-2">
                                                         <label for="Fri">{{__('words.Fri')}}</label>
                                                         <input type="checkbox" name="work_days[]" value="Fri"
-                                                               id="Fri" {{ $work_time && in_array('Fri' , $work_time->days) ? 'checked' : ''   }} >
+                                                               id="Fri" {{ $work_time != null && in_array('Fri' , $work_time->days) ? 'checked' : ''   }} >
                                                     </div>
 
                                                     <div class="col-md-2">
                                                         <label for="Sat">{{__('words.Sat')}}</label>
                                                         <input type="checkbox" name="work_days[]" value="Sat"
-                                                               id="Sat" {{ $work_time && in_array('Sat' , $work_time->days) ? 'checked' : ''   }} >
+                                                               id="Sat" {{ $work_time != null && in_array('Sat' , $work_time->days) ? 'checked' : ''   }} >
                                                     </div>
                                                 </div>
                                             </div>

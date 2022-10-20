@@ -18,22 +18,17 @@ class GetStoreMawaterOffersResource extends JsonResource
         $data["accessories_store_id"] = $this->accessories_store_id;
         $data["store"] = new GetAccessoriesStoresResource($this->accessoriesStore);
         $data["category_id"] = $this->category_id;
-        $data["category"] = new GetCategoriesResource($this->category);
+        $data["category"] = $this->category->name;
         $data["sub_category_id"] = $this->sub_category_id;
-        $data["sub_category"] = $this->SubCategory;
+        $data["sub_category"] = $this->SubCategory->name;
         $data["brand_id"] = $this->brand_id;
-        $data["brand"] = $this->brand;
+        $data["brand"] = $this->brand->name;
         $data["car_model_id"] = $this->car_model_id;
-        $data["car_model"] = $this->car_model;
+        $data["car_model"] = $this->car_model->name;
         $data["guarantee"] = $this->guarantee;
         $data["guarantee_year"] = $this->guarantee_year;
         $data["guarantee_month"] = $this->guarantee_month;
         $data["price"] = $this->price;
-        $data["discount_type"] = $this->discount_type;
-        $data["discount"] = $this->discount;
-        $data["price_after_discount"] = $this->price_after_discount;
-        $data["available"] = $this->available;
-        $data["active"] = $this->active;
         $data["card_discount_value"] = $this->card_discount_value;
         $data["card_price_after_discount"] = $this->card_price_after_discount;
         $data["card_number_of_uses_times"] = $this->card_number_of_uses_times;
@@ -43,6 +38,8 @@ class GetStoreMawaterOffersResource extends JsonResource
         $data["is_reviewed"] = $this->is_reviewed;
         $data["is_favorite"] = $this->is_favorite;
         $data["favorites_count"] = $this->favorites_count;
+        $data["number_of_views"] = $this->number_of_views ? $this->number_of_views : 0;
+        $data["active_number_of_views"] = $this->active_number_of_views;
         $data["available"] = $this->available;
         $data["active"] = $this->active;
 

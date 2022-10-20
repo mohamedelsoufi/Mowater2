@@ -58,7 +58,7 @@ class GarageController extends Controller
         try {
             $garage = Garage::active()->find($request->id);
 
-            $products = $garage->products()->search()->latest('id')->paginate(PAGINATION_COUNT);
+            $products = $garage->products()->active()->search()->latest('id')->paginate(PAGINATION_COUNT);
             if (empty($products))
                 return responseJson(0, __('message.no_result'));
             if ($products->count() == 0)
@@ -74,7 +74,7 @@ class GarageController extends Controller
         try {
             $garage = Garage::active()->find($request->id);
 
-            $services = $garage->services()->latest('id')->paginate(PAGINATION_COUNT);
+            $services = $garage->services()->active()->latest('id')->paginate(PAGINATION_COUNT);
             if (empty($services))
                 return responseJson(0, __('message.no_result'));
             if ($services->count() == 0)

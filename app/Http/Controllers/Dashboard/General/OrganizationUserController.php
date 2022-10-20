@@ -64,7 +64,10 @@ class OrganizationUserController extends Controller
     {
         try {
             $user = $this->getModelById($id);
-            return view('admin.general.OrgUsers.edit', compact('user'));
+            $model = new $user->organizable_type;
+            $org = $model->find($user->organizable_id);
+            $roles = $org->roles()->latest('id')->get();
+            return view('admin.general.OrgUsers.edit', compact('user','roles'));
         } catch (\Exception $e) {
             return redirect()->back()->with(['error' => __('message.something_wrong')]);
         }
@@ -83,6 +86,7 @@ class OrganizationUserController extends Controller
             $request_data = $request->except(['_token','password_confirmation']);
             $request_data['created_by'] = auth()->user()->email;
             $user->update($request_data);
+            $user->syncRoles([$request->role_id]);
             return redirect()->route('org-users.index')->with(['success' => __('message.updated_successfully')]);
         } catch (\Exception $e) {
             return redirect()->back()->with(['error' => __('message.something_wrong')]);
@@ -93,6 +97,13 @@ class OrganizationUserController extends Controller
     {
         try {
             $user = $this->getModelById($id);
+
+            $model = new $user->organizable_type;
+            $org = $model->find($user->organizable_id);
+            $users = $org->organization_users;
+            if (count($users) < 2)
+                return redirect()->route('org-users.index')->with(['error' => __('message.branch_user_deletion_error')]);
+
             $user->delete();
             return redirect()->route('org-users.index')->with(['success' => __('message.deleted_successfully')]);
         } catch (\Exception $e) {

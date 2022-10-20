@@ -85,11 +85,7 @@ class SpecialNumberOrganizationController extends Controller
 
             $organization = $this->model->create($request_data);
 
-            $organization->organization_users()->create([
-                'user_name' => $request->user_name,
-                'email' => $request->email,
-                'password' => $request->password,
-            ]);
+            createMasterOrgUser($organization);
             return redirect()->route('special-number-organizations.index')->with(['success' => __('message.created_successfully')]);
 
         } catch (\Exception $e) {

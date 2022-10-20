@@ -53,6 +53,10 @@ class AccessoriesStore extends Model
     // appends attributes end
 
     // relations start
+    public function roles(){
+        return $this->morphMany(Role::class,'rolable');
+    }
+
     public function accessories()
     {
         return $this->hasMany(Accessory::class);

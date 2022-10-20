@@ -25,7 +25,7 @@ class CreateAccessoriesTable extends Migration {
 			$table->float('price', 8,2)->nullable();
 			$table->enum('discount_type', array('percentage', 'amount'))->nullable();
 			$table->float('discount', 8,2)->nullable();
-			$table->integer('number_of_views')->nullable();
+            $table->integer('number_of_views')->default(0)->nullable();
             $table->boolean('active_number_of_views')->default(1)->nullable();
 			$table->boolean('available')->nullable()->default(1);
 			$table->boolean('active')->nullable()->default(1);

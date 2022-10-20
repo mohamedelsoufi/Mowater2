@@ -49,6 +49,10 @@ class TrafficClearingOffice extends Model
     // appends attributes end
 
     // relationship start
+    public function roles(){
+        return $this->morphMany(Role::class,'rolable');
+    }
+
     public function country()
     {
         return $this->belongsTo('App\Models\Country');
@@ -69,7 +73,7 @@ class TrafficClearingOffice extends Model
         return $this->morphMany(Offer::class, 'offerable');
     }
 
-    public function services()
+    public function trafficServices()
     {
         return $this->belongsToMany(TrafficClearingService::class, 'traffic_clearing_service_uses')->withPivot('fees','price');
     }

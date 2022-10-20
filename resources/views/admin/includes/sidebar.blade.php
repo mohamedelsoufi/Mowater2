@@ -83,7 +83,7 @@
                                     </ul>
                                 </li>
                             @endif
-                            <!-- Permissions Users end -->
+                        <!-- Permissions Users end -->
 
                             <!-- Admin Users Start -->
                             @if(auth('admin')->user()->hasPermission('read-admins'))
@@ -119,7 +119,7 @@
                                     </ul>
                                 </li>
                             @endif
-                            <!-- Admin Users end -->
+                        <!-- Admin Users end -->
 
                             <!-- App Users Start -->
                             @if(auth('admin')->user()->hasPermission('read-app_users'))
@@ -145,7 +145,7 @@
                                     </ul>
                                 </li>
                             @endif
-                            <!-- App Users end -->
+                        <!-- App Users end -->
 
                             <!-- Organization Users Start -->
                             @if(auth('admin')->user()->hasPermission('read-org_users'))
@@ -154,7 +154,7 @@
                                        class="nav-link {{ request()->routeIs('org-users.*') ? 'sub-menu active' : '' }}">
                                         <i class="fas fa-place-of-worship"></i>
                                         <p>
-                                            {{__('words.org_users')}}
+                                            {{__('words.orgs_users')}}
                                             <i class="{{app()->getLocale() == 'ar' ? 'left fas fa-angle-right' :  'right fas fa-angle-left'}}"></i>
                                         </p>
                                     </a>
@@ -171,7 +171,7 @@
                                     </ul>
                                 </li>
                         @endif
-                            <!-- Organization Users end -->
+                        <!-- Organization Users end -->
                         </ul>
                     </li>
                 @endif
@@ -579,40 +579,40 @@
                                             </li>
                                         @endif
 
-                                            {{-- Ad Types routes start --}}
-                                            @if(auth('admin')->user()->hasPermission('read-ad_types'))
-                                                <li class="nav-item {{ request()->routeIs('ad-types.*') ? 'menu-open' : '' }}">
-                                                    <a href="#"
-                                                       class="nav-link {{ request()->routeIs('ad-types.*') ? 'sub-menu active' : '' }}">
-                                                        <i class="fas fa-award"></i>
-                                                        <p>
-                                                            {{__('words.ad_types')}}
-                                                            <i class="{{app()->getLocale() == 'ar' ? 'left fas fa-angle-right' :  'right fas fa-angle-left'}}"></i>
-                                                        </p>
-                                                    </a>
-                                                    <ul class="nav nav-treeview">
-                                                        @if(auth('admin')->user()->hasPermission('read-ad_types'))
-                                                            <li class="nav-item">
-                                                                <a href="{{route('ad-types.index')}}"
-                                                                   class="nav-link {{ request()->routeIs('ad-types.index') ? 'active' : '' }}">
-                                                                    <i class="far fa-eye nav-icon"></i>
-                                                                    <p>{{__('words.show_all')}}</p>
-                                                                </a>
-                                                            </li>
-                                                        @endif
-                                                        @if(auth('admin')->user()->hasPermission('create-ad_types'))
-                                                            <li class="nav-item">
-                                                                <a href="{{route('ad-types.create')}}"
-                                                                   class="nav-link {{ request()->routeIs('ad-types.create') ? 'active' : '' }}">
-                                                                    <i class="fas fa-folder-plus"></i>
-                                                                    <p>{{__('words.create')}}</p>
-                                                                </a>
-                                                            </li>
-                                                        @endif
-                                                    </ul>
-                                                </li>
-                                            @endif
-                                            {{-- Ad Types routes end --}}
+                                        {{-- Ad Types routes start --}}
+                                        @if(auth('admin')->user()->hasPermission('read-ad_types'))
+                                            <li class="nav-item {{ request()->routeIs('ad-types.*') ? 'menu-open' : '' }}">
+                                                <a href="#"
+                                                   class="nav-link {{ request()->routeIs('ad-types.*') ? 'sub-menu active' : '' }}">
+                                                    <i class="fas fa-award"></i>
+                                                    <p>
+                                                        {{__('words.ad_types')}}
+                                                        <i class="{{app()->getLocale() == 'ar' ? 'left fas fa-angle-right' :  'right fas fa-angle-left'}}"></i>
+                                                    </p>
+                                                </a>
+                                                <ul class="nav nav-treeview">
+                                                    @if(auth('admin')->user()->hasPermission('read-ad_types'))
+                                                        <li class="nav-item">
+                                                            <a href="{{route('ad-types.index')}}"
+                                                               class="nav-link {{ request()->routeIs('ad-types.index') ? 'active' : '' }}">
+                                                                <i class="far fa-eye nav-icon"></i>
+                                                                <p>{{__('words.show_all')}}</p>
+                                                            </a>
+                                                        </li>
+                                                    @endif
+                                                    @if(auth('admin')->user()->hasPermission('create-ad_types'))
+                                                        <li class="nav-item">
+                                                            <a href="{{route('ad-types.create')}}"
+                                                               class="nav-link {{ request()->routeIs('ad-types.create') ? 'active' : '' }}">
+                                                                <i class="fas fa-folder-plus"></i>
+                                                                <p>{{__('words.create')}}</p>
+                                                            </a>
+                                                        </li>
+                                                    @endif
+                                                </ul>
+                                            </li>
+                                        @endif
+                                        {{-- Ad Types routes end --}}
                                     </ul>
                                 </li>
                             @endif

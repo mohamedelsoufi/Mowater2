@@ -9,7 +9,7 @@ return [
     'accessory_id' => 'Accessory id: ',
     'feature_id' => 'Feature id: ',
     'not_exist' => 'Not exist',
-    'service_not_fount_in_offer' => ' not exist in Mawater offers',
+    'service_not_fount_in_offer' => ' not exist in Mowater offers',
     'vehicle_id' => 'Vehicle id: ',
     'vehicle_not_available_for_reservation' => 'Vehicle not available for reservation',
     'not_available_or_not_active' => ' not available or not active',
@@ -33,7 +33,7 @@ return [
     'no_services_for_this_wench' => 'Error: No services for this wench',
     'no_favourites_exists' => 'No favourites exists !',
     'no_result' => 'Error : No result found !',
-    'not_exist_in_offer' => 'It was not found in the discount card offers of Mawater',
+    'not_exist_in_offer' => 'It was not found in the discount card offers of Mowater',
     'user_not_registered' => 'User not registered',
     'vehicle_successfully_reserved' => 'Vehicle Successfully reserved',
     'no_vehicle_reservation_for_this_account' => 'there is no vehicle reservation for this account !',
@@ -62,16 +62,16 @@ return [
 
 
     'user_vehicle_not_found' => 'No vehicle for current user with this vehicle id',
-    'subscribe_message' => 'Are you really want to subscribe in this mawater card: ',
+    'subscribe_message' => 'Are you really want to subscribe in this Mowater card: ',
     'delivery_not_available' => 'delivery service not available',
     'delivery_not_active' => 'delivery service not active',
 
-    'subscribed_user' => 'You are already bought this mawater card before!',
+    'subscribed_user' => 'You are already bought this Mowater card before!',
     'type_details_required' => 'you should choose what the auction will be on !',
     'max_vehicles' => 'You have reached to the max count of vehicles : 4',
     'entities_vehicles_counter' => 'The sum of the entered vehicles + the sum of the saved vehicles is greater than 4 vehicles',
-    'discount_not_lunched' => 'Mawater Card Not Lunched yet!',
-    'vehicle_exist_in_discount' => 'Vehicle Already exists in this mawater card!',
+    'discount_not_lunched' => 'Mowater Card Not Lunched yet!',
+    'vehicle_exist_in_discount' => 'Vehicle Already exists in this Mowater card!',
 
     //auction
     'subscription_done' => 'Your subscription is done successfully',
@@ -97,7 +97,8 @@ return [
     'not_available' => 'Not available',
     'not_active' => 'Not active',
 
-    'unsubscribed_discount_card' => "You're unsubscribed in this Mawater Card!",
+    'unsubscribed_discount_card' => "You're unsubscribed in this Mowater Card!",
+    'scribed_discount_card' => "You're already subscribed in this Mowater Card!",
 
     'unsubscribed_wallet' => "You'r not unsubscribed in wallet",
     'wallet_not_enough_amount' => "You don't have enough money in your wallet to subscribe here",
@@ -109,4 +110,6 @@ return [
     'invalid_login' => 'Some thing wrong in your email or password',
     'error_admin_role_delete' => 'You can not delete Super Admin role',
     'error_admin_role_update' => 'You can not edit Super Admin role',
+
+    'branch_user_deletion_error' => "You can not delete this user because this user is the last user in branch list."
 ];

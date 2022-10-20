@@ -10,7 +10,7 @@ class DayOff extends Model
     use HasFactory;
     protected $table = 'day_offs';
     public $timestamps = true;
-    protected $fillable = array('model_type', 'model_id', 'date', 'from', 'to');
+    protected $fillable = array('model_type', 'model_id', 'date', 'from', 'to','created_by');
     protected $hidden = ['created_at', 'updated_at'];
 
     //relationship start

@@ -9,7 +9,7 @@ class GetDiscountCardsResource extends JsonResource
 {
     public function toArray($request)
     {
-        $organizations = DiscountCardOrganization::where('discount_card_id', $this->id)->get();
+        $organizations = DiscountCardOrganization::where('discount_card_id', $this->id)->active()->get();
         $org_name = [];
         foreach ($organizations as $organization) {
             $model_type = $organization->organizable_type;

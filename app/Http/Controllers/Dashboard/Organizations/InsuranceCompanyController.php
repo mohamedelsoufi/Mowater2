@@ -78,11 +78,7 @@ class InsuranceCompanyController extends Controller
 
             $insurance_company = $this->model->create($request_data);
 
-            $insurance_company->organization_users()->create([
-                'user_name' => $request->user_name,
-                'email' => $request->email,
-                'password' => $request->password,
-            ]);
+            createMasterOrgUser($insurance_company);
             return redirect()->route('insurance_companies.index')->with(['success' => __('message.created_successfully')]);
         } catch (\Exception $e) {
             return redirect()->back()->with(['error' => __('message.something_wrong')]);

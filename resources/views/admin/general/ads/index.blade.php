@@ -71,7 +71,7 @@
                                                     </a>
                                                 @endif
                                             </td>
-                                            <td>{{$ad->title_ar}}</td>
+                                            <td>{{$ad->title}}</td>
                                             <td>
                                                 @if($ad->getRawOriginal('link') != null)
                                                     <a href="{{$ad->link}}"

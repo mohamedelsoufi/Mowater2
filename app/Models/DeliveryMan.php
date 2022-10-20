@@ -47,8 +47,13 @@ class DeliveryMan extends Model
         }
         return $this->description_en;
     }
+    // appends attributes end
 
     // relations start
+    public function roles(){
+        return $this->morphMany(Role::class,'rolable');
+    }
+
     public function reservations()
     {
         return $this->hasMany(DeliveryManReservation::class);
@@ -88,6 +93,15 @@ class DeliveryMan extends Model
     {
         return $this->belongsToMany(Category::class, DeliveryManCategory::class);
     }
+
+    public function conditions(){
+        return $this->morphMany(Condition::class,'conditionable');
+    }
+
+    public function deliveryAreas(){
+        return $this->hasMany(DeliveryArea::class,'delivery_man_id');
+    }
+    // relations end
 
     // Scopes start
     public function scopeActive($query)

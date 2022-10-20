@@ -32,7 +32,7 @@ class Vehicle extends Model
         'battery_installation_date', 'battery_installation_date_km', 'battery_warranty_expiry_date',
         'battery_warranty_expiry_date_km', 'vehicle_registration_expiry_date',
         'vehicle_registration_expiry_date_km', 'vehicle_insurance_expiry_date',
-        'vehicle_insurance_expiry_date_km', 'number_of_views','active_number_of_views', 'availability', 'active'];
+        'vehicle_insurance_expiry_date_km', 'number_of_views', 'active_number_of_views', 'availability', 'active'];
 
     protected $hidden = ['created_at', 'updated_at', 'traveled_distance', 'user_vehicle_status', 'mawatery_third_party'];
     protected $appends = ['one_image', 'is_favorite', 'favorites_count', 'distance_color', 'price_after_discount'];
@@ -233,7 +233,7 @@ class Vehicle extends Model
 
             $features[] = [
                 'key' => __('vehicle.coverage_type'),
-                'value' => $vehicle->coverage_type ? __('vehicle.' . $vehicle->coverage_type) :'--'
+                'value' => $vehicle->coverage_type ? __('vehicle.' . $vehicle->coverage_type) : '--'
             ];
         }
         $features[] = [
@@ -254,7 +254,7 @@ class Vehicle extends Model
         ];
         $features[] = [
             'key' => __('vehicle.air_conditioning_system'),
-            'value' =>$vehicle->air_conditioning_system ? __('vehicle.' . $vehicle->air_conditioning_system) : '--'
+            'value' => $vehicle->air_conditioning_system ? __('vehicle.' . $vehicle->air_conditioning_system) : '--'
         ];
         $features[] = [
             'key' => __('vehicle.windows_control'),
@@ -352,12 +352,17 @@ class Vehicle extends Model
     public function scopeOverView($query)
     {
         return $query->select('vehicles.id', 'vehicable_id', 'vehicable_type', 'vehicle_type', 'brand_id', 'car_model_id',
-            'car_class_id', 'manufacturing_year', 'is_new', 'price', 'user_vehicle_status', 'traveled_distance','active_number_of_views', 'number_of_views', 'created_at', 'availability', 'active');
+            'car_class_id', 'manufacturing_year', 'is_new', 'price', 'user_vehicle_status', 'traveled_distance', 'active_number_of_views', 'number_of_views', 'created_at', 'availability', 'active');
     }
 
     public function scopeActive($query)
     {
         return $query->where('active', 1);
+    }
+
+    public function scopeAvailable($query)
+    {
+        return $query->where('availability', 1);
     }
 
     public function scopeSearch($query)
@@ -475,6 +480,18 @@ class Vehicle extends Model
             }
         }
         return 0;
+    }
+
+    public function getPriceInMowaterCard()
+    {
+        $discount_type = $this->discount_type;
+        $percentage_value = ((100 - $this->discount) / 100);
+        if ($discount_type == 'percentage') {
+            return $this->price * $percentage_value;
+        } else {
+            return $this->price - $this->discount;
+
+        }
     }
     // accessors & Mutator end
 

@@ -10,7 +10,7 @@ class Phone extends Model
     use HasFactory;
     protected $table = 'phones';
     public $timestamps = true;
-    protected $fillable = array('phoneable_type', 'phoneable_id', 'country_code','phone' , 'title_en' , 'title_ar');
+    protected $fillable = array('phoneable_type', 'phoneable_id', 'country_code','phone' , 'title_en' , 'title_ar','created_by');
     protected $hidden = ['created_at', 'updated_at'];
     protected $appends = ['title'];
 

@@ -15,7 +15,7 @@ class HasWorkTimeMiddleware
         $model_id = $user->organizable_id;
         $model = new $model_type;
         $data = $model->find($model_id);
-        if (auth('web')->user()->hasPermission([$per . '-work_times-' . $data->name_en]))
+        if (auth('web')->user()->hasPermission([$per . '-work_time-' . $data->name_en]))
             return $next($request);
 
         else abort(404);

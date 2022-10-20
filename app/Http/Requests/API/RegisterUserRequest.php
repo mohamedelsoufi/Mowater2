@@ -25,8 +25,6 @@ class RegisterUserRequest extends FormRequest
             'date_of_birth' => 'nullable|date',
             'phone' => 'required|unique:users,phone,integer',
             'phone_code' => 'required',
-            'fcm_token' => 'nullable',
-            'device_token' => 'nullable',
             'nationality' => 'required',
             'country_id' => 'nullable|exists:countries,id',
             'city_id' => 'nullable|exists:cities,id',

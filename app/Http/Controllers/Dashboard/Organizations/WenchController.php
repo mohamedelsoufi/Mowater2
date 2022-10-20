@@ -83,11 +83,7 @@ class WenchController extends Controller
 
             $wench = $this->model->create($request_data);
 
-            $wench->organization_users()->create([
-                'user_name' => $request->user_name,
-                'email' => $request->email,
-                'password' => $request->password,
-            ]);
+            createMasterOrgUser($wench);
             return redirect()->route('wenches.index')->with(['success' => __('message.created_successfully')]);
         } catch (\Exception $e) {
             return redirect()->back()->with(['error' => __('message.something_wrong')]);

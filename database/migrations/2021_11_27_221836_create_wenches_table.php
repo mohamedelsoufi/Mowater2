@@ -22,8 +22,8 @@ class CreateWenchesTable extends Migration {
             $table->bigInteger('city_id')->unsigned()->nullable();
             $table->bigInteger('area_id')->unsigned()->nullable();
             $table->string('year_founded')->nullable();
-            $table->decimal('latitude', 10, 8)->nullable();
-            $table->decimal('longitude', 11, 8)->nullable();
+            $table->string('latitude')->nullable();
+            $table->string('longitude')->nullable();
             $table->enum('location_type', array('local', 'national'))->nullable();
             $table->string('status')->nullable();
             $table->boolean('reservation_availability')->nullable()->default(1);

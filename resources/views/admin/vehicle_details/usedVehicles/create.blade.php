@@ -1218,8 +1218,8 @@
                                         <div class="form-row">
                                             <div class="form-group col-md-6">
                                                 <div class="form-check">
-                                                    <input class="form-check-input" name="active" value="0"
-                                                           type="checkbox">
+                                                    <input class="form-check-input" name="active" value="1"
+                                                           {{old('active') ? "checked" : ""}} type="checkbox">
                                                     <label class="form-check-label">
                                                         {{__('words.activity')}}
                                                     </label>
@@ -1228,7 +1228,7 @@
 
                                             <div class="form-group col-md-6">
                                                 <div class="form-check">
-                                                    <input class="form-check-input" name="active_number_of_views" value="0" type="checkbox">
+                                                    <input class="form-check-input" name="active_number_of_views" value="1" {{old('active_number_of_views') ? "checked" : ""}} type="checkbox">
                                                     <label class="form-check-label">
                                                         {{__('words.active_number_of_views')}}
                                                     </label>

@@ -16,7 +16,7 @@ class CreateFirebaseNotificationsTable extends Migration
         Schema::create('firebase_notifications', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->BigInteger('user_id')->unsigned();
-            $table->longText('firebase_token');
+            $table->longText('fcm_token');
             $table->string('platform');
             $table->timestamps();
 

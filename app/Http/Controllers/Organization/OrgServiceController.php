@@ -3,117 +3,153 @@
 namespace App\Http\Controllers\Organization;
 
 use App\Http\Controllers\Controller;
+
 use App\Models\Category;
 use App\Models\Service;
-use App\Models\SubCategory;
 use Illuminate\Http\Request;
 use App\Http\Requests\ServiceRequest;
-use Illuminate\Support\Facades\File;
 
 class OrgServiceController extends Controller
 {
+    private $service;
+    private $category;
+
+    public function __construct(Service $service, Category $category)
+
+    {
+        $this->middleware(['HasOrgService:read'])->only(['index', 'show']);
+        $this->middleware(['HasOrgService:update'])->only('edit');
+        $this->middleware(['HasOrgService:create'])->only('create');
+        $this->middleware(['HasOrgService:delete'])->only('destroy');
+        $this->service = $service;
+        $this->category = $category;
+    }
 
     public function index()
     {
-        $user = auth()->guard('web')->user();
-        $model_type = $user->organizable_type;
-        $model_id = $user->organizable_id;
-        $model = new $model_type;
-        $record = $model->find($model_id);
-        $services = $record->services()->latest()->get();
-        $categories = Category::where('ref_name', 'services')->get();
-        return view('organization.services.index', compact('services', 'categories'));
+        try {
+            $record = getModelData();
+            $services = $record->services()->latest('id')->get();
+            return view('organization.services.index', compact('services', 'record'));
+        } catch (\Exception $e) {
+            return redirect()->back()->with(['error' => __('message.something_wrong')]);
+        }
     }
-
 
     public function create()
     {
-        $categories = Category::where('ref_name', 'services')->get();
-        return view('organization.services.create', compact('categories'));
-    }
-
-
-    public function store(Request $request)
-    {
-        if (!$request->has('available'))
-            $request->request->add(['available' => 0]);
-        else
-            $request->request->add(['available' => 1]);
-
-
-        $user = auth()->guard('web')->user();
-        $model_type = $user->organizable_type;
-        $model_id = $user->organizable_id;
-        $model = new $model_type;
-        $record = $model->find($model_id);
-        $service = $record->services()->create($request->all());
-        if ($request->has('images')) {
-            $service->uploadServiceImages();
-//            return $product;
-        }
-        if ($service)
-            return redirect()->route('organization.services.index')->with(['success' => __('message.created_successfully')]);
-        else
+        try {
+            $record = getModelData();
+            $categories = $this->category->where('ref_name', 'services')->latest('id')->get();
+            return view('organization.services.create', compact('record', 'categories'));
+        } catch (\Exception $e) {
             return redirect()->back()->with(['error' => __('message.something_wrong')]);
-
+        }
     }
 
+    public function store(ServiceRequest $request)
+    {
+        try {
+            if (!$request->has('active'))
+                $request->request->add(['active' => 0]);
+            else
+                $request->request->add(['active' => 1]);
+
+            if (!$request->has('available'))
+                $request->request->add(['available' => 0]);
+            else
+                $request->request->add(['available' => 1]);
+
+            if (!$request->has('active_number_of_views'))
+                $request->request->add(['active_number_of_views' => 0]);
+            else
+                $request->request->add(['active_number_of_views' => 1]);
+
+            $request_data = $request->except(['_token', 'images']);
+            $request_data['created_by'] = auth('web')->user()->email;
+            $record = getModelData();
+
+            $service = $record->services()->create($request_data);
+            if ($request->has('images')) {
+                request()->merge([
+                    'folder_name' => 'services'
+                ]);
+                $service->uploadImages();
+            }
+            return redirect()->route('organization.services.index')->with(['success' => __('message.created_successfully')]);
+        } catch (\Exception $e) {
+            return redirect()->back()->with(['error' => $e->getMessage()]);
+        }
+    }
 
     public function show($id)
     {
-        $show_service = Service::find($id);
-        $show_service->makeVisible('name_en', 'name_ar', 'description_en', 'description_ar');
-        $data = compact('show_service');
-        return response()->json(['status' => true, 'data' => $data]);
+        try {
+            $service = $this->service->find($id);
+            $record = getModelData();
+            return view('organization.services.show', compact('service', 'record'));
+        } catch (\Exception $e) {
+            return redirect()->back()->with(['error' => __('message.something_wrong')]);
+        }
     }
-
 
     public function edit($id)
     {
-        $show_service = Service::find($id);
-        $show_service->makeVisible('name_en', 'name_ar', 'description_en', 'description_ar');
-        $categories = Category::where('ref_name', 'services')->get();
-        return view('organization.services.update', compact('show_service', 'categories'));
+        try {
+            $service = $this->service->find($id);
+            $record = getModelData();
+            $categories = $this->category->where('ref_name', 'services')->latest('id')->get();
+            return view('organization.services.edit', compact( 'record', 'categories', 'service'));
+        } catch (\Exception $e) {
+            return redirect()->back()->with(['error' => __('message.something_wrong')]);
+        }
     }
 
     public function update(ServiceRequest $request, $id)
     {
+        try {
+            $service = $this->service->find($id);
+            if (!$request->has('active'))
+                $request->request->add(['active' => 0]);
+            else
+                $request->request->add(['active' => 1]);
 
-        $service = Service::find($id);
-        if (!$request->has('available'))
-            $request->request->add(['available' => 0]);
-        else
-            $request->request->add(['available' => 1]);
+            if (!$request->has('available'))
+                $request->request->add(['available' => 0]);
+            else
+                $request->request->add(['available' => 1]);
 
+            if (!$request->has('active_number_of_views'))
+                $request->request->add(['active_number_of_views' => 0]);
+            else
+                $request->request->add(['active_number_of_views' => 1]);
 
-        $request_data = $request->except(['images']);
-        if ($request->has('images') || $request->has('deleted_images')) {
-
-            $request->merge([
+            request()->merge([
                 'folder_name' => 'services'
             ]);
 
-            return $request;
-            $service->updateImages();
-        }
+            $request_data = $request->except(['_token', 'images', 'deleted_images', 'folder_name']);
+            $request_data['created_by'] = auth('web')->user()->email;
 
-        $service->update($request_data);
-
-        if ($service) {
+            if ($request->has('images') || $request->has('deleted_images')) {
+                $service->updateImages();
+            }
+            $service->update($request_data);
             return redirect()->route('organization.services.index')->with(['success' => __('message.updated_successfully')]);
-        } else {
-
+        } catch (\Exception $e) {
             return redirect()->back()->with(['error' => __('message.something_wrong')]);
         }
     }
 
-
     public function destroy($id)
     {
-        $service = Service::find($id);
-        $service->deleteImages();
-        $service->delete();
-        return redirect()->route('organization.services.index')->with(['success' => __('message.deleted_successfully')]);
-
+        try {
+            $service = $this->service->find($id);
+            $service->deleteImages();
+            $service->delete();
+            return redirect()->route('organization.services.index')->with(['success' => __('message.deleted_successfully')]);
+        } catch (\Exception $e) {
+            return redirect()->back()->with(['error' => __('message.something_wrong')]);
+        }
     }
 }

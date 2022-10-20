@@ -56,6 +56,8 @@ class GetDeliveriesResource extends JsonResource
             $data["phones"] = $this->phones;
             $data["reviews"]= $this->reviews;
             $data["day_offs"] = $this->day_offs;
+            $data["conditions"] = $this->conditions;
+            $data["deliver_to"] = GetDeliveryAreasResource::collection($this->deliveryAreas);
         }
         $data['payment_methods'] =  GetPaymentMethodsResource::collection($this->payment_methods);
         $data["is_reviewed"] = $this->is_reviewed;

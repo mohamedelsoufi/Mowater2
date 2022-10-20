@@ -21,10 +21,10 @@ trait HasReviews
         $count_reviews = $this->reviews()->count();
         if ($count_reviews) {
             $avg_rating = $total_ratings / $count_reviews;
-            return $avg_rating;
+            return round($avg_rating,2);
         }
 
-        return 5;
+        return round(5,2);
     }
 
     public function getRatingCountAttribute()

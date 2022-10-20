@@ -3,6 +3,7 @@
 namespace App\Http\Resources\Agencies;
 
 use App\Http\Resources\PaymentMethods\GetPaymentMethodsResource;
+use App\Http\Resources\Reviews\ShowReviewResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class GetAgenciesResource extends JsonResource
@@ -30,7 +31,7 @@ class GetAgenciesResource extends JsonResource
             "is_reviewed" => $this->is_reviewed,
             "is_favorite" => $this->is_favorite,
             "favorites_count" => $this->favorites_count,
-            "reviews" => $this->reviews,
+            "reviews" => ShowReviewResource::collection($this->reviews),
             "reservation_availability" => $this->reservation_availability,
             "delivery_availability" => $this->delivery_availability,
             "reservation_active" => $this->reservation_active,

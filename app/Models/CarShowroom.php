@@ -47,6 +47,10 @@ class CarShowroom extends Model
     // appends attributes end
 
     // relationship start
+    public function roles(){
+        return $this->morphMany(Role::class,'rolable');
+    }
+
     public function country()
     {
         return $this->belongsTo('App\Models\Country');
@@ -62,14 +66,11 @@ class CarShowroom extends Model
         return $this->belongsTo('App\Models\Area');
     }
 
-    public function tests()
-    {
-        return $this->hasManyThrough(TestDrive::class, Vehicle::class, 'vehicable_id', 'vehicle_id');
-    }
-
     public function reserve_vehicles()
     {
-        return $this->hasManyThrough(ReserveVehicle::class, Vehicle::class, 'vehicable_id', 'vehicle_id');
+        return $this->hasManyThrough(ReserveVehicle::class,
+            Vehicle::class, 'vehicable_id', 'vehicle_id')
+            ->whereIn('vehicle_id',$this->vehicles()->pluck('id')->toArray());
     }
 
     // relationship end

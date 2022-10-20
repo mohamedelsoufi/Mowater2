@@ -27,6 +27,8 @@ class CreateRentalOfficeCarsTable extends Migration
             $table->boolean('active_number_of_views')->default(1)->nullable();
             $table->boolean('active')->nullable()->default(1);
             $table->boolean('available')->nullable()->default(1);
+            $table->string('created_by')->default('system@app.com')->nullable();
+
             $table->timestamps();
 
             $table->foreign('brand_id')->on('brands')->references('id')->onUpdate('cascade')->onDelete('cascade');

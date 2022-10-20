@@ -140,55 +140,56 @@ trait HasFiles
 
     }
 
-    public function updateAdminUsedVehicle(){
+    public function updateAdminUsedVehicle()
+    {
         if (request()->hasFile('front_side_image')) {
             $img = $this->files()->where('type', 'front_side_image')->first();
             Storage::delete($img->getRawOriginal('path'));
             $img->delete();
             $image = request()->front_side_image->store('vehicles/for_sale');
-            $this->files()->create(['path' => $image,'type' => 'front_side_image']);
+            $this->files()->create(['path' => $image, 'type' => 'front_side_image']);
         }
         if (request()->hasFile('back_side_image')) {
             $img = $this->files()->where('type', 'back_side_image')->first();
             Storage::delete($img->getRawOriginal('path'));
             $img->delete();
             $image = request()->back_side_image->store('vehicles/for_sale');
-            $this->files()->create(['path' => $image,'type' => 'back_side_image']);
+            $this->files()->create(['path' => $image, 'type' => 'back_side_image']);
         }
         if (request()->hasFile('right_side_image')) {
             $img = $this->files()->where('type', 'right_side_image')->first();
             Storage::delete($img->getRawOriginal('path'));
             $img->delete();
             $image = request()->right_side_image->store('vehicles/for_sale');
-            $this->files()->create(['path' => $image,'type' => 'right_side_image']);
+            $this->files()->create(['path' => $image, 'type' => 'right_side_image']);
         }
         if (request()->hasFile('left_side_image')) {
             $img = $this->files()->where('type', 'left_side_image')->first();
             Storage::delete($img->getRawOriginal('path'));
             $img->delete();
             $image = request()->left_side_image->store('vehicles/for_sale');
-            $this->files()->create(['path' => $image,'type' => 'left_side_image']);
+            $this->files()->create(['path' => $image, 'type' => 'left_side_image']);
         }
         if (request()->hasFile('vehicle_dashboard_image')) {
             $img = $this->files()->where('type', 'vehicle_dashboard_image')->first();
             Storage::delete($img->getRawOriginal('path'));
             $img->delete();
             $image = request()->vehicle_dashboard_image->store('vehicles/for_sale');
-            $this->files()->create(['path' => $image,'type' => 'vehicle_dashboard_image']);
+            $this->files()->create(['path' => $image, 'type' => 'vehicle_dashboard_image']);
         }
         if (request()->hasFile('inside_vehicle_image')) {
             $img = $this->files()->where('type', 'inside_vehicle_image')->first();
             Storage::delete($img->getRawOriginal('path'));
             $img->delete();
             $image = request()->inside_vehicle_image->store('vehicles/for_sale');
-            $this->files()->create(['path' => $image,'type' => 'inside_vehicle_image']);
+            $this->files()->create(['path' => $image, 'type' => 'inside_vehicle_image']);
         }
         if (request()->hasFile('traffic_pdf')) {
             $img = $this->files()->where('type', 'traffic_pdf')->first();
             Storage::delete($img->getRawOriginal('path'));
             $img->delete();
             $image = request()->traffic_pdf->store('vehicles/for_sale');
-            $this->files()->create(['path' => $image,'type' => 'traffic_pdf']);
+            $this->files()->create(['path' => $image, 'type' => 'traffic_pdf']);
         }
     }
 
@@ -337,7 +338,8 @@ trait HasFiles
 
                 $img = File::findOrFail($image);
                 if (\Illuminate\Support\Facades\File::exists($image_path)) {
-                    \Illuminate\Support\Facades\File::delete($image_path . $img->path);
+//                    \Illuminate\Support\Facades\File::delete($image_path . $img->path);
+                    Storage::delete($img->getRawOriginal('path'));
                 }
                 \Illuminate\Support\Facades\File::delete($image_path . $img->path);
                 $img->delete();
@@ -378,10 +380,13 @@ trait HasFiles
 
     public function uploadImages()
     {
-
+        $folder_name = 'images';
         if (request()->has('images')) {
+            if (request()->filled('folder_name')) {
+                $folder_name = request()->folder_name;
+            }
             foreach (request()->images as $image) {
-                $file = $image->store('products');
+                $file = $image->store($folder_name);
 
                 $this->files()->create(['path' => $file]);
 

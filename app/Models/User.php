@@ -18,8 +18,7 @@ class User extends Authenticatable implements JWTSubject
     public $timestamps = true;
     protected $fillable = array('id', 'first_name', 'last_name', 'nickname', 'email', 'phone_code', 'phone', 'password',
         'active', 'date_of_birth', 'is_verified',
-        'gender', 'nationality', 'country_id', 'city_id', 'area_id', 'fcm_token', 'device_token',
-        'platform', 'profile_image', 'created_by');
+        'gender', 'nationality', 'country_id', 'city_id', 'area_id', 'profile_image', 'created_by');
     protected $hidden = array('password', 'created_at', 'updated_at');
 
     // JWT auth start
@@ -36,6 +35,11 @@ class User extends Authenticatable implements JWTSubject
     // JWT auth end
 
     // relation start
+    public function notificationMessages()
+    {
+        return $this->morphMany(NotificationMessage::class, 'notifiable');
+    }
+
     public function broker_reservatione()
     {
         return $this->hasMany(BrokerReservation::class);
@@ -219,17 +223,17 @@ class User extends Authenticatable implements JWTSubject
 
     public function setFirstNameAttribute($val)
     {
-        $this->attributes['first_name'] =ucfirst($val);
+        $this->attributes['first_name'] = ucfirst($val);
     }
 
     public function setLastNameAttribute($val)
     {
-        $this->attributes['last_name'] =ucfirst($val);
+        $this->attributes['last_name'] = ucfirst($val);
     }
 
     public function setNicknameAttribute($val)
     {
-        $this->attributes['nickname'] =ucfirst($val);
+        $this->attributes['nickname'] = ucfirst($val);
     }
 
     public function getProfileImageAttribute($val)
@@ -237,7 +241,8 @@ class User extends Authenticatable implements JWTSubject
         return asset('uploads') . '/' . $val;
     }
 
-    public function getIsVerified(){
+    public function getIsVerified()
+    {
         return $this->is_verified == 1 ? __('words.is_verified') : __('words.not_verified');
     }
 

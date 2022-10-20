@@ -78,12 +78,7 @@ class FuelStationController extends Controller
 
             $fuel_station = $this->model->create($request_data);
 
-
-            $fuel_station->organization_users()->create([
-                'user_name' => $request->user_name,
-                'email' => $request->email,
-                'password' => $request->password,
-            ]);
+            createMasterOrgUser($fuel_station);
             return redirect()->route('fuel-stations.index')->with(['success' => __('message.created_successfully')]);
 
         } catch

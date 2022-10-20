@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\App;
@@ -61,4 +62,15 @@ class Category extends Model
         $this->attributes['name_en'] = ucwords($val);
     }
     // accessors & Mutator end
+
+    // Scopes start
+    public function scopeSearch($query)
+    {
+
+        $query->when(request()->search, function ($q) {
+            return $q->where('name_ar', 'like', '%' . request()->search . '%')
+                ->orWhere('name_en', 'like', '%' . request()->search . '%');
+        });
+    }
+    // Scopes end
 }

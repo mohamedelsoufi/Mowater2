@@ -41,7 +41,7 @@
                                         <div class="form-row mb-3">
                                             <div class="form-group col-md-6">
                                                 <label>{{__('words.title_ar')}}</label>
-                                                <input type="text" name="title_ar"
+                                                <input type="text" name="title_ar" dir="rtl"
                                                        class="form-control @error('title_ar') is-invalid @enderror"
                                                        value="{{ old('title_ar') }}" placeholder="عنوان البطاقة">
                                                 @error('title_ar')
@@ -68,7 +68,7 @@
                                         <div class="form-row mb-3">
                                             <div class="form-group col-md-12">
                                                 <label>{{__('words.description_ar')}}</label>
-                                                <textarea name="description_ar" placeholder="وصف البطاقة"
+                                                <textarea name="description_ar" dir="rtl" placeholder="وصف البطاقة"
                                                           class="form-control @error('description_ar') is-invalid @enderror">{{ old('description_ar') }}</textarea>
 
                                                 @error('description_ar')
@@ -164,8 +164,8 @@
                                         <div class="form-row mb-3">
                                             <div class="form-group col-md-4">
                                                 <div class="form-check">
-                                                    <input class="form-check-input" name="active" value="0"
-                                                           type="checkbox">
+                                                    <input class="form-check-input" name="active" value="1"
+                                                           {{old('active') ? "checked" : ""}} type="checkbox">
                                                     <label class="form-check-label">
                                                         {{__('words.activity')}}
                                                     </label>

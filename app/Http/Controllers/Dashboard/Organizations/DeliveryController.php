@@ -99,11 +99,7 @@ class DeliveryController extends Controller
                 $delivery->categories()->attach($request->category_id);
             }
             if ($delivery) {
-                $delivery->organization_users()->create([
-                    'user_name' => $request->user_name,
-                    'email' => $request->email,
-                    'password' => $request->password
-                ]);
+                createMasterOrgUser($delivery);
                 return redirect()->route('delivery.index')->with(['success' => __('message.created_successfully')]);
             }
             return redirect()->route('delivery.index')->with(['error' => __('message.something_wrong')]);

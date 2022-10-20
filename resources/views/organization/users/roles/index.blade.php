@@ -19,8 +19,8 @@
                 </div>
             </div><!-- /.container-fluid -->
         </section>
-        @include('admin.includes.alerts.success')
-        @include('admin.includes.alerts.errors')
+        @include('organization.includes.alerts.success')
+        @include('organization.includes.alerts.errors')
         <section class="content">
             <div class="container-fluid">
                 <div class="row">
@@ -54,30 +54,30 @@
                                             <td>{{createdAtFormat($role->created_at)}}</td>
                                             <td>{{createdAtFormat($role->created_at) == updatedAtFormat($role->updated_at) ? '--' : updatedAtFormat($role->updated_at)}}</td>
                                             <td class="action">
-                                                @if(auth('admin')->user()->hasPermission('read-roles'))
-                                                    <a href="{{route('admin-roles.show',$role->id)}}"
+                                                @if(auth('web')->user()->hasPermission('read-org_roles-'. $record->name_en))
+                                                    <a href="{{route('organization.org-roles.show',$role->id)}}"
                                                        class="btn btn-outline-info" data-toggle="tooltip"
                                                        title="{{__('words.show')}}">
                                                         <i class="fas fa-eye"></i>
                                                     </a>
                                                 @endif
 
-                                                @if(auth('admin')->user()->hasPermission('update-roles'))
-                                                    <a href="{{route('admin-roles.edit',$role->id)}}"
+                                                @if(auth('web')->user()->hasPermission('update-org_roles-'. $record->name_en))
+                                                    <a href="{{route('organization.org-roles.edit',$role->id)}}"
                                                        class="btn btn-outline-warning" data-toggle="tooltip"
                                                        title="{{__('words.edit')}}">
                                                         <i class="fas fa-pen"></i>
                                                     </a>
                                                 @endif
 
-                                                @if(auth('admin')->user()->hasPermission('delete-roles'))
+                                                @if(auth('web')->user()->hasPermission('delete-org_roles-'. $record->name_en))
                                                     <a href="" class="btn btn-outline-danger"
                                                        data-toggle="modal"
                                                        data-target="#ModalDelete{{$role->id}}"
                                                        title="{{__('words.delete')}}">
                                                         <i class="fas fa-trash"></i>
                                                     </a>
-                                                    @include('admin.general.roles.deleteModal')
+                                                    @include('organization.users.roles.deleteModal')
                                                 @endif
                                             </td>
                                         </tr>

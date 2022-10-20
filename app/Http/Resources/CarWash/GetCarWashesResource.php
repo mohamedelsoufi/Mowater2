@@ -4,6 +4,7 @@ namespace App\Http\Resources\CarWash;
 
 use App\Http\Resources\Categories\GetCategoriesResource;
 use App\Http\Resources\PaymentMethods\GetPaymentMethodsResource;
+use App\Http\Resources\Reviews\ShowReviewResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class GetCarWashesResource extends JsonResource
@@ -39,7 +40,7 @@ class GetCarWashesResource extends JsonResource
         $data["active"] = $this->active;
 
         if ($request->routeIs('car-washes.show')){
-            $data["reviews"] = $this->reviews;
+            $data["reviews"] = ShowReviewResource::collection($this->reviews);
         }
         return $data;
     }

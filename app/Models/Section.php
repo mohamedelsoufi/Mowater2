@@ -27,9 +27,9 @@ class Section extends Model
     }
     public function getAdsAttribute()
     {
-       $ads = Ad::where('organizationable_type', 'App\\Models\\'.$this->ref_name)->where('status','approved')
+       $ads = Ad::where('organizationable_type', 'App\\Models\\'.$this->ref_name)->where('end_date','>',Carbon::now())->where('status','approved')->latest('id')
            ->where('end_date', '>', Carbon::now()->format('Y-m-d H:i:s'))->orderBy(
-           AdType::select('priority')->whereColumn('ad_types.id', 'ads.ad_type_id'), 'desc')->get();
+           AdType::select('priority')->whereColumn('ad_types.id', 'ads.ad_type_id'), 'desc')->limit(12)->get();
        return $ads;
     }
     //appends attributes end

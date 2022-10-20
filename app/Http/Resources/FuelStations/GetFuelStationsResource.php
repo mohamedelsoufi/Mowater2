@@ -3,6 +3,7 @@
 namespace App\Http\Resources\FuelStations;
 
 use App\Http\Resources\PaymentMethods\GetPaymentMethodsResource;
+use App\Http\Resources\Reviews\ShowReviewResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class GetFuelStationsResource extends JsonResource
@@ -32,7 +33,7 @@ class GetFuelStationsResource extends JsonResource
             "rating" => $this->rating,
             "rating_count" => $this->rating_count,
             "is_reviewed" => $this->is_reviewed,
-            "reviews" => $this->reviews,
+            "reviews" => ShowReviewResource::collection($this->reviews),
             "is_favorite" => $this->is_favorite,
             "favorites_count" => $this->favorites_count,
             "number_of_views" => $this->number_of_views,

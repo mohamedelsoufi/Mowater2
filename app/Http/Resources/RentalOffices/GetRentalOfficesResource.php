@@ -3,6 +3,7 @@
 namespace App\Http\Resources\RentalOffices;
 
 use App\Http\Resources\PaymentMethods\GetPaymentMethodsResource;
+use App\Http\Resources\Reviews\ShowReviewResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class GetRentalOfficesResource extends JsonResource
@@ -32,7 +33,7 @@ class GetRentalOfficesResource extends JsonResource
             "is_reviewed" => $this->is_reviewed,
             "is_favorite" => $this->is_favorite,
             "favorites_count" => $this->favorites_count,
-            "reviews" => $this->reviews,
+            "reviews" => ShowReviewResource::collection($this->reviews),
             "number_of_views" => $this->number_of_views,
             "active_number_of_views" => $this->active_number_of_views,
             "active" => $this->active,

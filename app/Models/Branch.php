@@ -18,12 +18,15 @@ use App;
 
 class Branch extends Model
 {
-    use CanBeFavourites, HasContacts, HasReviews, HasWorkTimes, HasDayoffs, HasOrgUsers,
-        HasServices, HasProducts, CanBeReserved,HasPaymentMethods,HasPhones;
+    use CanBeFavourites, HasContacts, HasReviews, HasWorkTimes, HasDayoffs, HasOrgUsers
+        , CanBeReserved,HasPaymentMethods,HasPhones;
 
     protected $table = 'branches';
     public $timestamps = true;
-    protected $guarded = [];
+    protected $fillable = ['id', 'branchable_type', 'branchable_id', 'name_en', 'name_ar', 'country_id',
+        'city_id', 'area_id', 'address_en', 'address_ar', 'category_id', 'longitude', 'latitude',
+        'reservation_active', 'reservation_availability', 'delivery_availability', 'available',
+        'number_of_views', 'active_number_of_views', 'created_by',];
     protected $hidden = ['created_at', 'updated_at'];
     protected $appends = ['name', 'address','favorites_count'];
 
@@ -45,6 +48,10 @@ class Branch extends Model
     }
 
     //relationship start
+    public function roles(){
+        return $this->morphMany(Role::class,'rolable');
+    }
+
     public function branchable()
     {
         return $this->morphTo();
@@ -55,14 +62,19 @@ class Branch extends Model
         return $this->belongsTo('App\Models\Category');
     }
 
+    public function country()
+    {
+        return $this->belongsTo('App\Models\Country');
+    }
+
     public function city()
     {
-        return $this->belongsTo('App\Models\City');
+        return $this->belongsTo(City::class);
     }
 
     public function area()
     {
-        return $this->belongsTo('App\Models\Area');
+        return $this->belongsTo(Area::class);
     }
 
     public function available_vehicles()
@@ -121,7 +133,7 @@ class Branch extends Model
     }
 
 
-    //scopes
+    // Scopes start
     public function scopeSearch($query)
     {
         $query->when(request()->search, function ($q) {
@@ -138,5 +150,38 @@ class Branch extends Model
         });
 
     }
+    // Scopes end
+
+    // accessors & Mutator start
+    public function getAvailable()
+    {
+        return $this->available == 1 ? __('words.available_prop') : __('words.not_available_prop');
+    }
+
+    public function getReservationAvailability()
+    {
+        return $this->reservation_availability == 1 ? __('words.available_prop') : __('words.not_available_prop');
+    }
+
+    public function getDeliveryAvailability()
+    {
+        return $this->delivery_availability == 1 ? __('words.available_prop') : __('words.not_available_prop');
+    }
+
+    public function getReservationActive()
+    {
+        return $this->reservation_active == 1 ? __('words.active') : __('words.inactive');
+    }
+
+    public function getDeliveryActive()
+    {
+        return $this->delivery_active == 1 ? __('words.active') : __('words.inactive');
+    }
+
+    public function getActiveNumberOfViews()
+    {
+        return $this->active_number_of_views == 1 ? __('words.active') : __('words.inactive');
+    }
+    // accessors & Mutator end
 
 }

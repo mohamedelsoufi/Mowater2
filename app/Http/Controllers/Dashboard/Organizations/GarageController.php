@@ -83,11 +83,7 @@ class GarageController extends Controller
 
             $garage = $this->model->create($request_data);
 
-            $garage->organization_users()->create([
-                'user_name' => $request->user_name,
-                'email' => $request->email,
-                'password' => $request->password,
-            ]);
+            createMasterOrgUser($garage);
             return redirect()->route('garages.index')->with(['success' => __('message.created_successfully')]);
         } catch (\Exception $e) {
             return redirect()->back()->with(['error' => __('message.something_wrong')]);

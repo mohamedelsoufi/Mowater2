@@ -37,7 +37,7 @@ class GetBrokersResource extends JsonResource
             $data['area'] = $this->area;
         }
         if ($request->routeIs('brokers.show')) {
-            $data['packages'] = BrokerPackagesResource::collection($this->packages);
+            $data['packages'] = BrokerPackagesResource::collection($this->brokerPackages);
             $data['laws'] = GetLawsResource::collection($this->laws);
             $data['branches'] = GetBranchesResource::collection($this->branches);
         }

@@ -29,7 +29,7 @@
                 }
             },
             error: function (reject) {
-                alert(reject);
+                alert("<?php echo e(__('message.something_wrong')); ?>");
             }
         });
     }
@@ -55,7 +55,7 @@
                 }
             },
             error: function (reject) {
-                alert(reject);
+                alert("<?php echo e(__('message.something_wrong')); ?>");
             }
         });
     }

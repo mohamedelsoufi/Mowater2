@@ -48,7 +48,7 @@
                                     @csrf
                                     <div class="row">
                                         <div class="input-group col-6 mb-3">
-                                            <input type="text" name="name_ar" class="form-control @error('name_ar') is-invalid @enderror"
+                                            <input type="text" name="name_ar" dir="rtl" class="form-control @error('name_ar') is-invalid @enderror"
                                                    value="{{ old('name_ar') }}" placeholder="{{__('words.name_ar')}}">
                                             @error('name_ar')
                                             <span class="invalid-feedback" role="alert">
@@ -70,7 +70,7 @@
 
                                     <div class="row">
                                         <div class="input-group col-6 mb-3">
-                                            <input type="text" name="description_ar" class="form-control @error('description_ar') is-invalid @enderror"
+                                            <input type="text" name="description_ar" dir="rtl" class="form-control @error('description_ar') is-invalid @enderror"
                                                    value="{{ old('description_ar') }}" placeholder="{{__('words.description_ar')}}">
                                             @error('description_ar')
                                             <span class="invalid-feedback" role="alert">

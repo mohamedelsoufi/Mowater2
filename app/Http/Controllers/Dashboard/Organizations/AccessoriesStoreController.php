@@ -77,11 +77,7 @@ class AccessoriesStoreController extends Controller
 
             $store = $this->model->create($request_data);
 
-            $store->organization_users()->create([
-                'user_name' => $request->user_name,
-                'email' => $request->email,
-                'password' => $request->password,
-            ]);
+            createMasterOrgUser($store);
             return redirect()->route('accessories-stores.index')->with(['success' => __('message.created_successfully')]);
         } catch (\Exception $e) {
             return redirect()->back()->with(['error' => __('message.something_wrong')]);

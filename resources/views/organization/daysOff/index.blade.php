@@ -39,6 +39,8 @@
                                         <th>#</th>
                                         <th>{{__('words.day')}}</th>
                                         <th>{{__('words.created_by')}}</th>
+                                        <th>{{__('words.created_at')}}</th>
+                                        <th>{{__('words.updated_at')}}</th>
                                         <th>{{__('words.actions')}}</th>
                                     </tr>
                                     </thead>

@@ -44,6 +44,11 @@
                                         </tr>
 
                                         <tr>
+                                            <th class="show-details-table">{{__('words.super_admin')}}</th>
+                                            <td>{{$user->roles->first() ? $user->roles->first()->is_super == 1 ? __('vehicle.yes') : __('vehicle.no') : ""}}</td>
+                                        </tr>
+
+                                        <tr>
                                             <th class="show-details-table">{{__('words.organization_name')}}</th>
                                             <td> {{ $user->organizable_type != 'App\\Models\\Branch' ? $user->organizable->name :
  __('words.organization').': '.$user->organizable->name . ' / '. __('words.branch').': ' . $user->organizable->branchable->name}}</td>

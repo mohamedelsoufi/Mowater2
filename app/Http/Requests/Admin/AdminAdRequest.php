@@ -24,7 +24,7 @@ class AdminAdRequest extends FormRequest
             'image' => 'required_without:id|image|max:10000',
             'price' => 'required|between:0,9999999999.99',
             'negotiable' => 'required|boolean',
-            'status' => 'required|in:'.ad_status(),
+            'status' => 'required_without:id|in:'.ad_status(),
             'start_date' => 'required',
             'end_date' => 'required',
         ];

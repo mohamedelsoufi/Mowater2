@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources\SpecialNumbers;
 
+use App\Http\Resources\Reviews\ShowReviewResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class GetSpecialNumberOrganizationsResource extends JsonResource
@@ -35,7 +36,7 @@ class GetSpecialNumberOrganizationsResource extends JsonResource
         $data["is_favorite"] = $this->is_favorite;
         $data["favorites_count"] = $this->favorites_count;
         if ($request->routeIs('special-org.show')){
-            $data["reviews"] = $this->review;
+            $data["reviews"] = ShowReviewResource::collection($this->reviews);
         }
         $data["number_of_views"] = $this->number_of_views;
         $data["active_number_of_views"] = $this->active_number_of_views;

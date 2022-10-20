@@ -21,6 +21,7 @@ class CreatePhonesTable extends Migration
             $table->string('title_ar')->nullable();
             $table->string('country_code')->nullable();
             $table->string('phone');
+            $table->string('created_by')->nullable()->default('system@app.com');
             $table->timestamps();
         });
     }

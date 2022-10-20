@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\FuelStation;
 use App\Models\PaymentMethod;
+use App\Models\Permission;
 use Illuminate\Database\Seeder;
 
 class FuelStationSeeder extends Seeder
@@ -92,11 +93,36 @@ class FuelStationSeeder extends Seeder
                 'title_ar' => $name_ar[$f]
             ]);
 
-            $fuel_station->organization_users()->create([
+            $org_user = $fuel_station->organization_users()->create([
                 'user_name' => 'Fuel Station ' . $f,
                 'email' => $users[$f],
                 'password' => "123456",
             ]);
+
+            $org_role = $fuel_station->roles()->create([
+                'name_en' => 'Organization super admin' .' '. $fuel_station->name_en. $f,
+                'name_ar' => 'صلاحية المدير المتميز' .' '. $fuel_station->name_ar. $f,
+                'display_name_ar' => 'صلاحية المدير المتميز' .' '. $fuel_station->name_ar,
+                'display_name_en' => 'Organization super admin' .' '. $fuel_station->name_en,
+                'description_ar' => 'له جميع الصلاحيات',
+                'description_en' => 'has all permissions',
+                'is_super' => 1,
+            ]);
+
+            foreach (\config('laratrust_seeder.org_roles') as $key => $values) {
+                foreach ($values as $value) {
+                    $permission = Permission::create([
+                        'name' => $value . '-' . $key.'-'. $fuel_station->name_en. $f,
+                        'display_name_ar' => __('words.' . $value) . ' ' . __('words.' . $key) . ' ' . $fuel_station->name_ar,
+                        'display_name_en' => $value . ' ' . $key . ' ' . $fuel_station->name_en,
+                        'description_ar' => __('words.' . $value) . ' ' . __('words.' . $key) . ' ' . $fuel_station->name_ar,
+                        'description_en' => $value . ' ' . $key . ' ' . $fuel_station->name_en,
+                    ]);
+                    $org_role->attachPermissions([$permission]);
+                }
+            }
+
+            $org_user->attachRole($org_role);
 
             $fuel_station->contact()->create([
                 'facebook_link' => 'https://www.google.com/',

@@ -6,7 +6,7 @@ use App\Traits\Ads\HasAds;
 use App\Traits\Contacts\HasContacts;
 use App\Traits\Dayoffs\HasDayoffs;
 use App\Traits\Favourites\CanBeFavourites;
-use App\Traits\Files\HasFile;
+use App\Traits\Files\HasFiles;
 use App\Traits\OrganizationDiscountCards\HasOrganizationDiscountCard;
 use App\Traits\OrganizationUsers\HasOrgUsers;
 use App\Traits\PaymentMethods\HasPaymentMethods;
@@ -22,11 +22,12 @@ use DateTime;
 
 class DrivingTrainer extends Model
 {
-    use HasFactory, HasOrgUsers, HasFile, CanBeReserved, HasWorkTimes, HasDayoffs, HasReviews,
+    use HasFactory, HasOrgUsers, HasFiles, CanBeReserved, HasWorkTimes, HasDayoffs, HasReviews,
         CanBeFavourites, HasAds, HasPhones, HasOrganizationDiscountCard, HasPaymentMethods, HasContacts;
     protected $guarded = [];
     protected $hidden = ['name_en', 'name_ar', 'description_en', 'description_ar', 'profile_picture', 'created_at', 'updated_at', 'notes'];
-    protected $appends = ['name', 'description', 'is_reviewed', 'rating', 'rating_count', 'is_favorite', 'favorites_count', 'profile', 'trainer_vehicle', 'age'];
+    protected $appends = ['name', 'description', 'is_reviewed', 'rating', 'rating_count', 'is_favorite',
+        'favorites_count', 'profile', 'trainer_vehicle', 'age','training_license','vehicle_image'];
 
     // appends start
     public function getNameAttribute()
@@ -52,6 +53,10 @@ class DrivingTrainer extends Model
     // appends end
 
     // relations start
+    public function roles(){
+        return $this->morphMany(Role::class,'rolable');
+    }
+
     public function reservations()
     {
         return $this->hasMany(TrainingReservation::class);
@@ -90,6 +95,10 @@ class DrivingTrainer extends Model
     public function types()
     {
         return $this->belongsToMany(TrainingType::class, DrivingTrainerType::class);
+    }
+
+    public function conditions(){
+        return $this->morphMany(Condition::class,'conditionable');
     }
     // relations end
 
@@ -147,6 +156,16 @@ class DrivingTrainer extends Model
     {
         $model = $this->find($this->id);
         return $model->profile_picture ? asset('uploads') . '/' . $model->profile_picture : asset('no-user.jpg');
+    }
+
+    public function getTrainingLicenseAttribute()
+    {
+        return $this->files()->where('type','training_license')->first() ? $this->files()->where('type','training_license')->first()->path : asset('uploads/default_image.png');
+    }
+
+    public function getVehicleImageAttribute()
+    {
+        return $this->files()->where('type','trainer_vehicle')->first() ? $this->files()->where('type','trainer_vehicle')->first()->path : asset('uploads/default_image.png');
     }
 
     public function getActive()

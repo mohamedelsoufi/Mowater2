@@ -42,6 +42,10 @@ class SpecialNumberOrganization extends Model
     // appends attributes end
 
     // relationship start
+    public function roles(){
+        return $this->morphMany(Role::class,'rolable');
+    }
+
     public function special_numbers()
     {
         return $this->hasMany(SpecialNumber::class);

@@ -14,7 +14,8 @@ class AvailablePaymentMethodRequest extends FormRequest
     public function rules()
     {
         return [
-            'available_payment_methods' => 'nullable|array|exists:payment_methods,' . $this->id,
+            'available_payment' => 'nullable|array',
+            'available_payment.*' => 'exists:payment_methods,id',
         ];
     }
 }

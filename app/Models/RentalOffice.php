@@ -47,6 +47,10 @@ class RentalOffice extends Model
     // appends attributes end
 
     // relationship start
+    public function roles(){
+        return $this->morphMany(Role::class,'rolable');
+    }
+
     public function rental_laws()
     {
         return $this->hasMany('App\Models\RentalLaw');

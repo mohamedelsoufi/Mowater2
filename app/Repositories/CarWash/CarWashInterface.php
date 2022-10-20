@@ -10,6 +10,8 @@ interface CarWashInterface
 
     public function mawaterOffers($request);
 
+    public function offers($request);
+
     public function getServices();
 
     public function showService($request);

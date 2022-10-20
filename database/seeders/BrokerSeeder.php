@@ -4,7 +4,11 @@ namespace Database\Seeders;
 
 use App\Models\Area;
 use App\Models\Broker;
+use App\Models\City;
+use App\Models\CoverageType;
+use App\Models\Feature;
 use App\Models\PaymentMethod;
+use App\Models\Permission;
 use Illuminate\Database\Seeder;
 
 class BrokerSeeder extends Seeder
@@ -96,31 +100,79 @@ The right of the insured to compensation shall be forfeited, and the United Insu
                 'duration' => '30',
                 'days' => 'Sun,Mon,Tue,Wed,Thu',
             ]);
-            $broker->organization_users()->create([
+            $org_user = $broker->organization_users()->create([
                 'user_name' => 'Broker' . $counter,
                 'email' => $users[$counter],
                 'password' => "123456",
             ]);
 
+            $org_role = $broker->roles()->create([
+                'name_en' => 'Organization super admin' . ' ' . $broker->name_en,
+                'name_ar' => 'صلاحية المدير المتميز' . ' ' . $broker->name_ar,
+                'display_name_ar' => 'صلاحية المدير المتميز' . ' ' . $broker->name_ar,
+                'display_name_en' => 'Organization super admin' . ' ' . $broker->name_en,
+                'description_ar' => 'له جميع الصلاحيات',
+                'description_en' => 'has all permissions',
+                'is_super' => 1,
+            ]);
 
-            $packages = $broker->packages;
-            foreach ($packages as $package){
+            foreach (\config('laratrust_seeder.org_roles') as $key => $values) {
+                foreach ($values as $value) {
+                    $permission = Permission::create([
+                        'name' => $value . '-' . $key . '-' . $broker->name_en,
+                        'display_name_ar' => __('words.' . $value) . ' ' . __('words.' . $key) . ' ' . $broker->name_ar,
+                        'display_name_en' => $value . ' ' . $key . ' ' . $broker->name_en,
+                        'description_ar' => __('words.' . $value) . ' ' . __('words.' . $key) . ' ' . $broker->name_ar,
+                        'description_en' => $value . ' ' . $key . ' ' . $broker->name_en,
+                    ]);
+                    $org_role->attachPermissions([$permission]);
+                }
+            }
+
+            $org_user->attachRole($org_role);
+
+            $coverage = CoverageType::pluck('id')->toArray();
+            $features = Feature::inRandomOrder()->take(7)->pluck('id');
+            $package_name_en = ['golden package', 'silver package', 'bronze package'];
+            $package_name_ar = ['الباقة الذهبية', 'الباقة الفضية', 'الباقة البرونزية'];
+            $discount_value = ['', '10', '20', '', '30'];
+
+            for ($c = 0; $c < count($package_name_en); $c++) {
+                $discount = $discount_value[array_rand($discount_value)];
+                $dis_type = ['percentage', 'amount'];
+                $n_package = $broker->brokerPackages()->create([
+                    'name_en' => $package_name_en[$c],
+                    'name_ar' => $package_name_ar[$c],
+                    'price' => 880,
+                    'discount' => $discount,
+                    'discount_type' => $discount != '' ? $dis_type[array_rand($dis_type)] : '',
+                    'coverage_type_id' => $coverage[array_rand($coverage)]
+                ]);
+                $n_package->features()->attach($features);
+
+            }
+
+            $brokerPackages = $broker->brokerPackages()->where('discount_type', '')->get();
+            foreach ($brokerPackages as $package) {
                 $package->offers()->create([
                     'discount_card_id' => 1,
                     'discount_type' => 'percentage',
-                    'discount_value' => 88,
+                    'discount_value' => 77,
                     'number_of_uses_times' => 'specific_number',
                     'specific_number' => 2,
-                    'notes' => 'خصم 88 % على التالي',
+                    'notes' => 'خصم 77 % على التالي',
                 ]);
             }
-            $package_ids = $broker->packages()->pluck('id');
+            $package_ids = $broker->brokerPackages()->pluck('id');
 
             for ($b = 0; $b < 2; $b++) {
+                $city = City::inRandomOrder()->first()->id;
                 $branch = $broker->branches()->create([
-                    'name_en' => 'Branch ' . $b,
-                    'name_ar' => 'فرع ' . $b,
-                    'area_id' => Area::first()->id,
+                    'name_en' => $broker->name_en . ' Branch ' . $b,
+                    'name_ar' => $broker->name_ar . ' فرع ' . $b,
+                    'country_id' => 1,
+                    'city_id' => $city,
+                    'area_id' => Area::where('city_id', $city)->first()->id,
                     'address_en' => 'Branch Address ' . $b,
                     'address_ar' => 'عنوان الفرع ' . $b,
                     'category_id' => null,
@@ -141,19 +193,44 @@ The right of the insured to compensation shall be forfeited, and the United Insu
                     'website' => 'https://www.google.com/',
                     'instagram_link' => 'https://www.google.com/',
                 ]);
-                $branch->organization_users()->create([
+                $branch_user = $branch->organization_users()->create([
                     'user_name' => 'Broker branch user ' . $b,
                     'email' => 'insurance_ba' . $b . $counter . '@gmail.com',
                     'password' => "123456",
                 ]);
+
+                $branch_role = $branch->roles()->create([
+                    'name_en' => 'super admin' . ' ' . $broker->name_en . ' ' . $branch->name_en,
+                    'name_ar' => 'صلاحية المدير المتميز' . ' ' . $broker->name_ar . ' ' . $branch->name_ar,
+                    'display_name_ar' => 'صلاحية المدير المتميز' . ' ' . $branch->name_ar,
+                    'display_name_en' => 'super admin' . ' ' . $branch->name_en,
+                    'description_ar' => 'له جميع الصلاحيات',
+                    'description_en' => 'has all permissions',
+                    'is_super' => 1,
+                ]);
+
+                foreach (\config('laratrust_seeder.org_roles') as $key => $values) {
+                    foreach ($values as $value) {
+                        $permission = Permission::create([
+                            'name' => $value . '-' . $key . '-' . $branch->name_en,
+                            'display_name_ar' => __('words.' . $value) . ' ' . __('words.' . $key) . ' ' . $branch->name_ar,
+                            'display_name_en' => $value . ' ' . $key . ' ' . $branch->name_en,
+                            'description_ar' => __('words.' . $value) . ' ' . __('words.' . $key) . ' ' . $branch->name_ar,
+                            'description_en' => $value . ' ' . $key . ' ' . $branch->name_en,
+                        ]);
+                        $branch_role->attachPermissions([$permission]);
+                    }
+                }
+
+                $branch_user->attachRole($branch_role);
 
                 $branch->available_features()->attach($package_ids);
                 $branch->payment_methods()->attach($payment_methods);
                 $branch->phones()->create([
                     'country_code' => '+973',
                     'phone' => $phone[array_rand($phone)],
-                    'title_en' => $name_en[$b],
-                    'title_ar' => $name_en[$b]
+                    'title_en' => $branch->name_en,
+                    'title_ar' => $branch->name_ar
                 ]);
             }
         }

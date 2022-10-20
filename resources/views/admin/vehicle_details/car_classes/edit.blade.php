@@ -43,7 +43,7 @@
                                         <div class="form-row">
                                             <div class="form-group col-md-6">
                                                 <label>{{__('words.name_ar')}}</label>
-                                                <input type="text" name="name_ar"
+                                                <input type="text" name="name_ar" dir="rtl"
                                                        class="form-control @error('name_ar') is-invalid @enderror"
                                                        value="{{ $car_class->name_ar}}" placeholder="إسم الفئة">
                                                 @error('name_ar')

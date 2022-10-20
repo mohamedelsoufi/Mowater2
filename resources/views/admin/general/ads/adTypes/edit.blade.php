@@ -45,7 +45,7 @@
                                         <div class="form-row mb-3">
                                             <div class="form-group col-md-6">
                                                 <label>{{__('words.name_ar')}}</label>
-                                                <input type="text" name="name_ar" disabled
+                                                <input type="text" name="name_ar" dir="rtl" disabled
                                                        class="form-control @error('name_ar') is-invalid @enderror"
                                                        value="{{ old('name_ar',$ad_type->name_ar) }}" placeholder="إسم الإعلان">
                                                 @error('name_ar')

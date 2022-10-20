@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Models\CarClass;
 use App\Models\CarModel;
 use App\Models\PaymentMethod;
+use App\Models\Permission;
 use Illuminate\Database\Seeder;
 use App\Models\CarShowroom;
 use App\Models\Brand;
@@ -27,7 +28,8 @@ class CarShowRoomSeeder extends Seeder
         $logos = ['m1.png', 'm2.jpg', 'm3.jpg', 'm4.png', 'm5.jpg', 'm6.jpg'];
         $users = ['m1@gmail.com', 'm2@gmail.com', 'm3@gmail.com', 'm4@gmail.com', 'm5@gmail.com', 'm6@gmail.com'];
         $branch_users = ['bm1@gmail.com', 'bm2@gmail.com', 'bm3@gmail.com', 'bm4@gmail.com'];
-
+        $discount_value = ['','10','20','','30'];
+        $discount_type = ['','percentage','amount','','percentage'];
         $names = [
             'الزهيدي لتجارة السيارات',
             'البلوشي للسيارات المستعملة',
@@ -89,11 +91,37 @@ class CarShowRoomSeeder extends Seeder
                 'days' => 'Sun,Mon,Tue,Wed,Thu',
             ]);
 
-            $car_show_room->organization_users()->create([
+            $org_user =  $car_show_room->organization_users()->create([
                 'user_name' => 'car user ' . $counter,
                 'email' => $users[$counter],
                 'password' => "123456",
             ]);
+
+            $org_role = $car_show_room->roles()->create([
+                'name_en' => 'Organization super admin' . ' ' . $car_show_room->name_en,
+                'name_ar' => 'صلاحية المدير المتميز' . ' ' . $car_show_room->name_ar,
+                'display_name_ar' => 'صلاحية المدير المتميز' . ' ' . $car_show_room->name_ar,
+                'display_name_en' => 'Organization super admin' . ' ' . $car_show_room->name_en,
+                'description_ar' => 'له جميع الصلاحيات',
+                'description_en' => 'has all permissions',
+                'is_super' => 1,
+            ]);
+
+            foreach (\config('laratrust_seeder.org_roles') as $key => $values) {
+                foreach ($values as $value) {
+                    $permission = Permission::create([
+                        'name' => $value . '-' . $key . '-' . $car_show_room->name_en,
+                        'display_name_ar' => __('words.' . $value) . ' ' . __('words.' . $key) . ' ' . $car_show_room->name_ar,
+                        'display_name_en' => $value . ' ' . $key . ' ' . $car_show_room->name_en,
+                        'description_ar' => __('words.' . $value) . ' ' . __('words.' . $key) . ' ' . $car_show_room->name_ar,
+                        'description_en' => $value . ' ' . $key . ' ' . $car_show_room->name_en,
+                    ]);
+                    $org_role->attachPermissions([$permission]);
+                }
+            }
+
+            $org_user->attachRole($org_role);
+
             $car_show_room->discount_cards()->attach(1);
 
             $brands = Brand::pluck('id')->toArray();
@@ -116,6 +144,8 @@ class CarShowRoomSeeder extends Seeder
                 $ghamara_count = array_rand(ghamara_count_arr());
             }
             for ($i = 0; $i < 4; $i++) {
+                $discount = $discount_value[array_rand($discount_value)];
+                    $dis_type = ['percentage','amount'];
                 $vehicle = $car_show_room->vehicles()->create([
                     'vehicle_type' => $vehicle_type[array_rand($vehicle_type)],
                     'brand_id' => $brands[array_rand($brands)],
@@ -159,6 +189,8 @@ class CarShowRoomSeeder extends Seeder
                     'location' => '',
                     'additional_notes' => '',
                     'price' => $price[array_rand($price)],
+                    'discount'=>$discount,
+                        'discount_type'=>$discount != '' ? $dis_type[array_rand($dis_type)] : '',
                     'availability' => array_rand($is_new),
                     'active' => array_rand($is_new),
                 ]);
@@ -175,8 +207,11 @@ class CarShowRoomSeeder extends Seeder
                     'type' => 'vehicle_3D',
                     'color_id' => 1,
                 ]);
+            }
 
-                $vehicle->offers()->create([
+            $vehicle_offers = $car_show_room->vehicles()->where('discount_type', '')->get();
+            foreach ($vehicle_offers as $veh ){
+                $veh->offers()->create([
                     'discount_card_id' => 1,
                     'discount_type' => 'percentage',
                     'discount_value' => 5,
@@ -189,10 +224,13 @@ class CarShowRoomSeeder extends Seeder
             $vehicles = $car_show_room->vehicles()->pluck('id');
 
             for ($b = 0; $b < 4; $b++) {
+                $city = City::inRandomOrder()->first()->id;
                 $branch = $car_show_room->branches()->create([
-                    'name_en' => 'Branch 1',
-                    'name_ar' => 'فرع 1',
-                    'area_id' => Area::first()->id,
+                    'name_en' => $car_show_room->name_en . ' Branch 1' . $b,
+                    'name_ar' => $car_show_room->name_ar . ' فرع 1' . $b,
+                    'country_id' => 1,
+                    'city_id' => $city,
+                    'area_id' => Area::where('city_id',$city)->first()->id,
                     'address_en' => 'Branch 1 Address',
                     'address_ar' => 'عنوان الفرع الأول',
                     'category_id' => null,
@@ -213,25 +251,46 @@ class CarShowRoomSeeder extends Seeder
                     'website' => 'https://www.google.com/',
                     'instagram_link' => 'https://www.google.com/',
                 ]);
-                $branch->organization_users()->create([
+                $branch_user = $branch->organization_users()->create([
                     'user_name' => 'car showroom branch user ' . $b,
                     'email' => 'bm' . $counter . $b . '@gmail.com',
                     'password' => "123456",
                 ]);
+
+                $branch_role = $branch->roles()->create([
+                    'name_en' => 'super admin' .' '. $car_show_room->name_en.' '.$branch->name_en.$b,
+                    'name_ar' => 'صلاحية المدير المتميز' .' '.$car_show_room->name_ar.' '. $branch->name_ar.$b,
+                    'display_name_ar' => 'صلاحية المدير المتميز' .' '. $branch->name_ar,
+                    'display_name_en' => 'super admin' .' '. $branch->name_en,
+                    'description_ar' => 'له جميع الصلاحيات',
+                    'description_en' => 'has all permissions',
+                    'is_super' => 1,
+                ]);
+
+                foreach (\config('laratrust_seeder.org_roles') as $key => $values) {
+                    foreach ($values as $value) {
+                        $permission = Permission::create([
+                            'name' => $value . '-' . $key.'-'.$branch->name_en,
+                            'display_name_ar' => __('words.' . $value) . ' ' . __('words.' . $key) . ' ' . $branch->name_ar,
+                            'display_name_en' => $value . ' ' . $key . ' ' . $branch->name_en,
+                            'description_ar' => __('words.' . $value) . ' ' . __('words.' . $key) . ' ' . $branch->name_ar,
+                            'description_en' => $value . ' ' . $key . ' ' . $branch->name_en,
+                        ]);
+                        $branch_role->attachPermissions([$permission]);
+                    }
+                }
+
+                $branch_user->attachRole($branch_role);
+
                 $branch->available_vehicles()->attach($vehicles);
                 $branch->payment_methods()->attach($payment_methods);
                 $branch->phones()->create([
                     'country_code' => '+973',
                     'phone' => $phone[array_rand($phone)],
-                    'title_en' => $names[$b],
-                    'title_ar' => $names[$b]
+                    'title_en' => $branch->name_en,
+                    'title_ar' =>  $branch->name_ar
                 ]);
             }
         }
-
-
-
-
-
     }
 }

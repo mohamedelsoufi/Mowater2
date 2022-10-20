@@ -24,6 +24,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('organization.home');
+        $record = getModelData();
+        return view('organization.home',compact('record'));
     }
 }

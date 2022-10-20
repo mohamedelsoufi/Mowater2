@@ -40,7 +40,7 @@
                                         <div class="form-row">
                                             <div class="form-group col-md-6">
                                                 <label>{{__('words.name_ar')}}</label>
-                                                <input type="text" name="name_ar"
+                                                <input type="text" name="name_ar" dir="rtl"
                                                        class="form-control @error('name_ar') is-invalid @enderror"
                                                        value="{{ old('name_ar') }}" placeholder="إسم الموديل">
                                                 @error('name_ar')
@@ -86,7 +86,7 @@
                                             <div class="form-group col-md-4">
                                                 <div class="form-check">
                                                     <input class="form-check-input" name="active" value="1"
-                                                           type="checkbox">
+                                                           {{old('active') ? "checked" : ""}} type="checkbox">
                                                     <label class="form-check-label">
                                                         {{__('words.activity')}}
                                                     </label>

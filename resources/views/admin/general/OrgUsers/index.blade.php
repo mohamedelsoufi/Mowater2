@@ -38,6 +38,7 @@
                                         <th>#</th>
                                         <th>{{__('words.user_name')}}</th>
                                         <th>{{__('words.email')}}</th>
+                                        <th>{{__('words.super_admin')}}</th>
                                         <th>{{__('words.activity')}}</th>
                                         <th>{{__('words.created_by')}}</th>
                                         <th>{{__('words.created_at')}}</th>
@@ -52,6 +53,7 @@
 
                                             <td>{{$user->user_name}}</td>
                                             <td>{{$user->email}}</td>
+                                            <td>{{$user->roles->first() ? $user->roles->first()->is_super == 1 ? __('vehicle.yes') : __('vehicle.no') : ""}}</td>
                                             <td>{{$user->getActive()}}</td>
                                             <td>{{$user->created_by}}</td>
                                             <td>{{createdAtFormat($user->created_at)}}</td>

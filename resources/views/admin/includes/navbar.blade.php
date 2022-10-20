@@ -122,6 +122,21 @@
 {{--                <a href="#" class="dropdown-item dropdown-footer">See All Notifications</a>--}}
 {{--            </div>--}}
 {{--        </li>--}}
+
+        <li class="nav-item dropdown">
+            <a class="nav-link" data-toggle="dropdown" href="#">
+                <i class="fas fa-globe-asia"></i>
+                <span class="MobileText">{{ LaravelLocalization::getCurrentLocaleNative() }}</span>
+            </a>
+            <div class="dropdown-menu dropdown-flag">
+                @foreach(LaravelLocalization::getSupportedLocales() as $localeCode => $properties)
+                    <a class="dropdown-item {{LaravelLocalization::getCurrentLocaleNative() == $properties['native'] ? 'd-none' : '' }}" rel="alternate" hreflang="{{ $localeCode }}" href="{{ LaravelLocalization::getLocalizedURL($localeCode, null, [], true) }}">
+                        {{ $properties['native'] }}
+                    </a>
+                @endforeach
+            </div>
+        </li>
+
         <li class="nav-item">
             <a class="nav-link" href="{{route('admin.logout')}}" data-toggle="tooltip" title="{{__('words.logout')}}" role="button">
                 <i class="fa fa-sign-out-alt"></i>

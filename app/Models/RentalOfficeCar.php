@@ -17,7 +17,7 @@ class RentalOfficeCar extends Model
     protected $hidden = ['created_at', 'updated_at'];
     protected $appends = ['one_image'];
 
-    //relationship start
+    // relations start
     public function brand()
     {
         return $this->belongsTo(Brand::class, 'brand_id');
@@ -57,9 +57,9 @@ class RentalOfficeCar extends Model
     {
         return $this->belongsToMany(RentalProperty::class, 'rental_office_car_properties');
     }
-    //relationship end
+    // relations end
 
-    //    Scopes
+    // Scopes start
     public function scopeActive($query)
     {
         return $query->where('active', 1);
@@ -68,6 +68,39 @@ class RentalOfficeCar extends Model
     public function scopeAvailable($query)
     {
         return $query->where('available', 1);
+    }
+
+    public function scopeSearch($query)
+    {
+        $query->when(request()->brand_id, function ($q) {
+            return $q->where('brand_id', request()->brand_id);
+        })->when(request()->car_model_id, function ($q) {
+            return $q->where('car_model_id', request()->car_model_id);
+        })->when(request()->car_class_id, function ($q) {
+            return $q->where('car_class_id', request()->car_class_id);
+        })->when(request()->vehicle_type, function ($q) {
+            return $q->where('vehicle_type', 'like', '%' . request()->vehicle_type . '%');
+        })->when(request()->manufacture_year, function ($q) {
+            return $q->where('manufacture_year', request()->manufacture_year);
+        });
+
+    }
+    // Scopes end
+
+    // accessors & Mutator start
+    public function getActive()
+    {
+        return $this->active == 1 ? __('words.active') : __('words.inactive');
+    }
+
+    public function getAvailability()
+    {
+        return $this->available == 1 ? __('words.available_prop') : __('words.not_available_prop');
+    }
+
+    public function getActiveNumberOfViews()
+    {
+        return $this->active_number_of_views == 1 ? __('words.active') : __('words.inactive');
     }
 
     public function getOneImageAttribute()
@@ -95,20 +128,18 @@ class RentalOfficeCar extends Model
 
     }
 
-    public function scopeSearch($query)
+    public function getNameAttribute()
     {
-        $query->when(request()->brand_id, function ($q) {
-            return $q->where('brand_id', request()->brand_id);
-        })->when(request()->car_model_id, function ($q) {
-            return $q->where('car_model_id', request()->car_model_id);
-        })->when(request()->car_class_id, function ($q) {
-            return $q->where('car_class_id', request()->car_class_id);
-        })->when(request()->vehicle_type, function ($q) {
-            return $q->where('vehicle_type', 'like', '%' . request()->vehicle_type . '%');
-        })->when(request()->manufacture_year, function ($q) {
-            return $q->where('manufacture_year', request()->manufacture_year);
-        });
+        $brand = $this->brand ? $this->brand->name : '';
+        $car_model = $this->car_model ? $this->car_model->name : '';
+        $car_class = $this->car_class ? $this->car_class->name : '';
+        $manufacturing_year = $this->manufacture_year ? $this->manufacture_year : '';
+
+        $name = $brand . ' - ' . $car_model . ' - ' . $manufacturing_year . ' - ' . $car_class;
+
+        return $name;
 
     }
+    // accessors & Mutator end
 
 }

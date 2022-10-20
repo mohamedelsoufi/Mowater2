@@ -11,7 +11,7 @@ class ShowVehicleResource extends JsonResource
     public function toArray($request)
     {
         $images=[];
-        $colors = $this->files()->pluck('color_id')->unique()->toArray();
+        $colors = $this->files()->where('type','!=','traffic_pdf')->pluck('color_id')->unique()->toArray();
         foreach ($colors as $key => $color) {
             $files = $this->files()->where('color_id', $color)->get();
 
@@ -22,6 +22,7 @@ class ShowVehicleResource extends JsonResource
                 'images' => $files
             ];
         }
+
         $array = [
             "id" => $this->id,
             "vehicable_id" => $this->vehicable_id,

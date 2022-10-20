@@ -18,7 +18,7 @@ class GetTrafficClearingOfficesResource extends JsonResource
             "country_id" => $this->country_id,
             "city_id" => $this->city_id,
             "area_id" => $this->area_id,
-            "services" => TrafficServicesResource::collection($this->services),
+            "services" => TrafficServicesResource::collection($this->trafficServices),
             "payment_methods" => GetPaymentMethodsResource::collection($this->payment_methods),
             "rating" => $this->rating,
             "rating_count" => $this->rating_count,

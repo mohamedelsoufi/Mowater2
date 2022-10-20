@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources\Scraps;
 
+use App\Http\Resources\Reviews\ShowReviewResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class GetScrapsResource extends JsonResource
@@ -22,7 +23,7 @@ class GetScrapsResource extends JsonResource
             "is_reviewed" => $this->is_reviewed,
             "is_favorite" => $this->is_favorite,
             "favorites_count" => $this->favorites_count,
-            "reviews" => $this->reviews,
+            "reviews" => ShowReviewResource::collection($this->reviews),
             "number_of_views" => $this->number_of_views,
             "active_number_of_views" => $this->active_number_of_views,
             "reservation_availability" => $this->reservation_availability,

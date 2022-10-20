@@ -13,7 +13,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-
+Route::get('test-firebase', function (){
+    notifyByFirebase('Tilte', 'Body Ya', "image", [
+        'fkDEPxZR9EKEmpCgKvbWwd:APA91bEeTj1xe2RC8EKjk7tby7qs4SVmio_2-GXiML0lmfKr-W72PTUWsWU88l3JH73UOYC1dGkjuMf4L796eJ9ycRAoZZ9Sgz25M6efkgWldWQcPT4td1MbkD5RW6W_SgjV96NM4hVl',
+    ], $data = ['yes']);
+});
 // unauthenticated routes
 Route::group(['namespace' => 'API', 'middleware' => 'APILocalization'], function () {
     Route::group(['namespace' => 'General'], function () {
@@ -83,6 +87,7 @@ Route::group(['namespace' => 'API', 'middleware' => 'APILocalization'], function
         Route::get('agency_services', 'AgencyController@services');
         Route::get('agency_categories', 'AgencyController@categories');
         Route::get('agency-mawater-card-offers', 'AgencyController@getDiscountCardOffers');
+        Route::get('agency-offers', 'AgencyController@getOffers');
 
         //Branches
         Route::get('branches', 'BranchController@index');
@@ -99,6 +104,7 @@ Route::group(['namespace' => 'API', 'middleware' => 'APILocalization'], function
         Route::get('car-show-room', 'CarShowroomController@index');
         Route::get('show-car-show-room', 'CarShowroomController@show');
         Route::get('car-showroom-mawater-card-offers', 'CarShowroomController@getDiscountCardOffers');
+        Route::get('car-showroom-offers', 'CarShowroomController@getOffers');
 
 
         // RentalOffice routes
@@ -161,12 +167,14 @@ Route::group(['namespace' => 'API', 'middleware' => 'APILocalization'], function
         Route::get('insurance-companies', 'IsuranceCompanyController@index');
         Route::get('show-insurance-company', 'IsuranceCompanyController@show_insurance_company')->name('insurance.show');
         Route::get('insurance-mawater-card-offers', 'IsuranceCompanyController@getDiscountCardOffers');
+        Route::get('insurance-offers', 'IsuranceCompanyController@getOffers');
         Route::get('show-insurance-package', 'IsuranceCompanyController@ShowPackage');
 
         //Brokers routes
         Route::get('brokers', 'BrokerController@index');
         Route::get('show-broker', 'BrokerController@show')->name('brokers.show');
         Route::get('broker-mawater-card-offers', 'BrokerController@getDiscountCardOffers');
+        Route::get('broker-offers', 'BrokerController@getOffers');
         Route::get('show-broker-package', 'BrokerController@ShowPackage');
 
 
@@ -219,6 +227,7 @@ Route::group(['namespace' => 'API', 'middleware' => 'APILocalization'], function
         Route::get('get-car-washes-services', 'CarWashController@getAllServices');
         Route::get('show-car-wash-service', 'CarWashController@ShowService')->name('car-washes.show-service');
         Route::get('get-car-wash-mawater-offers', 'CarWashController@getMawaterOffers');
+        Route::get('get-car-wash-offers', 'CarWashController@getOffers');
         Route::get('get-car-wash-service-available-times', 'CarWashController@getServiceAvailableTimes');
 
         //Mining Center routes
@@ -227,6 +236,7 @@ Route::group(['namespace' => 'API', 'middleware' => 'APILocalization'], function
         Route::get('get-mining-center-services', 'MiningCenterController@getAllServices');
         Route::get('show-mining-center-service', 'MiningCenterController@ShowService')->name('mining-centers.show-service');
         Route::get('get-mining-center-mawater-offers', 'MiningCenterController@getMawaterOffers');
+        Route::get('get-mining-center-offers', 'MiningCenterController@getOffers');
 
         //Accessories Store routes
         Route::get('get-accessories-stores', 'AccessoriesStoreController@index');
@@ -234,6 +244,7 @@ Route::group(['namespace' => 'API', 'middleware' => 'APILocalization'], function
         Route::get('get-accessories', 'AccessoriesStoreController@getAllAccessories');
         Route::get('show-accessory', 'AccessoriesStoreController@ShowAccessory')->name('accessories.show');
         Route::get('get-accessories-store-mawater-offers', 'AccessoriesStoreController@getMawaterOffers');
+        Route::get('get-accessories-store-offers', 'AccessoriesStoreController@getOffers');
 
     });
 
@@ -298,7 +309,9 @@ Route::group(['middleware' => ['jwt.verify:api', 'APILocalization', 'IsVerified'
 
         // firebase notifications
         Route::post('store-token', 'FirebaseController@storeToken');
-        Route::post('delete-token', 'FirebaseController@deleteToken');
+        Route::get('get-user-tokens', 'FirebaseController@getUserTokens');
+        Route::post('delete-user-tokens', 'FirebaseController@deleteUserTokens');
+        Route::post('delete-user-token', 'FirebaseController@deleteUserToken');
     });
 
     Route::group(['namespace' => 'Organizations'], function () {

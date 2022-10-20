@@ -3,6 +3,7 @@
 namespace App\Http\Resources\Wenches;
 
 use App\Http\Resources\PaymentMethods\GetPaymentMethodsResource;
+use App\Http\Resources\Reviews\ShowReviewResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class ShowWenchResource extends JsonResource
@@ -39,7 +40,7 @@ class ShowWenchResource extends JsonResource
             "is_reviewed" => $this->is_reviewed,
             "is_favorite" => $this->is_favorite,
             "favorites_count" => $this->favorites_count,
-            "reviews" => $this->reviews,
+            "reviews" => ShowReviewResource::collection($this->reviews),
             "status" => $this->status,
             "available" => $this->available,
             "active" => $this->active,
