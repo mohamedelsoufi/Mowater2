@@ -1,0 +1,1 @@
+[05-Jan-2022 14:37:02 Africa/Cairo] PHP Fatal error:  Trait 'App\Traits\Reviews\HasReviews' not found in /home/schemecode/public_html/mawatery/app/Models/Agency.php on line 25
