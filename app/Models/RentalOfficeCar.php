@@ -148,9 +148,9 @@ class RentalOfficeCar extends Model
             $discount_type = $this->discount_type;
             $percentage_value = ((100 - $this->discount) / 100);
             if ($discount_type == 'percentage') {
-                return $price_after_discount = $this->daily_rental_price * $percentage_value;
+                return $price_after_discount = number_format($this->daily_rental_price * $percentage_value,2);
             } else {
-                return $price_after_discount = $this->daily_rental_price - $this->discount;
+                return $price_after_discount = number_format($this->daily_rental_price - $this->discount,2);
 
             }
         }
@@ -163,9 +163,9 @@ class RentalOfficeCar extends Model
             $discount_type = $this->discount_type;
             $percentage_value = ((100 - $this->discount) / 100);
             if ($discount_type == 'percentage') {
-                return $price_after_discount = $this->weekly_rental_price * $percentage_value;
+                return $price_after_discount = number_format($this->weekly_rental_price * $percentage_value,2);
             } else {
-                return $price_after_discount = $this->weekly_rental_price - $this->discount;
+                return $price_after_discount = number_format($this->weekly_rental_price - $this->discount,2);
 
             }
         }
@@ -178,9 +178,9 @@ class RentalOfficeCar extends Model
             $discount_type = $this->discount_type;
             $percentage_value = ((100 - $this->discount) / 100);
             if ($discount_type == 'percentage') {
-                return $price_after_discount = $this->monthly_rental_price * $percentage_value;
+                return $price_after_discount = number_format($this->monthly_rental_price * $percentage_value,2);
             } else {
-                return $price_after_discount = $this->monthly_rental_price - $this->discount;
+                return $price_after_discount = number_format($this->monthly_rental_price - $this->discount,2);
 
             }
         }
@@ -193,9 +193,9 @@ class RentalOfficeCar extends Model
             $discount_type = $this->discount_type;
             $percentage_value = ((100 - $this->discount) / 100);
             if ($discount_type == 'percentage') {
-                return $price_after_discount = $this->yearly_rental_price * $percentage_value;
+                return $price_after_discount = number_format($this->yearly_rental_price * $percentage_value,2);
             } else {
-                return $price_after_discount = $this->yearly_rental_price - $this->discount;
+                return $price_after_discount = number_format($this->yearly_rental_price - $this->discount,2);
 
             }
         }

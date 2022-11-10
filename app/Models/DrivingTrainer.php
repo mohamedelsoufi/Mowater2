@@ -271,9 +271,9 @@ class DrivingTrainer extends Model
             $discount_type = $this->discount_type;
             $percentage_value = ((100 - $this->discount) / 100);
             if ($discount_type == 'percentage') {
-                return $price_after_discount = $this->hour_price * $percentage_value;
+                return $price_after_discount = number_format($this->hour_price * $percentage_value,2);
             } else {
-                return $price_after_discount = $this->hour_price - $this->discount;
+                return $price_after_discount = number_format($this->hour_price - $this->discount,2);
 
             }
         }
